@@ -1,0 +1,7 @@
+include README.md changelog.txt License.txt
+exclude pyproject.toml
+
+recursive-include examples *.py README.md diagram.png
+recursive-exclude examples/demoapps-internal *
+
+prune cpp-licenses

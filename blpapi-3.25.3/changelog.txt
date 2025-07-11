@@ -1,0 +1,476 @@
+Version 3.25.3:
+===============
+- Stability and performance improvements
+
+Version 3.25.2:
+===============
+- Subscribing with pre-resolved topics is no longer supported
+    Pre-resolved topics are no longer supported. Usage of this should be discontinued.
+
+- Stability and performance improvements
+
+Version 3.25.1:
+===============
+- Stability and performance improvements
+
+Version 3.24.12.2:
+===============
+- Stability and performance improvements
+
+Version 3.24.12:
+================
+- New ways to consume Events of a session
+    1. Consuming asynchronously with `await session.awaitEvent()`.
+    2. Session supports `for event in session` statements for iterating over events.
+    3. Session supports `async for event in session` statements for iterating over events.
+    For details check the documentation of Session.
+- Stability and performance improvements
+
+Version 3.24.11:
+================
+- Stability and performance improvements
+
+Version 3.24.10:
+================
+- Stability and performance improvements
+
+Version 3.24.9.3a1:
+================
+- Stability and performance improvements
+
+Version 3.24.9.2-alpha:
+================
+- Stability and performance improvements
+
+Version 3.24.9:
+===============
+- Stability and performance improvements
+
+Version 3.24.8.3:
+===============
+- Stability and performance improvements
+
+Version 3.24.8.2:
+===============
+- Stability and performance improvements
+
+Version 3.24.8:
+===============
+- Stability and performance improvements
+
+Version 3.24.7.1:
+===============
+- Stability and performance improvements
+
+Version 3.24.7:
+===============
+- Stability and performance improvements
+
+Version 3.24.6:
+===============
+- Stability and performance improvements
+
+Version 3.24.5:
+===============
+- Stability and performance improvements
+
+Version 3.24.4:
+===============
+- Stability and performance improvements
+
+Version 3.24.3:
+===============
+- Stability and performance improvements
+
+Version 3.24.2:
+===============
+- Stability and performance improvements
+
+Version 3.24.1:
+================
+- Added 'serverId' in subscription stream messages
+    'serverId', which identifies the endpoint where a subscription is established,
+    has been added to 'SubscriptionStreamsActivated' and 'SubscriptionStreamsDeactivated' messages.
+- Stability and performance improvements
+
+Version 3.23.12:
+================
+- Stability and performance improvements
+
+Version 3.23.11:
+===============
+- Versioning scheme change
+    BLPAPI now uses a versioning scheme that provides information about
+    the year and month the release was made. For example, '3.23.11' is the SDK
+    version 3 released in November of 2023.
+ - Automated cluster management for the public cloud
+    SDK now supports clustered configurations in the public cloud
+    that take advantage of horizontal scaling capabilities
+- Stability and performance improvements
+
+Version 3.23.1:
+===============
+- Stability and performance improvements
+
+Version 3.23.0:
+===============
+- Stability and performance improvements
+
+Version 3.22.0:
+===============
+- Added support for a named session
+    Users can now name a session by setting a 'sessionName' in
+    'SessionOptions'. The name can be used to identify the log lines pertaining
+    to a given session and it can be retrieved via 'Session.sessionName()' method.
+- Added names to threads provided by BLPAPI
+    Threads that are created by 'Session' are now named according to the
+    following scheme: blp<sessionID><component>. Component is a brief
+    descriptor of the thread function, for internal use.
+- Stability and performance improvements
+
+Version 3.21.0:
+===============
+- Horizontal scaling of requests
+    User requests will now be load-balanced across all connections for clients
+    using clustered farms. There is no change to the way clients send requests and
+    receive responses.
+- Stability and performance improvements
+
+Version 3.20.3:
+===============
+- Drop Python 3.7 support
+    Installation and use of the BLPAPI Python SDK now requires a Python 3.8+ runtime.
+- Stability and performance improvements
+
+Version 3.20.2:
+===============
+- Stability and performance improvements
+
+Version 3.20.1:
+===============
+- Support for application identity key (AIK)
+    The application identity key (AIK) is obtained through Bloomberg for registered
+    applications. It uniquely identifies the registered application for a given Session
+    and can be provided by 'SessionOptions.setApplicationIdentityKey'.
+
+- Stability and performance improvements
+
+Version 3.20.0:
+===============
+- Add SOCKS5 proxy support
+    Users can configure, per endpoint in `SessionOptions`, a single SOCKS5
+    proxy host by using `Socks5Config` class. SOCKS5 authentication is not
+    supported.
+
+- Stability and performance improvements
+
+Version 3.19.3:
+==============
+- Add 'expected_cpp_sdk_version()' method that returns a minimum compatible
+    BLPAPI C++ SDK version.
+- Drop Python 3.6 support
+    Installation and use of the BLPAPI Python SDK now requires a Python 3.7+ runtime.
+- Add Python 3.11 support
+- Stability and performance improvements
+
+Version 3.19.2:
+===============
+- Remove Python 3.6 support from DPKG
+- Stability and performance improvements
+
+Version 3.19.1:
+===============
+- Stability and performance improvements
+
+Version 3.19.0:
+===============
+- Add complete support for elements with bytearray data types ('bytes')
+    'EventFormatter.setValue(Name, bytes)' can now be used to set elements
+    of type Bytearray and the value of these elements are retrievable via
+    'Message.getElementAsBytes(Name)' or 'Element.getElementAsBytes(Name)'
+    or 'Element.getValueAsBytes()'.
+
+- Encourage usage of 'Name' in setters and getters taking the 'name' argument by string
+    Developers are encouraged to prefer 'Name' type parameter for methods
+    that accept either 'Name' or 'str' as the use of 'Name' is more
+    performant and functionally equivalent to 'str'.
+
+    This recommendation is enforced for clients with strict type check enabled.
+
+    Classes with such methods include 'Element', 'EventFormatter', 'Message',
+    'MessageFormatter', 'Request', 'Service', 'Name' and 'Schema'.
+
+- Stability and performance improvements
+
+Version 3.18.3:
+===============
+- Stability and performance improvements
+
+Version 3.18.2:
+===============
+- Stability and performance improvements
+
+Version 3.18.1:
+===============
+- Stability and performance improvements
+
+Version 3.18.0:
+===============
+- Improved 'Session.subcribe' and 'Session.resubscribe' interface
+    The current 'Session.subscribe' and 'Session.resubscribe' raise an
+    exception when one of the subscriptions is invalid, e.g., subscribe
+    with a duplicate 'CorrelationId'. A new set of overloads are added
+    with parameter 'SubscriptionPreprocessMode', which could be
+    - 'FAIL_ON_FIRST_ERROR': an exception is raised on the first
+      invalid subscription in the list, and the entire batch will be
+      considered failed.
+    - 'RETURN_INDIVIDUAL_ERRORS': instead of raising exceptions, a
+      list of 'SubscriptionPreprocessError' is returned, each
+      representing an error due to an invalid subscription in the list.
+      The valid subscriptions will move forward.
+
+- Stability and performance improvements
+
+Version 3.17.1:
+===============
+- Stability and performance improvements
+
+Version 3.17.0:
+===============
+- Native-type formatting and message consumption
+    Add ability to format 'Event's and 'Request's from native Python types
+    using methods 'EventFormatter.fromPy' and 'Request.fromPy'. Add ability
+    to convert a 'Message' to 'dict' with 'Message.toPy'. 'Message's and
+    'Request's have 'dict'-like behavior with '__getitem__' and
+    '__setitem__'.
+
+- A new method 'correlationId()' is added to 'blpapi.Message'
+    A new method 'Message.correlationId()' is added to return the
+    single CorrelationId associated with the message or None if the
+    message has no CorrelationIds. If the message has multiple
+    CorrelationIds, the first one is returned.
+
+- Constants for common used `Names`
+    A new utility class `blpapi.Names` has been added with common
+    message names.
+
+- Revamped examples
+    The 'examples' directory now contains 'demoapps' and 'unittests'
+    subdirectories. The 'demoapps' directory contains a consolidated set of
+    example applications. Within 'demoapps', the 'snippets' directory contains
+    sample code for creating and sending requests, and for processing
+    responses. Also within 'demoapps', the 'util' directory contains common
+    code shared between examples. The 'unittests' directory has been renamed
+    from 'mock-test-examples' and contains sample code for using the mock
+    testing interface.
+
+- End of Python 2 support
+    Installation and use of BLPAPI Python now requires a Python 3.6+
+    runtime.
+
+- Stability and performance improvements
+
+Version 3.16.6:
+===============
+- Stability and performance improvements
+
+Version 3.16.5:
+===============
+- Stability and performance improvements
+
+Version 3.16.4:
+===============
+- Stability and performance improvements
+
+Version 3.16.3:
+===============
+- Stability and performance improvements
+
+Version 3.16.2:
+===============
+- Stability and performance improvements
+
+Version 3.16.1:
+===============
+- Stability and performance improvements
+
+Version 3.16.0:
+===============
+- Attributes are no longer supported in 'blpapi.ResolutionList'
+    Support for attributes during resolution was never fully implemented
+    and is now deprecated.
+
+- Provide users ability to unit test applications offline using testing frameworks
+    The new utility module 'blpapi.test' can be used to create test events
+    and test messages. The test messages can be generated using Python
+    dictionaries, XML, JSON, or they can be built in a similar way to how
+    messages are normally constructed in the SDK.
+
+- Added unique request id to network interactions
+    A new, globally unique, request id has been added to network
+    interactions.  The request id is a string that can be obtained by
+    calling 'Request.getRequestId()' before sending a request, and
+    'Message.getRequestId()' for messages delivered to the application.
+
+    Not all requests and messages will have a request id, notably
+    subscription data messages will *not* have a request id except
+    for recaps.
+
+    This unique identifier will be useful when contacting support as it
+    will help quickly locate the interactions related to that event.
+
+- Stability and performance improvements
+
+Version 3.15.2:
+===============
+- Stability and performance improvements
+
+Version 3.15.1:
+===============
+- 'blpapi.Service.createAdminEvent()' is now deprecated. Use 'blpapi.Service.createPublishEvent()' instead
+
+- Stability and performance improvements
+
+Version 3.15.0:
+===============
+- Provided a simplified interface to handle authentication and authorization
+    - Simplified authentication settings through the new set of strongly-typed
+      overloads described with 'AuthOptions' class.
+
+    - Simplified existing multi-phased approach to authorization so that both
+      token generation and authorization can be done by the SDK.
+        - If 'AuthOptions' instance is provided to the session through the
+          newly introduced 'setSessionIdentityOptions' (part of 'SessionOptions'),
+          both token generation and subsequent authorization will be done by the
+          SDK. Successfully authorized identity would become the default
+          identity for the session that's used for all future requests unless
+          a different one is specified explicitly.
+
+        - Additionally, two new session methods that simplify creation of
+          additional identities have been introduced:
+            - 'generateAuthorizedIdentity' - generates authorized identity
+              based on the provided 'AuthOptions'.
+        - 'getAuthorizedIdentity' - returns authorized identity that's
+          associated with the 'generateAuthorizedIdentity' call.
+
+- Improved usage of network bandwidth through support for compression
+
+- 'blpapi.Message.topicName()' is now deprecated
+
+- Stability and performance improvements
+
+Version 3.14.1:
+===============
+- Stability and performance improvements
+
+Version 3.14.0:
+===============
+- Improved usage of network bandwidth for snapshot requests
+    Optimized the network bandwidth usage between endpoints and Bloomberg data
+    centers for snapshot requests. Customers can request to disable the
+    optimization by setting the 'bandwidthSaveModeDisabled' session option.
+
+- Stability and performance improvements
+
+Version 3.13.1:
+===============
+- Conversions to string using print helpers ignore null-terminators
+    Previously, when converting an e.g., Element to string explicitly,
+    or when printing it, null-terminators embedded in strings
+    would cause the resulting string to be truncated to the first one.
+
+- Format docstrings to be rendered by the Sphinx documentation generator
+- Stability and performance improvements
+
+Version 3.13.0:
+===============
+- Automated network configuration for ZFP over leased lines
+    Allow customers that leverage leased lines/routers for Bloomberg services
+    (such as existing Bloomberg terminals) to use this infrastructure to
+    connect their applications to Zero Foot-Print (ZFP) instances.
+
+    A new utility class, 'blpapi.ZfpUtil', can be used to create a
+    'SessionOptions' object with the appropriate servers. Applications can
+    update the options, including authorization settings, but should not
+    change the servers.
+
+    Added a new example ZfpOverLeasedLinesSessionExample.py to demonstrate
+    how to create a session over ZFP leased lines.
+
+- Stability and performance improvements
+
+Version 3.12.3:
+===============
+- Improve error reporting on failure to load the blpapi package
+- Remove dependency on the C++ runtime
+
+Version 3.12.2:
+===============
+- Stability and performance improvements
+
+Version 3.12.1:
+===============
+- Stability and performance improvements
+
+Version 3.12.0:
+===============
+- Add SessionOptions.toString() and SessionOptions.__str__
+- Add version helpers
+- Python3.7 compatibility
+    - Deprecated the named parameter 'async' for blpapi.EventFormatter.stop in
+    favor of 'async_'. 'async' is a reserved keyword with Python3.7.
+
+Version 3.11.0:
+===============
+- Add support for zero footprint connections
+- Add support for fragmented recaps
+- Add support for consuming microseconds
+
+Version 3.10.0:
+===============
+- Documentation change
+    Clarify the meaning of integer priorities in 'ProviderSession'. Greater
+    values indicate higher priorities.
+
+- Add support for 3.10 features
+    - Provide access to the Message recap type
+    - Enable configuration of service timeouts in SessionOptions
+    - Add support for publisher terminated subscriptions
+    For more details on these features, please refer to the C++ release notes
+
+Version 3.9.2:
+==============
+- Fix Message.fragmentType
+
+Version 3.9.1:
+==============
+- DPKG support
+- Fix argument handling in LocalMktDataSubscriptionExample.py
+- Fix ErrorInfo processing bug in SubscriptionWIthEventHandlerExample.py
+- Fix missing dependency on the binary package
+- Add support PyPI with wheels
+- Add Message.fragmentType
+
+Version 3.9.0:
+==============
+- Support for all new interfaces included in blpapi release 3.9
+- Python 3 support
+
+Version 3.7:
+==============
+- added support for new interfaces in BLPAPI 3.7
+
+Version 3.5.4:
+==============
+- fix source installation error when building against version 3.7 of C++ SDK
+- document system-wide C++ SDK installation
+
+Version 3.5.3:
+==============
+- preliminary support for Darwin platform (beta)
+- added 'Identity.hasEntitlements' and 'Identity.failedEntitlements' functions
+- report error if installation is attempted using Python 3
+
+Version 3.5.2:
+==============
+- Initial public release of Python SDK
