@@ -1,0 +1,54 @@
+(venv) PS C:\Users\ksharma12\fin_research\scripts> python .\fetch_options_to_excel.py
+Total options selected: 52
+Fetching market data for selected options...
+✅ Excel file saved: soun_options_2025-10-17.xlsx
+(venv) PS C:\Users\ksharma12\fin_research\scripts> python .\black_scholes_calculator.py
+✅ Excel file saved: C:\Users\ksharma12\fin_research\scripts\soun_options_2025-10-17_bs.xlsx
+(venv) PS C:\Users\ksharma12\fin_research\scripts> python .\heston_calculator.py       
+Calibration RMSE: 0.2032
+Calibrated Heston params: v0=1.0415265096010131, kappa=20.42325481708278, theta=20.77138605289871, sigma=0.0831995409261797, rho=0.08403971909620211
+✅ Excel file saved: C:\Users\ksharma12\fin_research\scripts\soun_options_2025-10-17_heston.xlsx
+(venv) PS C:\Users\ksharma12\fin_research\scripts> python .\fetch_options_to_excel.py  
+Total options selected: 42
+Fetching market data for selected options...
+✅ Excel file saved: bbai_options_2025-10-17`.xlsx
+(venv) PS C:\Users\ksharma12\fin_research\scripts> python .\fetch_options_to_excel.py
+Total options selected: 42
+Fetching market data for selected options...
+✅ Excel file saved: bbai_options_2025-12-19.xlsx
+(venv) PS C:\Users\ksharma12\fin_research\scripts> python .\black_scholes_calculator.py
+✅ Excel file saved: C:\Users\ksharma12\fin_research\scripts\bbai_options_2025-12-19_bs.xlsx
+(venv) PS C:\Users\ksharma12\fin_research\scripts> python .\heston_calculator.py       
+Calibration RMSE: 0.1278
+Calibrated Heston params: v0=1.4063638218403183, kappa=5.762725460777112, theta=0.4502528048634616, sigma=0.9999350250025085, rho=1.5413700843180023
+✅ Excel file saved: C:\Users\ksharma12\fin_research\scripts\bbai_options_2025-12-19_heston.xlsx
+(venv) PS C:\Users\ksharma12\fin_research\scripts> python .\fetch_options_to_excel.py  
+Total options selected: 100
+Fetching market data for selected options...
+✅ Excel file saved: crcl_options_2025-12-19.xlsx
+(venv) PS C:\Users\ksharma12\fin_research\scripts> python .\black_scholes_calculator.py
+✅ Excel file saved: C:\Users\ksharma12\fin_research\scripts\crcl_options_2025-12-19_bs.xlsx
+(venv) PS C:\Users\ksharma12\fin_research\scripts> python .\heston_calculator.py       
+Calibration RMSE: 2.3165
+Calibrated Heston params: v0=0.7530608343048011, kappa=3.4497403573841556e-06, theta=0.43335810478539905, sigma=-0.4663664054245096, rho=0.7525664648644877
+✅ Excel file saved: C:\Users\ksharma12\fin_research\scripts\crcl_options_2025-12-19_heston.xlsx
+(venv) PS C:\Users\ksharma12\fin_research\scripts> python .\fetch_options_to_excel.py  
+Total options selected: 332
+Fetching market data for selected options...
+✅ Excel file saved: avgo_options_2025-12-19.xlsx
+(venv) PS C:\Users\ksharma12\fin_research\scripts> python .\black_scholes_calculator.py
+✅ Excel file saved: C:\Users\ksharma12\fin_research\scripts\avgo_options_2025-12-19_bs.xlsx
+(venv) PS C:\Users\ksharma12\fin_research\scripts> python .\heston_calculator.py       
+Calibration RMSE: 2.6674
+Calibrated Heston params: v0=0.21772034059015327, kappa=2.557969253131072, theta=0.48186438477431176, sigma=-0.9999999802487557, rho=0.31051767921421725
+✅ Excel file saved: C:\Users\ksharma12\fin_research\scripts\avgo_options_2025-12-19_heston.xlsx
+(venv) PS C:\Users\ksharma12\fin_research\scripts> python .\fetch_options_to_excel.py
+Total options selected: 110
+Fetching market data for selected options...
+✅ Excel file saved: amd_options_2025-12-19.xlsx
+(venv) PS C:\Users\ksharma12\fin_research\scripts> python .\black_scholes_calculator.py
+✅ Excel file saved: C:\Users\ksharma12\fin_research\scripts\amd_options_2025-12-19_bs.xlsx
+(venv) PS C:\Users\ksharma12\fin_research\scripts> python .\heston_calculator.py
+Calibration RMSE: 1.6325
+Calibrated Heston params: v0=0.21760330336620795, kappa=3.9954543081160248, theta=0.3206166607358461, sigma=0.9999314747256635, rho=0.2381188796433607
+✅ Excel file saved: C:\Users\ksharma12\fin_research\scripts\amd_options_2025-12-19_heston.xlsx
