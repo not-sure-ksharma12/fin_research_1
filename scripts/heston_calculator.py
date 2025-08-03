@@ -3,11 +3,12 @@ import QuantLib as ql
 from datetime import datetime
 import sys
 import math
+import os
 sys.path.append(r"C:\Users\ksharma12\fin_research\scripts")
 from fetch_options_to_excel import save_with_formatting
 
-INPUT_FILE = r"C:\Users\ksharma12\fin_research\scripts\amd_options_2025-12-19.xlsx"
-OUTPUT_FILE = r"C:\Users\ksharma12\fin_research\scripts\amd_options_2025-12-19_heston.xlsx"
+INPUT_FILE = r"C:\Users\ksharma12\fin_research\scripts\excels\avgo_options_2025-08-15.xlsx"
+OUTPUT_FILE = r"C:\Users\ksharma12\fin_research\scripts\excels\avgo_options_2025-08-15_heston.xlsx"
 
 # Helper: Calibrate Heston model to market prices for a given expiry
 def calibrate_heston(df, valuation_date, risk_free_rate=0.05, dividend_yield=0.0):
@@ -101,6 +102,8 @@ def main():
     df = pd.read_excel(INPUT_FILE)
     valuation_date = datetime.today()
     risk_free_rate = 0.0453  # 4.53% from Bloomberg
+    if df["Current Price"].isna().any():
+        raise ValueError("Current Price column contains NaN values. Please check your input data.")
     params, heston_model, helpers, model_prices, market_prices = calibrate_heston(df, valuation_date, risk_free_rate=risk_free_rate)
     print(f"Calibrated Heston params: v0={params[0]}, kappa={params[1]}, theta={params[2]}, sigma={params[3]}, rho={params[4]}")
     # Map model prices back to the DataFrame for calibration error
@@ -121,6 +124,19 @@ def main():
     heston_results = df.apply(lambda row: heston_price_row(row, heston_model, valuation_date, risk_free_rate=risk_free_rate), axis=1)
     df_heston = pd.concat([df, heston_results], axis=1)
     save_with_formatting(df_heston, OUTPUT_FILE)
+    # Find and output all strikes where Heston_Price < PX_LAST and Heston_Price is valid and > 0 and Option Type is Call
+    strikes_below_market = df_heston[(df_heston["Heston_Price"].notna()) & (df_heston["Heston_Price"] > 0) & (df_heston["Heston_Price"] < df_heston["PX_LAST"]) & (df_heston["Option Type"] == "Call")]
+    # Use the original Option Ticker from the DataFrame
+    if "Option Ticker" not in strikes_below_market.columns and "Ticker" in strikes_below_market.columns:
+        strikes_below_market = strikes_below_market.rename(columns={"Ticker": "Option Ticker"})
+    # Only keep relevant columns
+    keep_cols = [col for col in ["Strike", "Heston_Price", "PX_LAST", "Option Ticker"] if col in strikes_below_market.columns]
+    strikes_below_market = strikes_below_market[keep_cols]
+    print("Strikes where Heston_Price < PX_LAST and Heston_Price > 0 (Calls only):")
+    print(strikes_below_market)
+    # Optionally, save to Excel with absolute path
+    strikes_below_market_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "excels", "avgo_strikes_below_market.xlsx"))
+    strikes_below_market.to_excel(strikes_below_market_path, index=False)
 
 if __name__ == "__main__":
     main() 

@@ -6,6 +6,7 @@ from openpyxl import load_workbook
 from openpyxl.styles import PatternFill, Font, Alignment
 from openpyxl.utils import get_column_letter
 from blpapi.event import Event
+import os
 
 def connect_to_bloomberg():
     from blpapi.sessionoptions import SessionOptions
@@ -77,16 +78,20 @@ def select_top_25_each(option_list, target_exp="2025-12-19"):
 def get_current_price(session, ticker):
     ref_data = session.getService("//blp/refdata")
     request = ref_data.createRequest("ReferenceDataRequest")
-    request.append("securities", f"{ticker} US Equity")
-    request.append("fields", "PX_LAST")
+    request.append("securities", ticker)
+    for field in ["PX_LAST", "PX_MID", "ASK", "BID"]:
+        request.append("fields", field)
     session.sendRequest(request)
     while True:
         ev = session.nextEvent(500)
         for msg in ev:
             if msg.messageType() == "ReferenceDataResponse":
                 for sec in msg.getElement("securityData").values():
-                    px = sec.getElement("fieldData").getElementAsFloat("PX_LAST")
-                    return px
+                    field_data = sec.getElement("fieldData")
+                    for field in ["PX_LAST", "PX_MID", "ASK", "BID"]:
+                        if field_data.hasElement(field):
+                            return field_data.getElementAsFloat(field)
+                    return None
         if ev.eventType() == Event.RESPONSE:
             break
     return None
@@ -177,8 +182,8 @@ def save_with_formatting(df, file_path):
 
 if __name__ == "__main__":
     session = connect_to_bloomberg()
-    ticker = 'AMD'
-    expiry = "2025-12-19"
+    ticker = 'AVGO'
+    expiry = "2025-08-15"
     chain = get_option_chain(session, ticker)
     # Select all options for the given expiry
     all_options = []
@@ -188,11 +193,17 @@ if __name__ == "__main__":
             all_options.append((o, parsed["Strike"], parsed["Option Type"]))
     print(f"Total options selected: {len(all_options)}")
     print("Fetching market data for selected options...")
-    current_price = get_current_price(session, ticker)
+    # Fetch the underlying's current price
+    underlying_ticker = f"{ticker} US Equity"
+    current_price = get_current_price(session, underlying_ticker)
     data = fetch_option_data(session, all_options, current_price=current_price)
     df = pd.DataFrame(data)
+    # Ensure 'Current Price' is filled for all rows
+    if "Current Price" not in df.columns or df["Current Price"].isna().any():
+        df["Current Price"] = current_price
     # Sort: Calls first by ascending strike, then Puts by ascending strike
     df_calls = df[df["Option Type"] == "Call"].sort_values(by=["Strike"], ascending=True)
     df_puts = df[df["Option Type"] == "Put"].sort_values(by=["Strike"], ascending=True)
     df_sorted = pd.concat([df_calls, df_puts], ignore_index=True)
-    save_with_formatting(df_sorted, "amd_options_2025-12-19.xlsx") 
+    output_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "excels", "avgo_options_2025-08-15.xlsx"))
+    save_with_formatting(df_sorted, output_path) 
