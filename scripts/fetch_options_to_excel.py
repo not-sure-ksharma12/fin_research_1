@@ -182,28 +182,26 @@ def save_with_formatting(df, file_path):
 
 if __name__ == "__main__":
     session = connect_to_bloomberg()
-    ticker = 'AVGO'
-    expiry = "2025-08-15"
+    ticker = 'NVDA'
+    expiry = "2025-09-19"
     chain = get_option_chain(session, ticker)
-    # Select all options for the given expiry
-    all_options = []
+    # Select only call options for the given expiry
+    call_options = []
     for o in chain:
         parsed = parse_option_ticker(o)
-        if parsed and parsed["Expiration"] == expiry:
-            all_options.append((o, parsed["Strike"], parsed["Option Type"]))
-    print(f"Total options selected: {len(all_options)}")
-    print("Fetching market data for selected options...")
+        if parsed and parsed["Expiration"] == expiry and parsed["Option Type"] == "Call":
+            call_options.append((o, parsed["Strike"], parsed["Option Type"]))
+    print(f"Total call options selected: {len(call_options)}")
+    print("Fetching market data for selected call options...")
     # Fetch the underlying's current price
     underlying_ticker = f"{ticker} US Equity"
     current_price = get_current_price(session, underlying_ticker)
-    data = fetch_option_data(session, all_options, current_price=current_price)
+    data = fetch_option_data(session, call_options, current_price=current_price)
     df = pd.DataFrame(data)
     # Ensure 'Current Price' is filled for all rows
     if "Current Price" not in df.columns or df["Current Price"].isna().any():
         df["Current Price"] = current_price
-    # Sort: Calls first by ascending strike, then Puts by ascending strike
-    df_calls = df[df["Option Type"] == "Call"].sort_values(by=["Strike"], ascending=True)
-    df_puts = df[df["Option Type"] == "Put"].sort_values(by=["Strike"], ascending=True)
-    df_sorted = pd.concat([df_calls, df_puts], ignore_index=True)
-    output_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "excels", "avgo_options_2025-08-15.xlsx"))
+    # Sort call options by ascending strike
+    df_sorted = df.sort_values(by=["Strike"], ascending=True)
+    output_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "excels", "nvda_call_options_2025-09-19.xlsx"))
     save_with_formatting(df_sorted, output_path) 
