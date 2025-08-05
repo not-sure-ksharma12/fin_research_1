@@ -1,0 +1,15 @@
+[2025-08-05 10:00:19] SYSTEM - AMD - Trading system initialized | initial_capital: $100.0 | company: AMD
+[2025-08-05 10:00:47] DATA_FETCH - AMD - Fetching live options data | expiry_date: 2025-09-19 | company: AMD
+[2025-08-05 10:00:51] ENTER - AMD - AMD_60.0_Call - BUY - $25.00
+[2025-08-05 10:00:51] TRADE_ENTRY - AMD - Trade entered: BUY AMD_60.0_Call | entry_price: $77.60 | heston_price: $115.69 | strike: $60.00 | contracts: 1 | position_size: $25.00 | mispricing: $-38.09 | active_trades: 1/4 | capital: $100.00
+[2025-08-05 10:00:51] ENTER - AMD - AMD_65.0_Call - BUY - $25.00
+[2025-08-05 10:00:51] TRADE_ENTRY - AMD - Trade entered: BUY AMD_65.0_Call | entry_price: $95.25 | heston_price: $110.72 | strike: $65.00 | contracts: 1 | position_size: $25.00 | mispricing: $-15.47 | active_trades: 2/4 | capital: $100.00
+[2025-08-05 10:00:51] ENTER - AMD - AMD_45.0_Call - SELL - $25.00
+[2025-08-05 10:00:51] TRADE_ENTRY - AMD - Trade entered: SELL AMD_45.0_Call | entry_price: $133.80 | heston_price: $130.61 | strike: $45.00 | contracts: 1 | position_size: $25.00 | mispricing: $3.19 | active_trades: 3/4 | capital: $100.00
+[2025-08-05 10:00:51] ENTER - AMD - AMD_50.0_Call - SELL - $25.00
+[2025-08-05 10:00:51] TRADE_ENTRY - AMD - Trade entered: SELL AMD_50.0_Call | entry_price: $128.30 | heston_price: $125.64 | strike: $50.00 | contracts: 1 | position_size: $25.00 | mispricing: $2.66 | active_trades: 4/4 | capital: $100.00
+[2025-08-05 10:00:51] HOUR_COMPLETE - AMD - Live hour processing complete | active_trades: 4/4 | buy_trades: 2 | sell_trades: 2 | capital: $100.00 | hour: 10
+[2025-08-05 11:01:33] DATA_FETCH - AMD - Fetching live options data | expiry_date: 2025-09-19 | company: AMD
+[2025-08-05 11:01:37] HOUR_COMPLETE - AMD - Live hour processing complete | active_trades: 4/4 | buy_trades: 2 | sell_trades: 2 | capital: $100.00 | hour: 11
+[2025-08-05 12:02:48] DATA_FETCH - AMD - Fetching live options data | expiry_date: 2025-09-19 | company: AMD
+[2025-08-05 12:02:52] HOUR_COMPLETE - AMD - Live hour processing complete | active_trades: 4/4 | buy_trades: 2 | sell_trades: 2 | capital: $100.00 | hour: 12

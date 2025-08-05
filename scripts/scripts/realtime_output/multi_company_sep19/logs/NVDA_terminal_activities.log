@@ -1,0 +1,15 @@
+[2025-08-05 10:00:19] SYSTEM - NVDA - Trading system initialized | initial_capital: $100.0 | company: NVDA
+[2025-08-05 10:00:19] DATA_FETCH - NVDA - Fetching live options data | expiry_date: 2025-09-19 | company: NVDA
+[2025-08-05 10:00:28] ENTER - NVDA - NVDA_41.0_Call - BUY - $25.00
+[2025-08-05 10:00:28] TRADE_ENTRY - NVDA - Trade entered: BUY NVDA_41.0_Call | entry_price: $105.50 | heston_price: $136.66 | strike: $41.00 | contracts: 1 | position_size: $25.00 | mispricing: $-31.16 | active_trades: 1/4 | capital: $100.00
+[2025-08-05 10:00:28] ENTER - NVDA - NVDA_47.0_Call - BUY - $25.00
+[2025-08-05 10:00:28] TRADE_ENTRY - NVDA - Trade entered: BUY NVDA_47.0_Call | entry_price: $108.95 | heston_price: $130.70 | strike: $47.00 | contracts: 1 | position_size: $25.00 | mispricing: $-21.75 | active_trades: 2/4 | capital: $100.00
+[2025-08-05 10:00:28] ENTER - NVDA - NVDA_60.0_Call - SELL - $25.00
+[2025-08-05 10:00:28] TRADE_ENTRY - NVDA - Trade entered: SELL NVDA_60.0_Call | entry_price: $120.88 | heston_price: $117.77 | strike: $60.00 | contracts: 1 | position_size: $25.00 | mispricing: $3.11 | active_trades: 3/4 | capital: $100.00
+[2025-08-05 10:00:28] ENTER - NVDA - NVDA_48.0_Call - SELL - $25.00
+[2025-08-05 10:00:28] TRADE_ENTRY - NVDA - Trade entered: SELL NVDA_48.0_Call | entry_price: $131.86 | heston_price: $129.70 | strike: $48.00 | contracts: 1 | position_size: $25.00 | mispricing: $2.16 | active_trades: 4/4 | capital: $100.00
+[2025-08-05 10:00:28] HOUR_COMPLETE - NVDA - Live hour processing complete | active_trades: 4/4 | buy_trades: 2 | sell_trades: 2 | capital: $100.00 | hour: 10
+[2025-08-05 11:01:03] DATA_FETCH - NVDA - Fetching live options data | expiry_date: 2025-09-19 | company: NVDA
+[2025-08-05 11:01:12] HOUR_COMPLETE - NVDA - Live hour processing complete | active_trades: 4/4 | buy_trades: 2 | sell_trades: 2 | capital: $100.00 | hour: 11
+[2025-08-05 12:02:07] DATA_FETCH - NVDA - Fetching live options data | expiry_date: 2025-09-19 | company: NVDA
+[2025-08-05 12:02:18] HOUR_COMPLETE - NVDA - Live hour processing complete | active_trades: 4/4 | buy_trades: 2 | sell_trades: 2 | capital: $100.00 | hour: 12

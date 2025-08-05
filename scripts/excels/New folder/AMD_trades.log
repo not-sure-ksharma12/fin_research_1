@@ -1,0 +1,8 @@
+[2025-08-05 08:01:11] ENTER - AMD - AMD_60.0_Call - BUY - $25.00
+[2025-08-05 08:01:11] ENTER - AMD - AMD_65.0_Call - BUY - $25.00
+[2025-08-05 08:01:11] ENTER - AMD - AMD_45.0_Call - SELL - $25.00
+[2025-08-05 08:01:11] ENTER - AMD - AMD_50.0_Call - SELL - $25.00
+[2025-08-05 09:45:09] EXIT - AMD - AMD_60.0_Call - BUY - $25.00 - PnL: $0.00 - Return: 0.00%
+[2025-08-05 09:45:09] EXIT - AMD - AMD_65.0_Call - BUY - $25.00 - PnL: $0.00 - Return: 0.00%
+[2025-08-05 09:45:09] EXIT - AMD - AMD_45.0_Call - SELL - $25.00 - PnL: $0.00 - Return: 0.00%
+[2025-08-05 09:45:09] EXIT - AMD - AMD_50.0_Call - SELL - $25.00 - PnL: $0.00 - Return: 0.00%

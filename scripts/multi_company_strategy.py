@@ -27,9 +27,56 @@ from heston_calculator import calibrate_heston, heston_price_row
 
 warnings.filterwarnings('ignore')
 
-# Configure logging
-logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+# Configure logging with file handler
+import logging.handlers
+
+# Create logs directory
+logs_dir = "scripts/realtime_output/multi_company_sep19/logs"
+os.makedirs(logs_dir, exist_ok=True)
+
+# Configure logging to both console and file
 logger = logging.getLogger(__name__)
+logger.setLevel(logging.INFO)
+
+# Create formatters
+console_formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
+file_formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
+
+# Console handler
+console_handler = logging.StreamHandler()
+console_handler.setLevel(logging.INFO)
+console_handler.setFormatter(console_formatter)
+
+# File handler with rotation (daily)
+log_filename = f"{logs_dir}/trading_activities.log"
+file_handler = logging.handlers.TimedRotatingFileHandler(
+    log_filename, 
+    when='midnight', 
+    interval=1, 
+    backupCount=30,  # Keep 30 days of logs
+    encoding='utf-8'
+)
+file_handler.setLevel(logging.INFO)
+file_handler.setFormatter(file_formatter)
+
+# Add handlers to logger
+logger.addHandler(console_handler)
+logger.addHandler(file_handler)
+
+# Also create a separate detailed log for all activities
+detailed_log_filename = f"{logs_dir}/detailed_activities.log"
+detailed_handler = logging.FileHandler(detailed_log_filename, mode='a', encoding='utf-8')
+detailed_handler.setLevel(logging.DEBUG)
+detailed_handler.setFormatter(file_formatter)
+logger.addHandler(detailed_handler)
+
+logger.info("=" * 80)
+logger.info("🚀 MULTI-COMPANY REAL-TIME TRADING SYSTEM STARTING")
+logger.info("=" * 80)
+logger.info(f"Log files will be saved to: {logs_dir}")
+logger.info(f"Main log: {log_filename}")
+logger.info(f"Detailed log: {detailed_log_filename}")
+logger.info("=" * 80)
 
 class CompanyRealTimeTrading:
     """Individual company real-time trading system"""
@@ -64,6 +111,13 @@ class CompanyRealTimeTrading:
         self.pst_tz = pytz.timezone('US/Pacific')
         
         logger.info(f"Real-time trading system initialized for {self.company} with ${initial_capital} capital")
+        
+        # Log initialization to terminal activities
+        self.save_terminal_activities(
+            "SYSTEM", 
+            "Trading system initialized", 
+            {"initial_capital": f"${initial_capital}", "company": self.company}
+        )
     
     def is_market_open(self) -> bool:
         """
@@ -83,7 +137,7 @@ class CompanyRealTimeTrading:
         
         return is_weekday and is_market_hours
     
-    def fetch_live_data(self, session, expiry_date: str = "2025-12-19") -> pd.DataFrame:
+    def fetch_live_data(self, session, expiry_date: str = "2025-09-19") -> pd.DataFrame:
         """
         Fetch live options data from Bloomberg for this company
         
@@ -96,6 +150,13 @@ class CompanyRealTimeTrading:
         """
         try:
             logger.info(f"Fetching live {self.company} options data for expiry {expiry_date}")
+            
+            # Log data fetching to terminal activities
+            self.save_terminal_activities(
+                "DATA_FETCH", 
+                "Fetching live options data", 
+                {"expiry_date": expiry_date, "company": self.company}
+            )
             
             # Get current option chain
             chain = get_option_chain(session, self.company)
@@ -128,10 +189,15 @@ class CompanyRealTimeTrading:
             # Ensure current price is filled
             df["Current Price"] = current_price
             
-            # Sort by strike price
+            # Filter for Call options only and sort by strike price
             df_calls = df[df["Option Type"] == "Call"].sort_values(by=["Strike"], ascending=True)
-            df_puts = df[df["Option Type"] == "Put"].sort_values(by=["Strike"], ascending=True)
-            df_sorted = pd.concat([df_calls, df_puts], ignore_index=True)
+            
+            if df_calls.empty:
+                logger.warning(f"No Call options found for {self.company}")
+                return pd.DataFrame()
+            
+            logger.info(f"Found {len(df_calls)} Call options for {self.company}")
+            df_sorted = df_calls
             
             # Calculate live Heston prices
             df_with_heston = self.calculate_live_heston_prices(df_sorted)
@@ -196,7 +262,7 @@ class CompanyRealTimeTrading:
                 axis=1
             )
             
-                    return df_with_heston
+            return df_with_heston
         
         except Exception as e:
             logger.error(f"Error calculating live Heston prices for {self.company}: {e}")
@@ -222,34 +288,103 @@ class CompanyRealTimeTrading:
         save_data['Trade_Type'] = ''
         save_data['Position_Size'] = 0.0
         
-        # Mark trades that were entered this hour
+        # Mark trades based on hour logic
+        active_trades_marked = 0
         for option_id, trade in self.active_trades.items():
-            if trade['entry_hour'] == hour:
-                mask = save_data['Option_ID'] == option_id
-                save_data.loc[mask, 'Trade_Status'] = 'Entered'
-                save_data.loc[mask, 'Trade_Type'] = trade['trade_type']
-                save_data.loc[mask, 'Position_Size'] = trade['position_size']
+            # Check if this trade should be marked in this hour
+            entry_time = trade.get('entry_time')
+            if entry_time:
+                try:
+                    # Parse entry time to get hour
+                    if isinstance(entry_time, str):
+                        entry_hour = int(entry_time.split(' ')[1].split(':')[0])
+                    else:
+                        # entry_time is a datetime object
+                        entry_hour = entry_time.hour
+                    
+                    # Only mark trades that were entered in this hour or earlier
+                    if entry_hour <= hour:
+                        # Try exact match first
+                        mask = save_data['Option_ID'] == option_id
+                        if mask.any():
+                            save_data.loc[mask, 'Trade_Status'] = 'Entered'
+                            save_data.loc[mask, 'Trade_Type'] = trade['trade_type']
+                            save_data.loc[mask, 'Position_Size'] = trade['position_size']
+                            active_trades_marked += 1
+                            logger.info(f"Marked active trade in Excel (hour {hour}): {option_id} - {trade['trade_type']} - ${trade['position_size']:.2f} (entered hour {entry_hour})")
+                        else:
+                            # Try to find by parsing the option_id components
+                            try:
+                                # Parse option_id format: "COMPANY_STRIKE_OPTION_TYPE"
+                                parts = option_id.split('_')
+                                if len(parts) >= 3:
+                                    company = parts[0]
+                                    strike = float(parts[1])
+                                    option_type = parts[2]
+                                    
+                                    # Find matching option in current data
+                                    option_mask = (
+                                        (save_data['Strike'] == strike) & 
+                                        (save_data['Option Type'] == option_type)
+                                    )
+                                    
+                                    if option_mask.any():
+                                        save_data.loc[option_mask, 'Trade_Status'] = 'Entered'
+                                        save_data.loc[option_mask, 'Trade_Type'] = trade['trade_type']
+                                        save_data.loc[option_mask, 'Position_Size'] = trade['position_size']
+                                        active_trades_marked += 1
+                                        logger.info(f"Marked active trade by components (hour {hour}): {option_id} - {trade['trade_type']} - ${trade['position_size']:.2f} (entered hour {entry_hour})")
+                                    else:
+                                        logger.warning(f"Active trade {option_id} not found in current data for {self.company} (no matching strike/type)")
+                                else:
+                                    logger.warning(f"Active trade {option_id} has invalid format for {self.company}")
+                            except Exception as e:
+                                logger.warning(f"Error parsing active trade {option_id} for {self.company}: {e}")
+                    else:
+                        logger.info(f"Skipping trade {option_id} for hour {hour} (entered at hour {entry_hour})")
+                except Exception as e:
+                    logger.warning(f"Error parsing entry time for trade {option_id}: {e}")
+                    # Fallback: mark the trade if we can't parse the time
+                    mask = save_data['Option_ID'] == option_id
+                    if mask.any():
+                        save_data.loc[mask, 'Trade_Status'] = 'Entered'
+                        save_data.loc[mask, 'Trade_Type'] = trade['trade_type']
+                        save_data.loc[mask, 'Position_Size'] = trade['position_size']
+                        active_trades_marked += 1
+                        logger.info(f"Marked active trade (fallback): {option_id} - {trade['trade_type']} - ${trade['position_size']:.2f}")
         
         # Mark trades that were exited this hour
+        exited_trades_marked = 0
         for trade in self.trade_history:
             if trade.get('exit_hour') == hour:
                 mask = save_data['Option_ID'] == trade['option_id']
-                save_data.loc[mask, 'Trade_Status'] = 'Exited'
-                save_data.loc[mask, 'Trade_Type'] = trade['trade_type']
-                save_data.loc[mask, 'Position_Size'] = trade['position_size']
+                if mask.any():
+                    save_data.loc[mask, 'Trade_Status'] = 'Exited'
+                    save_data.loc[mask, 'Trade_Type'] = trade['trade_type']
+                    save_data.loc[mask, 'Position_Size'] = trade['position_size']
+                    exited_trades_marked += 1
+                    logger.info(f"Marked exited trade in Excel: {trade['option_id']} - {trade['trade_type']} - ${trade['position_size']:.2f}")
         
         # Add to history
         self.hourly_data_history.append(save_data)
         
         # Update single Excel file with new hour data
         self.update_hourly_excel(save_data, hour)
+        
+        # Log summary of what was saved
+        logger.info(f"Saved hourly data for {self.company} hour {hour}: {active_trades_marked} active trades marked, {exited_trades_marked} exited trades marked")
+        
+        # If we have active trades but couldn't mark them in current data, force regenerate
+        if len(self.active_trades) > 0 and active_trades_marked < len(self.active_trades):
+            logger.warning(f"Only marked {active_trades_marked}/{len(self.active_trades)} active trades for {self.company}. Forcing regeneration...")
+            self.regenerate_hourly_excel_with_active_trades()
     
     def update_hourly_excel(self, data: pd.DataFrame, hour: int):
         """
         Update single Excel file with new hour data and color coding
         """
         # Single filename for the company
-        filename = f"scripts/realtime_output/multi_company_aug15/{self.company}_hourly_data.xlsx"
+        filename = f"scripts/realtime_output/multi_company_sep19/{self.company}_hourly_data.xlsx"
         
         try:
             # Try to load existing workbook
@@ -321,7 +456,7 @@ class CompanyRealTimeTrading:
     
     def log_trade_to_text(self, trade_info: dict, action: str):
         """
-        Log trade information to text file
+        Log trade information to text file and terminal activities
         """
         timestamp = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         log_entry = f"[{timestamp}] {action.upper()} - {self.company} - {trade_info['option_id']} - {trade_info['trade_type']} - ${trade_info['position_size']:.2f}"
@@ -330,10 +465,41 @@ class CompanyRealTimeTrading:
             log_entry += f" - PnL: ${trade_info.get('pnl', 0):.2f} - Return: {trade_info.get('return_pct', 0):.2f}%"
         
         # Save to text file
-        log_filename = f"scripts/realtime_output/multi_company_aug15/{self.company}_trades.log"
+        log_filename = f"scripts/realtime_output/multi_company_sep19/{self.company}_trades.log"
         with open(log_filename, 'a') as f:
             f.write(log_entry + '\n')
         
+        # Save to terminal activities log
+        terminal_log_filename = f"scripts/realtime_output/multi_company_sep19/logs/{self.company}_terminal_activities.log"
+        with open(terminal_log_filename, 'a') as f:
+            f.write(log_entry + '\n')
+        
+        logger.info(log_entry)
+    
+    def save_terminal_activities(self, activity_type: str, message: str, details: dict = None):
+        """
+        Save terminal activities to log files
+        
+        Args:
+            activity_type: Type of activity (TRADE, SYSTEM, ERROR, etc.)
+            message: Activity message
+            details: Additional details as dictionary
+        """
+        timestamp = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        
+        # Create detailed log entry
+        log_entry = f"[{timestamp}] {activity_type.upper()} - {self.company} - {message}"
+        
+        if details:
+            details_str = " | ".join([f"{k}: {v}" for k, v in details.items()])
+            log_entry += f" | {details_str}"
+        
+        # Save to company-specific terminal activities log
+        terminal_log_filename = f"scripts/realtime_output/multi_company_sep19/logs/{self.company}_terminal_activities.log"
+        with open(terminal_log_filename, 'a') as f:
+            f.write(log_entry + '\n')
+        
+        # Also log to main system log
         logger.info(log_entry)
     
     def update_daily_stats(self, trade_info: dict = None):
@@ -360,19 +526,16 @@ class CompanyRealTimeTrading:
         - If some trades active: only select opportunities to fill remaining slots
         
         Args:
-            data: Current live options data
+            data: Current live options data (already filtered for Call options)
             
         Returns:
             Tuple of (undervalued_option_ids, overvalued_option_ids)
         """
-        # Filter for call options only
-        call_data = data[data['Option Type'] == 'Call'].copy()
-        
-        # Filter for valid data (non-null prices)
-        valid_data = call_data.dropna(subset=['PX_LAST', 'Heston_Price'])
+        # Filter for valid data (non-null prices) - data is already Call options only
+        valid_data = data.dropna(subset=['PX_LAST', 'Heston_Price'])
         
         if len(valid_data) < 4:
-            logger.warning(f"Insufficient live data for {self.company}: only {len(valid_data)} valid call options")
+            logger.warning(f"Insufficient live data for {self.company}: only {len(valid_data)} valid Call options")
             return [], []
         
         # Find undervalued options (Market < Heston)
@@ -505,6 +668,22 @@ class CompanyRealTimeTrading:
             logger.info(f"   🎯 4TH TRADE: Using remaining capital allocation")
         logger.info("=" * 80)
         
+        # Log trade entry to terminal activities
+        self.save_terminal_activities(
+            "TRADE_ENTRY",
+            f"Trade entered: {trade_type} {option_id}",
+            {
+                "entry_price": f"${option_data['PX_LAST']:.2f}",
+                "heston_price": f"${option_data['Heston_Price']:.2f}",
+                "strike": f"${option_data['Strike']:.2f}",
+                "contracts": contracts,
+                "position_size": f"${position_size:.2f}",
+                "mispricing": f"${option_data['Market_vs_Heston']:.2f}",
+                "active_trades": f"{len(self.active_trades)}/4",
+                "capital": f"${self.current_capital:.2f}"
+            }
+        )
+        
         return True
     
     def check_live_exit_conditions(self, option_id: str, data: pd.DataFrame) -> bool:
@@ -625,6 +804,23 @@ class CompanyRealTimeTrading:
         logger.info(f"   Capital Status: {'PROFIT' if self.current_capital >= self.initial_capital else 'LOSS'}")
         logger.info("=" * 80)
         
+        # Log trade exit to terminal activities
+        self.save_terminal_activities(
+            "TRADE_EXIT",
+            f"Trade exited: {trade['trade_type']} {option_id}",
+            {
+                "entry_price": f"${trade['entry_market_price']:.2f}",
+                "exit_price": f"${current_market_price:.2f}",
+                "pnl": f"${pnl:.2f}",
+                "return_pct": f"{trade['return_pct']:.2f}%",
+                "duration_hours": trade['duration_hours'],
+                "contracts": trade['contracts'],
+                "active_trades": f"{len(self.active_trades)}/4",
+                "capital": f"${self.current_capital:.2f}",
+                "total_pnl": f"${self.total_pnl:.2f}"
+            }
+        )
+        
         return True
     
     def process_live_hour(self, session):
@@ -677,8 +873,135 @@ class CompanyRealTimeTrading:
         
         logger.info(f"Live hour complete for {self.company}: {active_trades_count}/4 active trades ({active_buy_trades} BUY, {active_sell_trades} SELL), Capital: ${self.current_capital:.2f}")
         
+        # Force regenerate Excel to ensure all trades are properly recorded
+        self.regenerate_hourly_excel_with_active_trades()
+        
+        # Log hour completion to terminal activities
+        self.save_terminal_activities(
+            "HOUR_COMPLETE",
+            f"Live hour processing complete",
+            {
+                "active_trades": f"{active_trades_count}/4",
+                "buy_trades": active_buy_trades,
+                "sell_trades": active_sell_trades,
+                "capital": f"${self.current_capital:.2f}",
+                "hour": current_hour
+            }
+        )
+        
         # Update last processed time
         self.last_processed_time = current_time
+    
+    def regenerate_hourly_excel_with_active_trades(self):
+        """
+        Regenerate hourly Excel file to show all active trades
+        This is useful to fix the issue where trades don't show up in Excel
+        """
+        if not self.hourly_data_history:
+            logger.warning(f"No hourly data history for {self.company}")
+            return
+        
+        # Get the most recent hourly data
+        latest_data = self.hourly_data_history[-1].copy()
+        
+        # Mark active trades based on hour logic
+        active_trades_marked = 0
+        hour = latest_data['Hour'].iloc[0] if 'Hour' in latest_data.columns else datetime.now().hour
+        
+        for option_id, trade in self.active_trades.items():
+            # Check if this trade should be marked in this hour
+            entry_time = trade.get('entry_time')
+            if entry_time:
+                try:
+                    # Parse entry time to get hour
+                    if isinstance(entry_time, str):
+                        entry_hour = int(entry_time.split(' ')[1].split(':')[0])
+                    else:
+                        # entry_time is a datetime object
+                        entry_hour = entry_time.hour
+                    
+                    # Only mark trades that were entered in this hour or earlier
+                    if entry_hour <= hour:
+                        # Try exact match first
+                        mask = latest_data['Option_ID'] == option_id
+                        if mask.any():
+                            latest_data.loc[mask, 'Trade_Status'] = 'Entered'
+                            latest_data.loc[mask, 'Trade_Type'] = trade['trade_type']
+                            latest_data.loc[mask, 'Position_Size'] = trade['position_size']
+                            active_trades_marked += 1
+                            logger.info(f"Regenerated: Marked active trade in Excel (hour {hour}): {option_id} - {trade['trade_type']} - ${trade['position_size']:.2f} (entered hour {entry_hour})")
+                        else:
+                            # Try to find by parsing the option_id components
+                            try:
+                                # Parse option_id format: "COMPANY_STRIKE_OPTION_TYPE"
+                                parts = option_id.split('_')
+                                if len(parts) >= 3:
+                                    company = parts[0]
+                                    strike = float(parts[1])
+                                    option_type = parts[2]
+                                    
+                                    # Find matching option in current data
+                                    option_mask = (
+                                        (latest_data['Strike'] == strike) & 
+                                        (latest_data['Option Type'] == option_type)
+                                    )
+                                    
+                                    if option_mask.any():
+                                        latest_data.loc[option_mask, 'Trade_Status'] = 'Entered'
+                                        latest_data.loc[option_mask, 'Trade_Type'] = trade['trade_type']
+                                        latest_data.loc[option_mask, 'Position_Size'] = trade['position_size']
+                                        active_trades_marked += 1
+                                        logger.info(f"Regenerated: Marked active trade by components (hour {hour}): {option_id} - {trade['trade_type']} - ${trade['position_size']:.2f} (entered hour {entry_hour})")
+                                    else:
+                                        logger.warning(f"Regenerated: Active trade {option_id} not found in data for {self.company} (no matching strike/type)")
+                                else:
+                                    logger.warning(f"Regenerated: Active trade {option_id} has invalid format for {self.company}")
+                            except Exception as e:
+                                logger.warning(f"Regenerated: Error parsing active trade {option_id} for {self.company}: {e}")
+                    else:
+                        logger.info(f"Regenerated: Skipping trade {option_id} for hour {hour} (entered at hour {entry_hour})")
+                except Exception as e:
+                    logger.warning(f"Regenerated: Error parsing entry time for trade {option_id}: {e}")
+                    # Fallback: mark the trade if we can't parse the time
+                    mask = latest_data['Option_ID'] == option_id
+                    if mask.any():
+                        latest_data.loc[mask, 'Trade_Status'] = 'Entered'
+                        latest_data.loc[mask, 'Trade_Type'] = trade['trade_type']
+                        latest_data.loc[mask, 'Position_Size'] = trade['position_size']
+                        active_trades_marked += 1
+                        logger.info(f"Regenerated: Marked active trade (fallback): {option_id} - {trade['trade_type']} - ${trade['position_size']:.2f}")
+        
+        # Update the Excel file
+        self.update_hourly_excel(latest_data, hour)
+        
+        logger.info(f"Regenerated hourly Excel for {self.company} with {active_trades_marked}/{len(self.active_trades)} active trades marked")
+        
+        # If we still couldn't mark all trades, log a warning
+        if active_trades_marked < len(self.active_trades):
+            logger.warning(f"Regenerated: Could only mark {active_trades_marked}/{len(self.active_trades)} active trades for {self.company}")
+            logger.warning(f"Active trades: {list(self.active_trades.keys())}")
+            logger.warning(f"Available options in data: {list(latest_data['Option_ID'].unique())}")
+    
+    def save_system_summary_to_terminal(self):
+        """
+        Save current system summary to terminal activities log
+        """
+        summary = {
+            "total_trades": self.total_trades,
+            "profitable_trades": self.profitable_trades,
+            "total_pnl": f"${self.total_pnl:.2f}",
+            "current_capital": f"${self.current_capital:.2f}",
+            "active_trades": len(self.active_trades),
+            "daily_pnl": f"${self.daily_pnl:.2f}",
+            "daily_trades": self.daily_trade_count,
+            "win_rate": f"{(self.profitable_trades / self.total_trades * 100) if self.total_trades > 0 else 0:.2f}%"
+        }
+        
+        self.save_terminal_activities(
+            "SYSTEM_SUMMARY",
+            "Current system status summary",
+            summary
+        )
 
 
 class MultiCompanyRealTimeTrading:
@@ -703,7 +1026,7 @@ class MultiCompanyRealTimeTrading:
             self.company_systems[company] = CompanyRealTimeTrading(company, capital_per_company)
         
         # Create output directories
-        self.output_dir = "scripts/realtime_output/multi_company_aug15"
+        self.output_dir = "scripts/realtime_output/multi_company_sep19"
         os.makedirs(self.output_dir, exist_ok=True)
         
         # Portfolio tracking
@@ -1139,6 +1462,25 @@ class MultiCompanyRealTimeTrading:
             logger.info("=" * 80)
             logger.info("✅ MULTI-COMPANY REAL-TIME TRADING SYSTEM STOPPED")
             logger.info("=" * 80)
+    
+    def regenerate_all_excel_files(self):
+        """
+        Regenerate all Excel files to show current active trades
+        This fixes the issue where trades don't show up in Excel files
+        """
+        logger.info("=" * 80)
+        logger.info("🔄 REGENERATING ALL EXCEL FILES WITH ACTIVE TRADES...")
+        logger.info("=" * 80)
+        
+        for company, system in self.company_systems.items():
+            try:
+                system.regenerate_hourly_excel_with_active_trades()
+            except Exception as e:
+                logger.error(f"Error regenerating Excel for {company}: {e}")
+        
+        logger.info("=" * 80)
+        logger.info("✅ ALL EXCEL FILES REGENERATED")
+        logger.info("=" * 80)
 
 
 def main():

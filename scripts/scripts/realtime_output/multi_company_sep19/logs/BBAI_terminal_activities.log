@@ -1,0 +1,15 @@
+[2025-08-05 10:00:19] SYSTEM - BBAI - Trading system initialized | initial_capital: $100.0 | company: BBAI
+[2025-08-05 10:01:00] DATA_FETCH - BBAI - Fetching live options data | expiry_date: 2025-09-19 | company: BBAI
+[2025-08-05 10:01:01] ENTER - BBAI - BBAI_0.5_Call - BUY - $25.00
+[2025-08-05 10:01:01] TRADE_ENTRY - BBAI - Trade entered: BUY BBAI_0.5_Call | entry_price: $5.89 | heston_price: $6.55 | strike: $0.50 | contracts: 1 | position_size: $25.00 | mispricing: $-0.66 | active_trades: 1/4 | capital: $100.00
+[2025-08-05 10:01:01] ENTER - BBAI - BBAI_1.5_Call - BUY - $25.00
+[2025-08-05 10:01:01] TRADE_ENTRY - BBAI - Trade entered: BUY BBAI_1.5_Call | entry_price: $5.26 | heston_price: $5.55 | strike: $1.50 | contracts: 1 | position_size: $25.00 | mispricing: $-0.29 | active_trades: 2/4 | capital: $100.00
+[2025-08-05 10:01:01] ENTER - BBAI - BBAI_17.0_Call - SELL - $25.00
+[2025-08-05 10:01:01] TRADE_ENTRY - BBAI - Trade entered: SELL BBAI_17.0_Call | entry_price: $0.19 | heston_price: $0.03 | strike: $17.00 | contracts: 1 | position_size: $25.00 | mispricing: $0.16 | active_trades: 3/4 | capital: $100.00
+[2025-08-05 10:01:01] ENTER - BBAI - BBAI_2.0_Call - SELL - $25.00
+[2025-08-05 10:01:01] TRADE_ENTRY - BBAI - Trade entered: SELL BBAI_2.0_Call | entry_price: $5.20 | heston_price: $5.06 | strike: $2.00 | contracts: 1 | position_size: $25.00 | mispricing: $0.14 | active_trades: 4/4 | capital: $100.00
+[2025-08-05 10:01:01] HOUR_COMPLETE - BBAI - Live hour processing complete | active_trades: 4/4 | buy_trades: 2 | sell_trades: 2 | capital: $100.00 | hour: 10
+[2025-08-05 11:01:57] DATA_FETCH - BBAI - Fetching live options data | expiry_date: 2025-09-19 | company: BBAI
+[2025-08-05 11:02:06] HOUR_COMPLETE - BBAI - Live hour processing complete | active_trades: 4/4 | buy_trades: 2 | sell_trades: 2 | capital: $100.00 | hour: 11
+[2025-08-05 12:03:21] DATA_FETCH - BBAI - Fetching live options data | expiry_date: 2025-09-19 | company: BBAI
+[2025-08-05 12:03:26] HOUR_COMPLETE - BBAI - Live hour processing complete | active_trades: 4/4 | buy_trades: 2 | sell_trades: 2 | capital: $100.00 | hour: 12

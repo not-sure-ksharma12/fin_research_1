@@ -1,0 +1,15 @@
+[2025-08-05 10:00:19] SYSTEM - CRCL - Trading system initialized | initial_capital: $100.0 | company: CRCL
+[2025-08-05 10:00:55] DATA_FETCH - CRCL - Fetching live options data | expiry_date: 2025-09-19 | company: CRCL
+[2025-08-05 10:01:00] ENTER - CRCL - CRCL_155.0_Call - BUY - $25.00
+[2025-08-05 10:01:00] TRADE_ENTRY - CRCL - Trade entered: BUY CRCL_155.0_Call | entry_price: $18.55 | heston_price: $23.20 | strike: $155.00 | contracts: 1 | position_size: $25.00 | mispricing: $-4.65 | active_trades: 1/4 | capital: $100.00
+[2025-08-05 10:01:00] ENTER - CRCL - CRCL_160.0_Call - BUY - $25.00
+[2025-08-05 10:01:00] TRADE_ENTRY - CRCL - Trade entered: BUY CRCL_160.0_Call | entry_price: $16.45 | heston_price: $21.03 | strike: $160.00 | contracts: 1 | position_size: $25.00 | mispricing: $-4.58 | active_trades: 2/4 | capital: $100.00
+[2025-08-05 10:01:00] ENTER - CRCL - CRCL_125.0_Call - SELL - $25.00
+[2025-08-05 10:01:00] TRADE_ENTRY - CRCL - Trade entered: SELL CRCL_125.0_Call | entry_price: $59.00 | heston_price: $40.71 | strike: $125.00 | contracts: 1 | position_size: $25.00 | mispricing: $18.29 | active_trades: 3/4 | capital: $100.00
+[2025-08-05 10:01:00] ENTER - CRCL - CRCL_145.0_Call - SELL - $25.00
+[2025-08-05 10:01:00] TRADE_ENTRY - CRCL - Trade entered: SELL CRCL_145.0_Call | entry_price: $43.50 | heston_price: $28.16 | strike: $145.00 | contracts: 1 | position_size: $25.00 | mispricing: $15.34 | active_trades: 4/4 | capital: $100.00
+[2025-08-05 10:01:00] HOUR_COMPLETE - CRCL - Live hour processing complete | active_trades: 4/4 | buy_trades: 2 | sell_trades: 2 | capital: $100.00 | hour: 10
+[2025-08-05 11:01:52] DATA_FETCH - CRCL - Fetching live options data | expiry_date: 2025-09-19 | company: CRCL
+[2025-08-05 11:01:57] HOUR_COMPLETE - CRCL - Live hour processing complete | active_trades: 4/4 | buy_trades: 2 | sell_trades: 2 | capital: $100.00 | hour: 11
+[2025-08-05 12:02:56] DATA_FETCH - CRCL - Fetching live options data | expiry_date: 2025-09-19 | company: CRCL
+[2025-08-05 12:03:21] HOUR_COMPLETE - CRCL - Live hour processing complete | active_trades: 4/4 | buy_trades: 2 | sell_trades: 2 | capital: $100.00 | hour: 12

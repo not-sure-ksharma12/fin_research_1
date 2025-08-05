@@ -1,0 +1,15 @@
+[2025-08-05 10:00:19] SYSTEM - SOFI - Trading system initialized | initial_capital: $100.0 | company: SOFI
+[2025-08-05 10:00:40] DATA_FETCH - SOFI - Fetching live options data | expiry_date: 2025-09-19 | company: SOFI
+[2025-08-05 10:00:43] ENTER - SOFI - SOFI_22.0_Call - BUY - $25.00
+[2025-08-05 10:00:43] TRADE_ENTRY - SOFI - Trade entered: BUY SOFI_22.0_Call | entry_price: $1.52 | heston_price: $3.15 | strike: $22.00 | contracts: 1 | position_size: $25.00 | mispricing: $-1.63 | active_trades: 1/4 | capital: $100.00
+[2025-08-05 10:00:43] ENTER - SOFI - SOFI_23.0_Call - BUY - $25.00
+[2025-08-05 10:00:43] TRADE_ENTRY - SOFI - Trade entered: BUY SOFI_23.0_Call | entry_price: $1.15 | heston_price: $2.75 | strike: $23.00 | contracts: 1 | position_size: $25.00 | mispricing: $-1.60 | active_trades: 2/4 | capital: $100.00
+[2025-08-05 10:00:43] ENTER - SOFI - SOFI_3.0_Call - SELL - $25.00
+[2025-08-05 10:00:43] TRADE_ENTRY - SOFI - Trade entered: SELL SOFI_3.0_Call | entry_price: $19.75 | heston_price: $18.51 | strike: $3.00 | contracts: 1 | position_size: $25.00 | mispricing: $1.24 | active_trades: 3/4 | capital: $100.00
+[2025-08-05 10:00:43] ENTER - SOFI - SOFI_10.0_Call - SELL - $25.00
+[2025-08-05 10:00:43] TRADE_ENTRY - SOFI - Trade entered: SELL SOFI_10.0_Call | entry_price: $12.08 | heston_price: $11.62 | strike: $10.00 | contracts: 1 | position_size: $25.00 | mispricing: $0.46 | active_trades: 4/4 | capital: $100.00
+[2025-08-05 10:00:43] HOUR_COMPLETE - SOFI - Live hour processing complete | active_trades: 4/4 | buy_trades: 2 | sell_trades: 2 | capital: $100.00 | hour: 10
+[2025-08-05 11:01:25] DATA_FETCH - SOFI - Fetching live options data | expiry_date: 2025-09-19 | company: SOFI
+[2025-08-05 11:01:29] HOUR_COMPLETE - SOFI - Live hour processing complete | active_trades: 4/4 | buy_trades: 2 | sell_trades: 2 | capital: $100.00 | hour: 11
+[2025-08-05 12:02:30] DATA_FETCH - SOFI - Fetching live options data | expiry_date: 2025-09-19 | company: SOFI
+[2025-08-05 12:02:34] HOUR_COMPLETE - SOFI - Live hour processing complete | active_trades: 4/4 | buy_trades: 2 | sell_trades: 2 | capital: $100.00 | hour: 12

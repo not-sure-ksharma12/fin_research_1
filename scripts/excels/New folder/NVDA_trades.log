@@ -1,0 +1,8 @@
+[2025-08-05 08:00:48] ENTER - NVDA - NVDA_44.0_Call - BUY - $25.00
+[2025-08-05 08:00:48] ENTER - NVDA - NVDA_49.0_Call - BUY - $25.00
+[2025-08-05 08:00:48] ENTER - NVDA - NVDA_60.0_Call - SELL - $25.00
+[2025-08-05 08:00:48] ENTER - NVDA - NVDA_48.0_Call - SELL - $25.00
+[2025-08-05 09:44:47] EXIT - NVDA - NVDA_44.0_Call - BUY - $25.00 - PnL: $nan - Return: nan%
+[2025-08-05 09:44:47] EXIT - NVDA - NVDA_49.0_Call - BUY - $25.00 - PnL: $nan - Return: nan%
+[2025-08-05 09:44:47] EXIT - NVDA - NVDA_60.0_Call - SELL - $25.00 - PnL: $0.00 - Return: 0.00%
+[2025-08-05 09:44:47] EXIT - NVDA - NVDA_48.0_Call - SELL - $25.00 - PnL: $0.00 - Return: 0.00%
