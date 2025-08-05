@@ -10,6 +10,10 @@ import time
 import warnings
 from typing import Dict, List, Tuple, Optional
 import QuantLib as ql
+import pytz
+from openpyxl import Workbook
+from openpyxl.styles import PatternFill, Font
+from openpyxl.utils.dataframe import dataframe_to_rows
 
 # Add scripts directory to path
 sys.path.append(r"C:\Users\ksharma12\fin_research\scripts")
@@ -50,7 +54,34 @@ class CompanyRealTimeTrading:
         self.profitable_trades = 0
         self.total_pnl = 0.0
         
+        # Data saving and logging
+        self.hourly_data_history = []
+        self.daily_trades = []
+        self.daily_pnl = 0.0
+        self.daily_trade_count = 0
+        
+        # Market hours (PST)
+        self.pst_tz = pytz.timezone('US/Pacific')
+        
         logger.info(f"Real-time trading system initialized for {self.company} with ${initial_capital} capital")
+    
+    def is_market_open(self) -> bool:
+        """
+        Check if market is open (PST timezone)
+        Market hours: 6:30 AM - 1:00 PM PST (9:30 AM - 4:00 PM EST)
+        """
+        now_pst = datetime.now(self.pst_tz)
+        current_time = now_pst.time()
+        
+        # Market hours: 6:30 AM - 1:00 PM PST
+        market_open = datetime.strptime("06:30:00", "%H:%M:%S").time()
+        market_close = datetime.strptime("13:00:00", "%H:%M:%S").time()
+        
+        # Check if it's a weekday and within market hours
+        is_weekday = now_pst.weekday() < 5  # Monday = 0, Friday = 4
+        is_market_hours = market_open <= current_time <= market_close
+        
+        return is_weekday and is_market_hours
     
     def fetch_live_data(self, session, expiry_date: str = "2025-12-19") -> pd.DataFrame:
         """
@@ -165,15 +196,168 @@ class CompanyRealTimeTrading:
                 axis=1
             )
             
-            return df_with_heston
-            
+                    return df_with_heston
+        
         except Exception as e:
             logger.error(f"Error calculating live Heston prices for {self.company}: {e}")
             return df
     
+    def save_hourly_data(self, data: pd.DataFrame, hour: int):
+        """
+        Save hourly data with color coding for trades - updates single file
+        """
+        if data.empty:
+            return
+        
+        # Create a copy for saving
+        save_data = data.copy()
+        
+        # Add hour and timestamp
+        save_data['Hour'] = hour
+        save_data['Timestamp'] = datetime.now()
+        save_data['Date'] = datetime.now().strftime('%Y-%m-%d')
+        
+        # Add trade status columns
+        save_data['Trade_Status'] = 'No_Trade'
+        save_data['Trade_Type'] = ''
+        save_data['Position_Size'] = 0.0
+        
+        # Mark trades that were entered this hour
+        for option_id, trade in self.active_trades.items():
+            if trade['entry_hour'] == hour:
+                mask = save_data['Option_ID'] == option_id
+                save_data.loc[mask, 'Trade_Status'] = 'Entered'
+                save_data.loc[mask, 'Trade_Type'] = trade['trade_type']
+                save_data.loc[mask, 'Position_Size'] = trade['position_size']
+        
+        # Mark trades that were exited this hour
+        for trade in self.trade_history:
+            if trade.get('exit_hour') == hour:
+                mask = save_data['Option_ID'] == trade['option_id']
+                save_data.loc[mask, 'Trade_Status'] = 'Exited'
+                save_data.loc[mask, 'Trade_Type'] = trade['trade_type']
+                save_data.loc[mask, 'Position_Size'] = trade['position_size']
+        
+        # Add to history
+        self.hourly_data_history.append(save_data)
+        
+        # Update single Excel file with new hour data
+        self.update_hourly_excel(save_data, hour)
+    
+    def update_hourly_excel(self, data: pd.DataFrame, hour: int):
+        """
+        Update single Excel file with new hour data and color coding
+        """
+        # Single filename for the company
+        filename = f"scripts/realtime_output/multi_company_aug15/{self.company}_hourly_data.xlsx"
+        
+        try:
+            # Try to load existing workbook
+            from openpyxl import load_workbook
+            wb = load_workbook(filename)
+            
+            # Check if hour sheet already exists
+            if f"Hour_{hour}" in wb.sheetnames:
+                # Remove existing sheet for this hour
+                wb.remove(wb[f"Hour_{hour}"])
+            
+        except FileNotFoundError:
+            # Create new workbook if file doesn't exist
+            wb = Workbook()
+            # Remove default sheet
+            wb.remove(wb.active)
+        
+        # Create new sheet for this hour
+        ws = wb.create_sheet(f"Hour_{hour}")
+        
+        # Define colors
+        yellow_fill = PatternFill(start_color='FFFF00', end_color='FFFF00', fill_type='solid')  # BUY entered
+        orange_fill = PatternFill(start_color='FFA500', end_color='FFA500', fill_type='solid')  # SELL entered
+        light_green_fill = PatternFill(start_color='90EE90', end_color='90EE90', fill_type='solid')  # BUY profitable exit
+        light_red_fill = PatternFill(start_color='FFB6C1', end_color='FFB6C1', fill_type='solid')  # BUY loss exit
+        dark_green_fill = PatternFill(start_color='006400', end_color='006400', fill_type='solid')  # SELL profitable exit
+        dark_red_fill = PatternFill(start_color='8B0000', end_color='8B0000', fill_type='solid')  # SELL loss exit
+        
+        # Write data
+        for r in dataframe_to_rows(data, index=False, header=True):
+            ws.append(r)
+        
+        # Apply color coding
+        for row in range(2, len(data) + 2):  # Skip header
+            trade_status = ws.cell(row=row, column=data.columns.get_loc('Trade_Status') + 1).value
+            trade_type = ws.cell(row=row, column=data.columns.get_loc('Trade_Type') + 1).value
+            
+            if trade_status == 'Entered':
+                if trade_type == 'BUY':
+                    for col in range(1, len(data.columns) + 1):
+                        ws.cell(row=row, column=col).fill = yellow_fill
+                elif trade_type == 'SELL':
+                    for col in range(1, len(data.columns) + 1):
+                        ws.cell(row=row, column=col).fill = orange_fill
+            
+            elif trade_status == 'Exited':
+                # Check if profitable by looking at PnL
+                pnl_col = data.columns.get_loc('pnl') + 1 if 'pnl' in data.columns else None
+                if pnl_col:
+                    pnl_value = ws.cell(row=row, column=pnl_col).value
+                    if pnl_value is not None:
+                        if trade_type == 'BUY':
+                            fill_color = light_green_fill if pnl_value > 0 else light_red_fill
+                        else:  # SELL
+                            fill_color = dark_green_fill if pnl_value > 0 else dark_red_fill
+                        
+                        for col in range(1, len(data.columns) + 1):
+                            ws.cell(row=row, column=col).fill = fill_color
+        
+        # Save file
+        wb.save(filename)
+        logger.info(f"Hourly data updated for {self.company} hour {hour}: {filename}")
+    
+    def save_hourly_excel(self, data: pd.DataFrame, hour: int):
+        """
+        Legacy method - now calls update_hourly_excel
+        """
+        self.update_hourly_excel(data, hour)
+    
+    def log_trade_to_text(self, trade_info: dict, action: str):
+        """
+        Log trade information to text file
+        """
+        timestamp = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        log_entry = f"[{timestamp}] {action.upper()} - {self.company} - {trade_info['option_id']} - {trade_info['trade_type']} - ${trade_info['position_size']:.2f}"
+        
+        if action == 'EXIT':
+            log_entry += f" - PnL: ${trade_info.get('pnl', 0):.2f} - Return: {trade_info.get('return_pct', 0):.2f}%"
+        
+        # Save to text file
+        log_filename = f"scripts/realtime_output/multi_company_aug15/{self.company}_trades.log"
+        with open(log_filename, 'a') as f:
+            f.write(log_entry + '\n')
+        
+        logger.info(log_entry)
+    
+    def update_daily_stats(self, trade_info: dict = None):
+        """
+        Update daily trading statistics
+        """
+        today = datetime.now().strftime('%Y-%m-%d')
+        
+        # Reset daily stats if it's a new day
+        if not self.daily_trades or self.daily_trades[0].get('date') != today:
+            self.daily_trades = []
+            self.daily_pnl = 0.0
+            self.daily_trade_count = 0
+        
+        if trade_info:
+            self.daily_trades.append(trade_info)
+            self.daily_pnl += trade_info.get('pnl', 0)
+            self.daily_trade_count += 1
+    
     def select_live_trading_opportunities(self, data: pd.DataFrame) -> Tuple[List[str], List[str]]:
         """
-        Select the 2 most undervalued and 2 most overvalued call options from live data
+        Select trading opportunities based on current active positions
+        - If no active trades: select 2 BUY and 2 SELL opportunities
+        - If some trades active: only select opportunities to fill remaining slots
         
         Args:
             data: Current live options data
@@ -199,17 +383,27 @@ class CompanyRealTimeTrading:
         overvalued = valid_data[valid_data['Market_vs_Heston'] > 0].copy()
         overvalued = overvalued.sort_values('Market_vs_Heston', ascending=False)
         
-        # Select top 2 from each category
-        undervalued_ids = undervalued['Option_ID'].head(2).tolist()
-        overvalued_ids = overvalued['Option_ID'].head(2).tolist()
+        # Count current active trades by type
+        active_buy_trades = sum(1 for trade in self.active_trades.values() if trade['trade_type'] == 'BUY')
+        active_sell_trades = sum(1 for trade in self.active_trades.values() if trade['trade_type'] == 'SELL')
         
-        logger.info(f"Live selection for {self.company}: {len(undervalued_ids)} undervalued, {len(overvalued_ids)} overvalued options")
+        # Calculate how many more trades we need of each type
+        needed_buy_trades = max(0, 2 - active_buy_trades)
+        needed_sell_trades = max(0, 2 - active_sell_trades)
+        
+        # Select opportunities based on what we need
+        undervalued_ids = undervalued['Option_ID'].head(needed_buy_trades).tolist()
+        overvalued_ids = overvalued['Option_ID'].head(needed_sell_trades).tolist()
+        
+        logger.info(f"Live selection for {self.company}: {len(undervalued_ids)} BUY opportunities, {len(overvalued_ids)} SELL opportunities")
+        logger.info(f"Current active trades: {active_buy_trades} BUY, {active_sell_trades} SELL")
         
         return undervalued_ids, overvalued_ids
     
     def enter_live_trade(self, option_id: str, trade_type: str, data: pd.DataFrame) -> bool:
         """
-        Enter a new live trade if not already in position
+        Enter a new live trade if not already in position and max 4 trades not reached
+        Position size is dynamic based on available capital (up to $25)
         
         Args:
             option_id: Unique option identifier
@@ -223,11 +417,48 @@ class CompanyRealTimeTrading:
             logger.debug(f"Already in live trade for {option_id}")
             return False
         
+        # Check if we already have 4 active trades (max limit)
+        if len(self.active_trades) >= 4:
+            logger.debug(f"Maximum 4 trades already active for {self.company}, cannot enter new trade")
+            return False
+        
         option_data = data[data['Option_ID'] == option_id].iloc[0]
         
-        # Calculate position size (equal allocation among active trades)
-        num_active_trades = len(self.active_trades) + 1
-        position_size = self.current_capital / num_active_trades
+        # Calculate available capital for this trade
+        # If we have losses, use maximum available amount up to $25
+        # If we have profits, use standard $25
+        # For the 4th trade, use all remaining capital (up to $25)
+        
+        # Check if this is the 4th trade (last trade)
+        is_last_trade = (len(self.active_trades) == 3)  # 0-based, so 3 means 4th trade
+        
+        if self.current_capital >= self.initial_capital:
+            # We have profits or break-even, use standard $25
+            position_size = 25.0
+        else:
+            # We have losses
+            if is_last_trade:
+                # 4th trade: use all remaining capital (up to $25)
+                # Calculate how much we've already allocated
+                allocated_capital = sum(trade['position_size'] for trade in self.active_trades.values())
+                remaining_capital = self.current_capital - allocated_capital
+                position_size = min(25.0, remaining_capital)
+                
+                logger.info(f"4th trade detected for {self.company}: allocated=${allocated_capital:.2f}, remaining=${remaining_capital:.2f}, position_size=${position_size:.2f}")
+            else:
+                # First 3 trades: use maximum of $25 or capital/4, but never exceed available capital
+                if self.current_capital >= 100.0:
+                    # We have enough capital for 4 trades of $25 each
+                    position_size = 25.0
+                else:
+                    # Use maximum of $25 or capital/4, but never exceed available capital
+                    safe_per_trade = self.current_capital / 4
+                    position_size = min(25.0, safe_per_trade)
+        
+        # Ensure we have minimum capital to trade
+        if position_size < 1.0:
+            logger.warning(f"Insufficient capital for {self.company}: ${self.current_capital:.2f}, minimum required: $1.00")
+            return False
         
         # Calculate number of contracts (assuming $100 per contract)
         contracts = int(position_size / 100)
@@ -245,11 +476,15 @@ class CompanyRealTimeTrading:
             'stock_price': option_data['Current Price'],
             'contracts': contracts,
             'position_size': position_size,
-            'entry_mispricing': option_data['Market_vs_Heston']
+            'entry_mispricing': option_data['Market_vs_Heston'],
+            'capital_at_entry': self.current_capital
         }
         
         self.active_trades[option_id] = trade_info
         self.total_trades += 1
+        
+        # Log trade to text file
+        self.log_trade_to_text(trade_info, 'ENTER')
         
         # Enhanced logging for trade entry
         logger.info("=" * 80)
@@ -263,8 +498,11 @@ class CompanyRealTimeTrading:
         logger.info(f"   Contracts: {contracts}")
         logger.info(f"   Position Size: ${position_size:.2f}")
         logger.info(f"   Mispricing: ${option_data['Market_vs_Heston']:.2f}")
-        logger.info(f"   Active Trades: {len(self.active_trades)}")
+        logger.info(f"   Active Trades: {len(self.active_trades)}/4")
         logger.info(f"   Current Capital: ${self.current_capital:.2f}")
+        logger.info(f"   Capital Status: {'PROFIT' if self.current_capital >= self.initial_capital else 'LOSS'}")
+        if is_last_trade and self.current_capital < self.initial_capital:
+            logger.info(f"   🎯 4TH TRADE: Using remaining capital allocation")
         logger.info("=" * 80)
         
         return True
@@ -357,6 +595,12 @@ class CompanyRealTimeTrading:
         self.trade_history.append(trade)
         del self.active_trades[option_id]
         
+        # Update daily stats
+        self.update_daily_stats(trade)
+        
+        # Log trade to text file
+        self.log_trade_to_text(trade, 'EXIT')
+        
         # Enhanced logging for trade exit
         logger.info("=" * 80)
         logger.info(f"💰 TRADE EXITED: {trade['trade_type']} {option_id}")
@@ -371,9 +615,14 @@ class CompanyRealTimeTrading:
         logger.info(f"   PnL: ${pnl:.2f}")
         logger.info(f"   Return: {trade['return_pct']:.2f}%")
         logger.info(f"   Contracts: {trade['contracts']}")
-        logger.info(f"   Active Trades: {len(self.active_trades)}")
-        logger.info(f"   Current Capital: ${self.current_capital:.2f}")
+        logger.info(f"   Position Size: ${trade['position_size']:.2f}")
+        logger.info(f"   Capital at Entry: ${trade['capital_at_entry']:.2f}")
+        logger.info(f"   Capital at Exit: ${self.current_capital:.2f}")
+        active_buy_trades = sum(1 for trade in self.active_trades.values() if trade['trade_type'] == 'BUY')
+        active_sell_trades = sum(1 for trade in self.active_trades.values() if trade['trade_type'] == 'SELL')
+        logger.info(f"   Active Trades: {len(self.active_trades)}/4 ({active_buy_trades} BUY, {active_sell_trades} SELL)")
         logger.info(f"   Total PnL: ${self.total_pnl:.2f}")
+        logger.info(f"   Capital Status: {'PROFIT' if self.current_capital >= self.initial_capital else 'LOSS'}")
         logger.info("=" * 80)
         
         return True
@@ -383,6 +632,13 @@ class CompanyRealTimeTrading:
         Process one live trading hour for this company
         """
         current_time = datetime.now()
+        current_hour = current_time.hour
+        
+        # Check if market is open
+        if not self.is_market_open():
+            logger.info(f"Market is closed for {self.company} at {current_time.strftime('%Y-%m-%d %H:%M:%S')} PST")
+            return
+        
         logger.info(f"Processing live hour for {self.company} at {current_time.strftime('%Y-%m-%d %H:%M:%S')}")
         
         # Fetch fresh live data
@@ -390,6 +646,9 @@ class CompanyRealTimeTrading:
         if live_data.empty:
             logger.error(f"No live data available for {self.company}, skipping this hour")
             return
+        
+        # Save hourly data with color coding
+        self.save_hourly_data(live_data, current_hour)
         
         # Check exit conditions for existing trades
         options_to_exit = []
@@ -411,9 +670,12 @@ class CompanyRealTimeTrading:
         for option_id in overvalued_ids:
             self.enter_live_trade(option_id, 'SELL', live_data)
         
-        # Log current portfolio status
+        # Log current portfolio status with detailed breakdown
         active_trades_count = len(self.active_trades)
-        logger.info(f"Live hour complete for {self.company}: {active_trades_count} active trades, Capital: ${self.current_capital:.2f}")
+        active_buy_trades = sum(1 for trade in self.active_trades.values() if trade['trade_type'] == 'BUY')
+        active_sell_trades = sum(1 for trade in self.active_trades.values() if trade['trade_type'] == 'SELL')
+        
+        logger.info(f"Live hour complete for {self.company}: {active_trades_count}/4 active trades ({active_buy_trades} BUY, {active_sell_trades} SELL), Capital: ${self.current_capital:.2f}")
         
         # Update last processed time
         self.last_processed_time = current_time
@@ -453,6 +715,87 @@ class MultiCompanyRealTimeTrading:
         logger.info(f"Companies: {', '.join(companies)}")
         logger.info(f"Capital per company: ${capital_per_company}")
         logger.info(f"Total portfolio capital: ${self.total_portfolio_capital}")
+        logger.info(f"Portfolio allocation: {len(companies)} companies × ${capital_per_company} = ${self.total_portfolio_capital}")
+    
+    def is_market_open(self) -> bool:
+        """
+        Check if market is open (PST timezone)
+        Market hours: 6:30 AM - 1:00 PM PST (9:30 AM - 4:00 PM EST)
+        """
+        now_pst = datetime.now(pytz.timezone('US/Pacific'))
+        current_time = now_pst.time()
+        
+        # Market hours: 6:30 AM - 1:00 PM PST
+        market_open = datetime.strptime("06:30:00", "%H:%M:%S").time()
+        market_close = datetime.strptime("13:00:00", "%H:%M:%S").time()
+        
+        # Check if it's a weekday and within market hours
+        is_weekday = now_pst.weekday() < 5  # Monday = 0, Friday = 4
+        is_market_hours = market_open <= current_time <= market_close
+        
+        return is_weekday and is_market_hours
+    
+    def save_daily_summary(self):
+        """
+        Save daily trading summary for all companies
+        """
+        today = datetime.now().strftime('%Y-%m-%d')
+        
+        daily_summary = {
+            'Date': [],
+            'Company': [],
+            'Number_of_Trades': [],
+            'Daily_PnL': [],
+            'Daily_Return_%': [],
+            'Total_Trades': [],
+            'Total_PnL': [],
+            'Current_Capital': [],
+            'Win_Rate_%': []
+        }
+        
+        for company, system in self.company_systems.items():
+            # Get daily stats
+            daily_pnl = system.daily_pnl
+            daily_trades = system.daily_trade_count
+            
+            # Calculate daily return
+            daily_return = (daily_pnl / system.initial_capital * 100) if system.initial_capital > 0 else 0
+            
+            # Calculate win rate
+            win_rate = (system.profitable_trades / system.total_trades * 100) if system.total_trades > 0 else 0
+            
+            daily_summary['Date'].append(today)
+            daily_summary['Company'].append(company)
+            daily_summary['Number_of_Trades'].append(daily_trades)
+            daily_summary['Daily_PnL'].append(daily_pnl)
+            daily_summary['Daily_Return_%'].append(daily_return)
+            daily_summary['Total_Trades'].append(system.total_trades)
+            daily_summary['Total_PnL'].append(system.total_pnl)
+            daily_summary['Current_Capital'].append(system.current_capital)
+            daily_summary['Win_Rate_%'].append(win_rate)
+        
+        # Create DataFrame
+        df_daily = pd.DataFrame(daily_summary)
+        
+        # Save to Excel
+        daily_filename = f"{self.output_dir}/daily_summary_{today}.xlsx"
+        df_daily.to_excel(daily_filename, index=False)
+        
+        logger.info(f"Daily summary saved: {daily_filename}")
+        
+        # Also append to master daily log
+        master_daily_file = f"{self.output_dir}/master_daily_log.xlsx"
+        
+        try:
+            # Try to read existing file
+            existing_df = pd.read_excel(master_daily_file)
+            combined_df = pd.concat([existing_df, df_daily], ignore_index=True)
+        except FileNotFoundError:
+            # Create new file if it doesn't exist
+            combined_df = df_daily
+        
+        combined_df.to_excel(master_daily_file, index=False)
+        logger.info(f"Master daily log updated: {master_daily_file}")
     
     def connect_bloomberg(self):
         """Connect to Bloomberg Terminal"""
@@ -505,6 +848,11 @@ class MultiCompanyRealTimeTrading:
         
         # Save incremental results
         self.save_incremental_results()
+        
+        # Save daily summary (check if it's end of day)
+        current_time = datetime.now()
+        if current_time.hour >= 13:  # After 1 PM PST (market close)
+            self.save_daily_summary()
     
     def save_incremental_results(self):
         """Save incremental results after each hour"""
@@ -740,12 +1088,18 @@ class MultiCompanyRealTimeTrading:
             while self.is_running:
                 current_time = datetime.now()
                 
-                # Process the current hour for all companies
-                self.process_live_hour_all_companies()
-                
-                # Wait for the next hour (3600 seconds = 1 hour)
-                logger.info(f"Waiting for next hour... (will process at {(current_time + timedelta(hours=1)).strftime('%Y-%m-%d %H:%M:%S')})")
-                time.sleep(3600)  # Wait 1 hour
+                # Check if market is open
+                if self.is_market_open():
+                    # Process the current hour for all companies
+                    self.process_live_hour_all_companies()
+                    
+                    # Wait for the next hour (3600 seconds = 1 hour)
+                    logger.info(f"Waiting for next hour... (will process at {(current_time + timedelta(hours=1)).strftime('%Y-%m-%d %H:%M:%S')} PST)")
+                    time.sleep(3600)  # Wait 1 hour
+                else:
+                    # Market is closed, wait longer
+                    logger.info(f"Market is closed. Waiting 30 minutes before checking again...")
+                    time.sleep(1800)  # Wait 30 minutes
                 
         except KeyboardInterrupt:
             logger.info("=" * 80)
@@ -790,8 +1144,8 @@ class MultiCompanyRealTimeTrading:
 def main():
     """Main function to run the multi-company real-time trading system"""
     
-    # Define the 7 companies
-    companies = ['AVGO', 'AMD', 'TSLA', 'BBAI', 'CRCL', 'NVDA', 'AUR']
+    # Define the 9 companies
+    companies = ['NVDA', 'AUR', 'TSLA', 'SOFI', 'SOUN', 'AMD', 'AVGO', 'CRCL', 'BBAI', 'SLDB']
     
     # Initialize multi-company real-time trading system
     trading_system = MultiCompanyRealTimeTrading(companies, capital_per_company=100.0)
