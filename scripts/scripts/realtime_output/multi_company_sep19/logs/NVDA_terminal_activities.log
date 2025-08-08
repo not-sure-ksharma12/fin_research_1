@@ -1,15 +1,65 @@
-[2025-08-05 10:00:19] SYSTEM - NVDA - Trading system initialized | initial_capital: $100.0 | company: NVDA
-[2025-08-05 10:00:19] DATA_FETCH - NVDA - Fetching live options data | expiry_date: 2025-09-19 | company: NVDA
-[2025-08-05 10:00:28] ENTER - NVDA - NVDA_41.0_Call - BUY - $25.00
-[2025-08-05 10:00:28] TRADE_ENTRY - NVDA - Trade entered: BUY NVDA_41.0_Call | entry_price: $105.50 | heston_price: $136.66 | strike: $41.00 | contracts: 1 | position_size: $25.00 | mispricing: $-31.16 | active_trades: 1/4 | capital: $100.00
-[2025-08-05 10:00:28] ENTER - NVDA - NVDA_47.0_Call - BUY - $25.00
-[2025-08-05 10:00:28] TRADE_ENTRY - NVDA - Trade entered: BUY NVDA_47.0_Call | entry_price: $108.95 | heston_price: $130.70 | strike: $47.00 | contracts: 1 | position_size: $25.00 | mispricing: $-21.75 | active_trades: 2/4 | capital: $100.00
-[2025-08-05 10:00:28] ENTER - NVDA - NVDA_60.0_Call - SELL - $25.00
-[2025-08-05 10:00:28] TRADE_ENTRY - NVDA - Trade entered: SELL NVDA_60.0_Call | entry_price: $120.88 | heston_price: $117.77 | strike: $60.00 | contracts: 1 | position_size: $25.00 | mispricing: $3.11 | active_trades: 3/4 | capital: $100.00
-[2025-08-05 10:00:28] ENTER - NVDA - NVDA_48.0_Call - SELL - $25.00
-[2025-08-05 10:00:28] TRADE_ENTRY - NVDA - Trade entered: SELL NVDA_48.0_Call | entry_price: $131.86 | heston_price: $129.70 | strike: $48.00 | contracts: 1 | position_size: $25.00 | mispricing: $2.16 | active_trades: 4/4 | capital: $100.00
-[2025-08-05 10:00:28] HOUR_COMPLETE - NVDA - Live hour processing complete | active_trades: 4/4 | buy_trades: 2 | sell_trades: 2 | capital: $100.00 | hour: 10
-[2025-08-05 11:01:03] DATA_FETCH - NVDA - Fetching live options data | expiry_date: 2025-09-19 | company: NVDA
-[2025-08-05 11:01:12] HOUR_COMPLETE - NVDA - Live hour processing complete | active_trades: 4/4 | buy_trades: 2 | sell_trades: 2 | capital: $100.00 | hour: 11
-[2025-08-05 12:02:07] DATA_FETCH - NVDA - Fetching live options data | expiry_date: 2025-09-19 | company: NVDA
-[2025-08-05 12:02:18] HOUR_COMPLETE - NVDA - Live hour processing complete | active_trades: 4/4 | buy_trades: 2 | sell_trades: 2 | capital: $100.00 | hour: 12
+[2025-08-06 12:56:09] SYSTEM - NVDA - Trading system initialized | initial_capital: $100.0 | company: NVDA
+[2025-08-06 12:56:09] DATA_FETCH - NVDA - Fetching live options data | expiry_date: 2025-09-19 | company: NVDA
+[2025-08-06 12:56:18] ENTER - NVDA - NVDA_47.0_Call - BUY - $25.00
+[2025-08-06 12:56:18] TRADE_ENTRY - NVDA - Trade entered: BUY NVDA_47.0_Call | entry_price: $108.95 | heston_price: $132.99 | strike: $47.00 | contracts: 1 | position_size: $25.00 | mispricing: $-24.04 | active_trades: 1/4 | capital: $100.00
+[2025-08-06 12:56:18] ENTER - NVDA - NVDA_42.0_Call - BUY - $25.00
+[2025-08-06 12:56:18] TRADE_ENTRY - NVDA - Trade entered: BUY NVDA_42.0_Call | entry_price: $120.90 | heston_price: $137.96 | strike: $42.00 | contracts: 1 | position_size: $25.00 | mispricing: $-17.06 | active_trades: 2/4 | capital: $100.00
+[2025-08-06 12:56:18] ENTER - NVDA - NVDA_126.0_Call - SELL - $25.00
+[2025-08-06 12:56:18] TRADE_ENTRY - NVDA - Trade entered: SELL NVDA_126.0_Call | entry_price: $55.00 | heston_price: $54.71 | strike: $126.00 | contracts: 1 | position_size: $25.00 | mispricing: $0.29 | active_trades: 3/4 | capital: $100.00
+[2025-08-06 12:56:18] ENTER - NVDA - NVDA_135.0_Call - SELL - $25.00
+[2025-08-06 12:56:18] TRADE_ENTRY - NVDA - Trade entered: SELL NVDA_135.0_Call | entry_price: $46.24 | heston_price: $46.17 | strike: $135.00 | contracts: 1 | position_size: $25.00 | mispricing: $0.07 | active_trades: 4/4 | capital: $100.00
+[2025-08-06 12:56:18] HOUR_COMPLETE - NVDA - Live hour processing complete | active_trades: 4/4 | buy_trades: 2 | sell_trades: 2 | capital: $100.00 | hour: 12
+[2025-08-07 06:56:53] DATA_FETCH - NVDA - Fetching live options data | expiry_date: 2025-09-19 | company: NVDA
+[2025-08-07 07:58:38] DATA_FETCH - NVDA - Fetching live options data | expiry_date: 2025-09-19 | company: NVDA
+[2025-08-07 07:58:47] EXIT - NVDA - NVDA_126.0_Call - SELL - $25.00 - PnL: $-2.85 - Return: -11.40%
+[2025-08-07 07:58:47] TRADE_EXIT - NVDA - Trade exited: SELL NVDA_126.0_Call | entry_price: $55.00 | exit_price: $57.85 | pnl: $-2.85 | return_pct: -11.40% | duration_hours: -5 | contracts: 1 | active_trades: 3/4 | capital: $97.15 | total_pnl: $-2.85
+[2025-08-07 07:58:47] EXIT - NVDA - NVDA_135.0_Call - SELL - $25.00 - PnL: $-2.49 - Return: -9.96%
+[2025-08-07 07:58:47] TRADE_EXIT - NVDA - Trade exited: SELL NVDA_135.0_Call | entry_price: $46.24 | exit_price: $48.73 | pnl: $-2.49 | return_pct: -9.96% | duration_hours: -5 | contracts: 1 | active_trades: 2/4 | capital: $94.66 | total_pnl: $-5.34
+[2025-08-07 07:58:47] ENTER - NVDA - NVDA_92.0_Call - SELL - $23.67
+[2025-08-07 07:58:47] TRADE_ENTRY - NVDA - Trade entered: SELL NVDA_92.0_Call | entry_price: $92.03 | heston_price: $91.31 | strike: $92.00 | contracts: 1 | position_size: $23.67 | mispricing: $0.72 | active_trades: 3/4 | capital: $94.66
+[2025-08-07 07:58:47] ENTER - NVDA - NVDA_122.0_Call - SELL - $21.00
+[2025-08-07 07:58:47] TRADE_ENTRY - NVDA - Trade entered: SELL NVDA_122.0_Call | entry_price: $62.00 | heston_price: $61.73 | strike: $122.00 | contracts: 1 | position_size: $21.00 | mispricing: $0.27 | active_trades: 4/4 | capital: $94.66
+[2025-08-07 07:58:47] HOUR_COMPLETE - NVDA - Live hour processing complete | active_trades: 4/4 | buy_trades: 2 | sell_trades: 2 | capital: $94.66 | hour: 7
+[2025-08-07 08:59:35] DATA_FETCH - NVDA - Fetching live options data | expiry_date: 2025-09-19 | company: NVDA
+[2025-08-07 08:59:44] HOUR_COMPLETE - NVDA - Live hour processing complete | active_trades: 4/4 | buy_trades: 2 | sell_trades: 2 | capital: $94.66 | hour: 8
+[2025-08-07 10:00:24] DATA_FETCH - NVDA - Fetching live options data | expiry_date: 2025-09-19 | company: NVDA
+[2025-08-07 10:00:33] HOUR_COMPLETE - NVDA - Live hour processing complete | active_trades: 4/4 | buy_trades: 2 | sell_trades: 2 | capital: $94.66 | hour: 10
+[2025-08-07 11:01:14] DATA_FETCH - NVDA - Fetching live options data | expiry_date: 2025-09-19 | company: NVDA
+[2025-08-07 11:01:23] EXIT - NVDA - NVDA_122.0_Call - SELL - $21.00 - PnL: $3.10 - Return: 14.77%
+[2025-08-07 11:01:23] TRADE_EXIT - NVDA - Trade exited: SELL NVDA_122.0_Call | entry_price: $62.00 | exit_price: $58.90 | pnl: $3.10 | return_pct: 14.77% | duration_hours: 4 | contracts: 1 | active_trades: 3/4 | capital: $97.76 | total_pnl: $-2.24
+[2025-08-07 11:01:23] ENTER - NVDA - NVDA_112.0_Call - SELL - $24.10
+[2025-08-07 11:01:23] TRADE_ENTRY - NVDA - Trade entered: SELL NVDA_112.0_Call | entry_price: $71.67 | heston_price: $68.87 | strike: $112.00 | contracts: 1 | position_size: $24.10 | mispricing: $2.80 | active_trades: 4/4 | capital: $97.76
+[2025-08-07 11:01:23] HOUR_COMPLETE - NVDA - Live hour processing complete | active_trades: 4/4 | buy_trades: 2 | sell_trades: 2 | capital: $97.76 | hour: 11
+[2025-08-07 12:02:12] DATA_FETCH - NVDA - Fetching live options data | expiry_date: 2025-09-19 | company: NVDA
+[2025-08-07 12:02:21] HOUR_COMPLETE - NVDA - Live hour processing complete | active_trades: 4/4 | buy_trades: 2 | sell_trades: 2 | capital: $97.76 | hour: 12
+[2025-08-08 06:33:16] DATA_FETCH - NVDA - Fetching live options data | expiry_date: 2025-09-19 | company: NVDA
+[2025-08-08 06:33:26] EXIT - NVDA - NVDA_92.0_Call - SELL - $23.67 - PnL: $2.92 - Return: 12.34%
+[2025-08-08 06:33:26] TRADE_EXIT - NVDA - Trade exited: SELL NVDA_92.0_Call | entry_price: $92.03 | exit_price: $89.11 | pnl: $2.92 | return_pct: 12.34% | duration_hours: -1 | contracts: 1 | active_trades: 3/4 | capital: $100.68 | total_pnl: $0.68
+[2025-08-08 06:33:26] EXIT - NVDA - NVDA_112.0_Call - SELL - $24.10 - PnL: $3.15 - Return: 13.07%
+[2025-08-08 06:33:26] TRADE_EXIT - NVDA - Trade exited: SELL NVDA_112.0_Call | entry_price: $71.67 | exit_price: $68.52 | pnl: $3.15 | return_pct: 13.07% | duration_hours: -5 | contracts: 1 | active_trades: 2/4 | capital: $103.83 | total_pnl: $3.83
+[2025-08-08 06:33:26] ENTER - NVDA - NVDA_60.0_Call - SELL - $25.00
+[2025-08-08 06:33:26] TRADE_ENTRY - NVDA - Trade entered: SELL NVDA_60.0_Call | entry_price: $122.90 | heston_price: $121.08 | strike: $60.00 | contracts: 1 | position_size: $25.00 | mispricing: $1.82 | active_trades: 3/4 | capital: $103.83
+[2025-08-08 06:33:26] ENTER - NVDA - NVDA_80.0_Call - SELL - $25.00
+[2025-08-08 06:33:26] TRADE_ENTRY - NVDA - Trade entered: SELL NVDA_80.0_Call | entry_price: $103.00 | heston_price: $101.19 | strike: $80.00 | contracts: 1 | position_size: $25.00 | mispricing: $1.81 | active_trades: 4/4 | capital: $103.83
+[2025-08-08 06:33:27] HOUR_COMPLETE - NVDA - Live hour processing complete | active_trades: 4/4 | buy_trades: 2 | sell_trades: 2 | capital: $103.83 | hour: 6
+[2025-08-08 07:34:21] DATA_FETCH - NVDA - Fetching live options data | expiry_date: 2025-09-19 | company: NVDA
+[2025-08-08 07:34:31] HOUR_COMPLETE - NVDA - Live hour processing complete | active_trades: 4/4 | buy_trades: 2 | sell_trades: 2 | capital: $103.83 | hour: 7
+[2025-08-08 08:35:06] DATA_FETCH - NVDA - Fetching live options data | expiry_date: 2025-09-19 | company: NVDA
+[2025-08-08 08:35:17] EXIT - NVDA - NVDA_60.0_Call - SELL - $25.00 - PnL: $0.00 - Return: 0.00%
+[2025-08-08 08:35:17] TRADE_EXIT - NVDA - Trade exited: SELL NVDA_60.0_Call | entry_price: $122.90 | exit_price: $122.90 | pnl: $0.00 | return_pct: 0.00% | duration_hours: 2 | contracts: 1 | active_trades: 3/4 | capital: $103.83 | total_pnl: $3.83
+[2025-08-08 08:35:17] EXIT - NVDA - NVDA_80.0_Call - SELL - $25.00 - PnL: $0.00 - Return: 0.00%
+[2025-08-08 08:35:17] TRADE_EXIT - NVDA - Trade exited: SELL NVDA_80.0_Call | entry_price: $103.00 | exit_price: $103.00 | pnl: $0.00 | return_pct: 0.00% | duration_hours: 2 | contracts: 1 | active_trades: 2/4 | capital: $103.83 | total_pnl: $3.83
+[2025-08-08 08:35:17] ENTER - NVDA - NVDA_100.0_Call - SELL - $25.00
+[2025-08-08 08:35:17] TRADE_ENTRY - NVDA - Trade entered: SELL NVDA_100.0_Call | entry_price: $83.90 | heston_price: $83.67 | strike: $100.00 | contracts: 1 | position_size: $25.00 | mispricing: $0.23 | active_trades: 3/4 | capital: $103.83
+[2025-08-08 08:35:17] ENTER - NVDA - NVDA_125.0_Call - SELL - $25.00
+[2025-08-08 08:35:17] TRADE_ENTRY - NVDA - Trade entered: SELL NVDA_125.0_Call | entry_price: $59.30 | heston_price: $59.08 | strike: $125.00 | contracts: 1 | position_size: $25.00 | mispricing: $0.22 | active_trades: 4/4 | capital: $103.83
+[2025-08-08 08:35:17] HOUR_COMPLETE - NVDA - Live hour processing complete | active_trades: 4/4 | buy_trades: 2 | sell_trades: 2 | capital: $103.83 | hour: 8
+[2025-08-08 08:45:24] DATA_FETCH - NVDA - Fetching live options data | expiry_date: 2025-09-19 | company: NVDA
+[2025-08-08 08:45:32] EXIT - NVDA - NVDA_47.0_Call - BUY - $25.00 - PnL: $0.00 - Return: 0.00%
+[2025-08-08 08:45:32] TRADE_EXIT - NVDA - Trade exited: BUY NVDA_47.0_Call | entry_price: $108.95 | exit_price: $108.95 | pnl: $0.00 | return_pct: 0.00% | duration_hours: -4 | contracts: 1 | active_trades: 3/4 | capital: $103.83 | total_pnl: $3.83
+[2025-08-08 08:45:32] EXIT - NVDA - NVDA_42.0_Call - BUY - $25.00 - PnL: $0.00 - Return: 0.00%
+[2025-08-08 08:45:32] TRADE_EXIT - NVDA - Trade exited: BUY NVDA_42.0_Call | entry_price: $120.90 | exit_price: $120.90 | pnl: $0.00 | return_pct: 0.00% | duration_hours: -4 | contracts: 1 | active_trades: 2/4 | capital: $103.83 | total_pnl: $3.83
+[2025-08-08 08:45:32] EXIT - NVDA - NVDA_100.0_Call - SELL - $25.00 - PnL: $0.00 - Return: 0.00%
+[2025-08-08 08:45:32] TRADE_EXIT - NVDA - Trade exited: SELL NVDA_100.0_Call | entry_price: $83.90 | exit_price: $83.90 | pnl: $0.00 | return_pct: 0.00% | duration_hours: 0 | contracts: 1 | active_trades: 1/4 | capital: $103.83 | total_pnl: $3.83
+[2025-08-08 08:45:32] EXIT - NVDA - NVDA_125.0_Call - SELL - $25.00 - PnL: $0.13 - Return: 0.52%
+[2025-08-08 08:45:32] TRADE_EXIT - NVDA - Trade exited: SELL NVDA_125.0_Call | entry_price: $59.30 | exit_price: $59.17 | pnl: $0.13 | return_pct: 0.52% | duration_hours: 0 | contracts: 1 | active_trades: 0/4 | capital: $103.96 | total_pnl: $3.96

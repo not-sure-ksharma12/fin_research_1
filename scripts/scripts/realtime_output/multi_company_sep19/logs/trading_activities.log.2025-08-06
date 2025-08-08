@@ -1,0 +1,875 @@
+2025-08-06 12:56:09,605 - INFO - ================================================================================
+2025-08-06 12:56:09,605 - INFO - 🚀 MULTI-COMPANY REAL-TIME TRADING SYSTEM STARTING
+2025-08-06 12:56:09,605 - INFO - ================================================================================
+2025-08-06 12:56:09,605 - INFO - Log files will be saved to: scripts/realtime_output/multi_company_sep19/logs
+2025-08-06 12:56:09,605 - INFO - Main log: scripts/realtime_output/multi_company_sep19/logs/trading_activities.log
+2025-08-06 12:56:09,605 - INFO - Detailed log: scripts/realtime_output/multi_company_sep19/logs/detailed_activities.log
+2025-08-06 12:56:09,605 - INFO - ================================================================================
+2025-08-06 12:56:09,647 - INFO - Real-time trading system initialized for NVDA with $100.0 capital
+2025-08-06 12:56:09,648 - INFO - [2025-08-06 12:56:09] SYSTEM - NVDA - Trading system initialized | initial_capital: $100.0 | company: NVDA
+2025-08-06 12:56:09,648 - INFO - Real-time trading system initialized for AUR with $100.0 capital
+2025-08-06 12:56:09,649 - INFO - [2025-08-06 12:56:09] SYSTEM - AUR - Trading system initialized | initial_capital: $100.0 | company: AUR
+2025-08-06 12:56:09,649 - INFO - Real-time trading system initialized for TSLA with $100.0 capital
+2025-08-06 12:56:09,649 - INFO - [2025-08-06 12:56:09] SYSTEM - TSLA - Trading system initialized | initial_capital: $100.0 | company: TSLA
+2025-08-06 12:56:09,649 - INFO - Real-time trading system initialized for SOFI with $100.0 capital
+2025-08-06 12:56:09,650 - INFO - [2025-08-06 12:56:09] SYSTEM - SOFI - Trading system initialized | initial_capital: $100.0 | company: SOFI
+2025-08-06 12:56:09,650 - INFO - Real-time trading system initialized for SOUN with $100.0 capital
+2025-08-06 12:56:09,650 - INFO - [2025-08-06 12:56:09] SYSTEM - SOUN - Trading system initialized | initial_capital: $100.0 | company: SOUN
+2025-08-06 12:56:09,650 - INFO - Real-time trading system initialized for AMD with $100.0 capital
+2025-08-06 12:56:09,651 - INFO - [2025-08-06 12:56:09] SYSTEM - AMD - Trading system initialized | initial_capital: $100.0 | company: AMD
+2025-08-06 12:56:09,651 - INFO - Real-time trading system initialized for AVGO with $100.0 capital
+2025-08-06 12:56:09,651 - INFO - [2025-08-06 12:56:09] SYSTEM - AVGO - Trading system initialized | initial_capital: $100.0 | company: AVGO
+2025-08-06 12:56:09,651 - INFO - Real-time trading system initialized for CRCL with $100.0 capital
+2025-08-06 12:56:09,652 - INFO - [2025-08-06 12:56:09] SYSTEM - CRCL - Trading system initialized | initial_capital: $100.0 | company: CRCL
+2025-08-06 12:56:09,652 - INFO - Real-time trading system initialized for BBAI with $100.0 capital
+2025-08-06 12:56:09,652 - INFO - [2025-08-06 12:56:09] SYSTEM - BBAI - Trading system initialized | initial_capital: $100.0 | company: BBAI
+2025-08-06 12:56:09,652 - INFO - Real-time trading system initialized for SLDB with $100.0 capital
+2025-08-06 12:56:09,653 - INFO - [2025-08-06 12:56:09] SYSTEM - SLDB - Trading system initialized | initial_capital: $100.0 | company: SLDB
+2025-08-06 12:56:09,653 - INFO - Multi-company real-time trading system initialized for 10 companies
+2025-08-06 12:56:09,653 - INFO - Companies: NVDA, AUR, TSLA, SOFI, SOUN, AMD, AVGO, CRCL, BBAI, SLDB
+2025-08-06 12:56:09,653 - INFO - Capital per company: $100.0
+2025-08-06 12:56:09,653 - INFO - Total portfolio capital: $1000.0
+2025-08-06 12:56:09,653 - INFO - Portfolio allocation: 10 companies × $100.0 = $1000.0
+2025-08-06 12:56:09,653 - INFO - Starting multi-company real-time trading system for 10 companies
+2025-08-06 12:56:09,843 - INFO - Successfully connected to Bloomberg Terminal
+2025-08-06 12:56:09,844 - INFO - Multi-company real-time trading system is now running. Press Ctrl+C to stop.
+2025-08-06 12:56:09,844 - INFO - ================================================================================
+2025-08-06 12:56:09,845 - INFO - 🔄 PROCESSING LIVE HOUR FOR ALL COMPANIES at 2025-08-06 12:56:09
+2025-08-06 12:56:09,845 - INFO - ================================================================================
+2025-08-06 12:56:09,845 - INFO - Processing live hour for NVDA at 2025-08-06 12:56:09
+2025-08-06 12:56:09,845 - INFO - Fetching live NVDA options data for expiry 2025-09-19
+2025-08-06 12:56:09,846 - INFO - [2025-08-06 12:56:09] DATA_FETCH - NVDA - Fetching live options data | expiry_date: 2025-09-19 | company: NVDA
+2025-08-06 12:56:10,408 - INFO - Found 276 live options for NVDA
+2025-08-06 12:56:17,750 - INFO - Found 138 Call options for NVDA
+2025-08-06 12:56:18,217 - INFO - Live Heston params for NVDA: v0=0.0000, kappa=3.1941, theta=0.3080, sigma=-0.6462, rho=0.3099
+2025-08-06 12:56:18,383 - INFO - Hourly data updated for NVDA hour 12 (2025-08-06): scripts/realtime_output/multi_company_sep19/NVDA_hourly_data.xlsx
+2025-08-06 12:56:18,383 - INFO - Saved hourly data for NVDA hour 12 (2025-08-06): 0 active trades marked, 0 exited trades marked
+2025-08-06 12:56:18,385 - INFO - Live selection for NVDA: 2 BUY opportunities, 2 SELL opportunities
+2025-08-06 12:56:18,385 - INFO - Current active trades: 0 BUY, 0 SELL
+2025-08-06 12:56:18,385 - INFO - [2025-08-06 12:56:18] ENTER - NVDA - NVDA_47.0_Call - BUY - $25.00
+2025-08-06 12:56:18,385 - INFO - ================================================================================
+2025-08-06 12:56:18,385 - INFO - 🎯 TRADE ENTERED: BUY NVDA_47.0_Call
+2025-08-06 12:56:18,385 - INFO -    Company: NVDA
+2025-08-06 12:56:18,385 - INFO -    Entry Time: 2025-08-06 12:56:18
+2025-08-06 12:56:18,385 - INFO -    Entry Price: $108.95
+2025-08-06 12:56:18,385 - INFO -    Heston Price: $132.99
+2025-08-06 12:56:18,385 - INFO -    Strike Price: $47.00
+2025-08-06 12:56:18,385 - INFO -    Stock Price: $179.74
+2025-08-06 12:56:18,385 - INFO -    Contracts: 1
+2025-08-06 12:56:18,385 - INFO -    Position Size: $25.00
+2025-08-06 12:56:18,385 - INFO -    Mispricing: $-24.04
+2025-08-06 12:56:18,385 - INFO -    Active Trades: 1/4
+2025-08-06 12:56:18,385 - INFO -    Current Capital: $100.00
+2025-08-06 12:56:18,385 - INFO -    Capital Status: PROFIT
+2025-08-06 12:56:18,385 - INFO - ================================================================================
+2025-08-06 12:56:18,385 - INFO - [2025-08-06 12:56:18] TRADE_ENTRY - NVDA - Trade entered: BUY NVDA_47.0_Call | entry_price: $108.95 | heston_price: $132.99 | strike: $47.00 | contracts: 1 | position_size: $25.00 | mispricing: $-24.04 | active_trades: 1/4 | capital: $100.00
+2025-08-06 12:56:18,391 - INFO - [2025-08-06 12:56:18] ENTER - NVDA - NVDA_42.0_Call - BUY - $25.00
+2025-08-06 12:56:18,391 - INFO - ================================================================================
+2025-08-06 12:56:18,391 - INFO - 🎯 TRADE ENTERED: BUY NVDA_42.0_Call
+2025-08-06 12:56:18,391 - INFO -    Company: NVDA
+2025-08-06 12:56:18,391 - INFO -    Entry Time: 2025-08-06 12:56:18
+2025-08-06 12:56:18,391 - INFO -    Entry Price: $120.90
+2025-08-06 12:56:18,391 - INFO -    Heston Price: $137.96
+2025-08-06 12:56:18,391 - INFO -    Strike Price: $42.00
+2025-08-06 12:56:18,392 - INFO -    Stock Price: $179.74
+2025-08-06 12:56:18,392 - INFO -    Contracts: 1
+2025-08-06 12:56:18,392 - INFO -    Position Size: $25.00
+2025-08-06 12:56:18,392 - INFO -    Mispricing: $-17.06
+2025-08-06 12:56:18,392 - INFO -    Active Trades: 2/4
+2025-08-06 12:56:18,392 - INFO -    Current Capital: $100.00
+2025-08-06 12:56:18,392 - INFO -    Capital Status: PROFIT
+2025-08-06 12:56:18,392 - INFO - ================================================================================
+2025-08-06 12:56:18,392 - INFO - [2025-08-06 12:56:18] TRADE_ENTRY - NVDA - Trade entered: BUY NVDA_42.0_Call | entry_price: $120.90 | heston_price: $137.96 | strike: $42.00 | contracts: 1 | position_size: $25.00 | mispricing: $-17.06 | active_trades: 2/4 | capital: $100.00
+2025-08-06 12:56:18,393 - INFO - [2025-08-06 12:56:18] ENTER - NVDA - NVDA_126.0_Call - SELL - $25.00
+2025-08-06 12:56:18,393 - INFO - ================================================================================
+2025-08-06 12:56:18,393 - INFO - 🎯 TRADE ENTERED: SELL NVDA_126.0_Call
+2025-08-06 12:56:18,393 - INFO -    Company: NVDA
+2025-08-06 12:56:18,394 - INFO -    Entry Time: 2025-08-06 12:56:18
+2025-08-06 12:56:18,394 - INFO -    Entry Price: $55.00
+2025-08-06 12:56:18,394 - INFO -    Heston Price: $54.71
+2025-08-06 12:56:18,394 - INFO -    Strike Price: $126.00
+2025-08-06 12:56:18,394 - INFO -    Stock Price: $179.74
+2025-08-06 12:56:18,394 - INFO -    Contracts: 1
+2025-08-06 12:56:18,394 - INFO -    Position Size: $25.00
+2025-08-06 12:56:18,394 - INFO -    Mispricing: $0.29
+2025-08-06 12:56:18,394 - INFO -    Active Trades: 3/4
+2025-08-06 12:56:18,394 - INFO -    Current Capital: $100.00
+2025-08-06 12:56:18,394 - INFO -    Capital Status: PROFIT
+2025-08-06 12:56:18,394 - INFO - ================================================================================
+2025-08-06 12:56:18,396 - INFO - [2025-08-06 12:56:18] TRADE_ENTRY - NVDA - Trade entered: SELL NVDA_126.0_Call | entry_price: $55.00 | heston_price: $54.71 | strike: $126.00 | contracts: 1 | position_size: $25.00 | mispricing: $0.29 | active_trades: 3/4 | capital: $100.00
+2025-08-06 12:56:18,396 - INFO - [2025-08-06 12:56:18] ENTER - NVDA - NVDA_135.0_Call - SELL - $25.00
+2025-08-06 12:56:18,396 - INFO - ================================================================================
+2025-08-06 12:56:18,396 - INFO - 🎯 TRADE ENTERED: SELL NVDA_135.0_Call
+2025-08-06 12:56:18,396 - INFO -    Company: NVDA
+2025-08-06 12:56:18,396 - INFO -    Entry Time: 2025-08-06 12:56:18
+2025-08-06 12:56:18,396 - INFO -    Entry Price: $46.24
+2025-08-06 12:56:18,396 - INFO -    Heston Price: $46.17
+2025-08-06 12:56:18,396 - INFO -    Strike Price: $135.00
+2025-08-06 12:56:18,396 - INFO -    Stock Price: $179.74
+2025-08-06 12:56:18,396 - INFO -    Contracts: 1
+2025-08-06 12:56:18,396 - INFO -    Position Size: $25.00
+2025-08-06 12:56:18,398 - INFO -    Mispricing: $0.07
+2025-08-06 12:56:18,398 - INFO -    Active Trades: 4/4
+2025-08-06 12:56:18,398 - INFO -    Current Capital: $100.00
+2025-08-06 12:56:18,398 - INFO -    Capital Status: PROFIT
+2025-08-06 12:56:18,398 - INFO - ================================================================================
+2025-08-06 12:56:18,398 - INFO - [2025-08-06 12:56:18] TRADE_ENTRY - NVDA - Trade entered: SELL NVDA_135.0_Call | entry_price: $46.24 | heston_price: $46.17 | strike: $135.00 | contracts: 1 | position_size: $25.00 | mispricing: $0.07 | active_trades: 4/4 | capital: $100.00
+2025-08-06 12:56:18,398 - INFO - Live hour complete for NVDA: 4/4 active trades (2 BUY, 2 SELL), Capital: $100.00
+2025-08-06 12:56:18,399 - INFO - Regenerated: Marked active trade in Excel (hour 12): NVDA_47.0_Call - BUY - $25.00 (entered hour 12)
+2025-08-06 12:56:18,400 - INFO - Regenerated: Marked active trade in Excel (hour 12): NVDA_42.0_Call - BUY - $25.00 (entered hour 12)
+2025-08-06 12:56:18,400 - INFO - Regenerated: Marked active trade in Excel (hour 12): NVDA_126.0_Call - SELL - $25.00 (entered hour 12)
+2025-08-06 12:56:18,401 - INFO - Regenerated: Marked active trade in Excel (hour 12): NVDA_135.0_Call - SELL - $25.00 (entered hour 12)
+2025-08-06 12:56:18,468 - INFO - Hourly data updated for NVDA hour 12 (2025-08-06): scripts/realtime_output/multi_company_sep19/NVDA_hourly_data.xlsx
+2025-08-06 12:56:18,468 - INFO - Regenerated hourly Excel for NVDA with 4/4 active trades marked
+2025-08-06 12:56:18,468 - INFO - [2025-08-06 12:56:18] HOUR_COMPLETE - NVDA - Live hour processing complete | active_trades: 4/4 | buy_trades: 2 | sell_trades: 2 | capital: $100.00 | hour: 12
+2025-08-06 12:56:18,468 - INFO - Processing live hour for AUR at 2025-08-06 12:56:18
+2025-08-06 12:56:18,468 - INFO - Fetching live AUR options data for expiry 2025-09-19
+2025-08-06 12:56:18,468 - INFO - [2025-08-06 12:56:18] DATA_FETCH - AUR - Fetching live options data | expiry_date: 2025-09-19 | company: AUR
+2025-08-06 12:56:18,785 - INFO - Found 40 live options for AUR
+2025-08-06 12:56:19,862 - INFO - Found 20 Call options for AUR
+2025-08-06 12:56:20,051 - INFO - Live Heston params for AUR: v0=0.0000, kappa=18.6463, theta=5.4826, sigma=0.2205, rho=2.1164
+2025-08-06 12:56:20,092 - INFO - Hourly data updated for AUR hour 12 (2025-08-06): scripts/realtime_output/multi_company_sep19/AUR_hourly_data.xlsx
+2025-08-06 12:56:20,092 - INFO - Saved hourly data for AUR hour 12 (2025-08-06): 0 active trades marked, 0 exited trades marked
+2025-08-06 12:56:20,092 - INFO - Live selection for AUR: 2 BUY opportunities, 2 SELL opportunities
+2025-08-06 12:56:20,092 - INFO - Current active trades: 0 BUY, 0 SELL
+2025-08-06 12:56:20,101 - INFO - [2025-08-06 12:56:20] ENTER - AUR - AUR_1.0_Call - BUY - $25.00
+2025-08-06 12:56:20,101 - INFO - ================================================================================
+2025-08-06 12:56:20,101 - INFO - 🎯 TRADE ENTERED: BUY AUR_1.0_Call
+2025-08-06 12:56:20,101 - INFO -    Company: AUR
+2025-08-06 12:56:20,101 - INFO -    Entry Time: 2025-08-06 12:56:20
+2025-08-06 12:56:20,101 - INFO -    Entry Price: $4.47
+2025-08-06 12:56:20,101 - INFO -    Heston Price: $5.08
+2025-08-06 12:56:20,101 - INFO -    Strike Price: $1.00
+2025-08-06 12:56:20,102 - INFO -    Stock Price: $6.07
+2025-08-06 12:56:20,102 - INFO -    Contracts: 1
+2025-08-06 12:56:20,102 - INFO -    Position Size: $25.00
+2025-08-06 12:56:20,102 - INFO -    Mispricing: $-0.61
+2025-08-06 12:56:20,102 - INFO -    Active Trades: 1/4
+2025-08-06 12:56:20,103 - INFO -    Current Capital: $100.00
+2025-08-06 12:56:20,103 - INFO -    Capital Status: PROFIT
+2025-08-06 12:56:20,103 - INFO - ================================================================================
+2025-08-06 12:56:20,103 - INFO - [2025-08-06 12:56:20] TRADE_ENTRY - AUR - Trade entered: BUY AUR_1.0_Call | entry_price: $4.47 | heston_price: $5.08 | strike: $1.00 | contracts: 1 | position_size: $25.00 | mispricing: $-0.61 | active_trades: 1/4 | capital: $100.00
+2025-08-06 12:56:20,105 - INFO - [2025-08-06 12:56:20] ENTER - AUR - AUR_2.0_Call - BUY - $25.00
+2025-08-06 12:56:20,105 - INFO - ================================================================================
+2025-08-06 12:56:20,105 - INFO - 🎯 TRADE ENTERED: BUY AUR_2.0_Call
+2025-08-06 12:56:20,105 - INFO -    Company: AUR
+2025-08-06 12:56:20,105 - INFO -    Entry Time: 2025-08-06 12:56:20
+2025-08-06 12:56:20,105 - INFO -    Entry Price: $3.80
+2025-08-06 12:56:20,105 - INFO -    Heston Price: $4.08
+2025-08-06 12:56:20,105 - INFO -    Strike Price: $2.00
+2025-08-06 12:56:20,105 - INFO -    Stock Price: $6.07
+2025-08-06 12:56:20,105 - INFO -    Contracts: 1
+2025-08-06 12:56:20,105 - INFO -    Position Size: $25.00
+2025-08-06 12:56:20,105 - INFO -    Mispricing: $-0.28
+2025-08-06 12:56:20,106 - INFO -    Active Trades: 2/4
+2025-08-06 12:56:20,106 - INFO -    Current Capital: $100.00
+2025-08-06 12:56:20,106 - INFO -    Capital Status: PROFIT
+2025-08-06 12:56:20,106 - INFO - ================================================================================
+2025-08-06 12:56:20,106 - INFO - [2025-08-06 12:56:20] TRADE_ENTRY - AUR - Trade entered: BUY AUR_2.0_Call | entry_price: $3.80 | heston_price: $4.08 | strike: $2.00 | contracts: 1 | position_size: $25.00 | mispricing: $-0.28 | active_trades: 2/4 | capital: $100.00
+2025-08-06 12:56:20,107 - INFO - [2025-08-06 12:56:20] ENTER - AUR - AUR_3.0_Call - SELL - $25.00
+2025-08-06 12:56:20,108 - INFO - ================================================================================
+2025-08-06 12:56:20,108 - INFO - 🎯 TRADE ENTERED: SELL AUR_3.0_Call
+2025-08-06 12:56:20,108 - INFO -    Company: AUR
+2025-08-06 12:56:20,108 - INFO -    Entry Time: 2025-08-06 12:56:20
+2025-08-06 12:56:20,108 - INFO -    Entry Price: $3.20
+2025-08-06 12:56:20,108 - INFO -    Heston Price: $3.09
+2025-08-06 12:56:20,108 - INFO -    Strike Price: $3.00
+2025-08-06 12:56:20,108 - INFO -    Stock Price: $6.07
+2025-08-06 12:56:20,108 - INFO -    Contracts: 1
+2025-08-06 12:56:20,108 - INFO -    Position Size: $25.00
+2025-08-06 12:56:20,108 - INFO -    Mispricing: $0.11
+2025-08-06 12:56:20,108 - INFO -    Active Trades: 3/4
+2025-08-06 12:56:20,108 - INFO -    Current Capital: $100.00
+2025-08-06 12:56:20,108 - INFO -    Capital Status: PROFIT
+2025-08-06 12:56:20,108 - INFO - ================================================================================
+2025-08-06 12:56:20,108 - INFO - [2025-08-06 12:56:20] TRADE_ENTRY - AUR - Trade entered: SELL AUR_3.0_Call | entry_price: $3.20 | heston_price: $3.09 | strike: $3.00 | contracts: 1 | position_size: $25.00 | mispricing: $0.11 | active_trades: 3/4 | capital: $100.00
+2025-08-06 12:56:20,108 - INFO - [2025-08-06 12:56:20] ENTER - AUR - AUR_14.0_Call - SELL - $25.00
+2025-08-06 12:56:20,108 - INFO - ================================================================================
+2025-08-06 12:56:20,108 - INFO - 🎯 TRADE ENTERED: SELL AUR_14.0_Call
+2025-08-06 12:56:20,108 - INFO -    Company: AUR
+2025-08-06 12:56:20,108 - INFO -    Entry Time: 2025-08-06 12:56:20
+2025-08-06 12:56:20,108 - INFO -    Entry Price: $0.05
+2025-08-06 12:56:20,108 - INFO -    Heston Price: $0.03
+2025-08-06 12:56:20,108 - INFO -    Strike Price: $14.00
+2025-08-06 12:56:20,108 - INFO -    Stock Price: $6.07
+2025-08-06 12:56:20,108 - INFO -    Contracts: 1
+2025-08-06 12:56:20,108 - INFO -    Position Size: $25.00
+2025-08-06 12:56:20,108 - INFO -    Mispricing: $0.02
+2025-08-06 12:56:20,108 - INFO -    Active Trades: 4/4
+2025-08-06 12:56:20,108 - INFO -    Current Capital: $100.00
+2025-08-06 12:56:20,108 - INFO -    Capital Status: PROFIT
+2025-08-06 12:56:20,108 - INFO - ================================================================================
+2025-08-06 12:56:20,108 - INFO - [2025-08-06 12:56:20] TRADE_ENTRY - AUR - Trade entered: SELL AUR_14.0_Call | entry_price: $0.05 | heston_price: $0.03 | strike: $14.00 | contracts: 1 | position_size: $25.00 | mispricing: $0.02 | active_trades: 4/4 | capital: $100.00
+2025-08-06 12:56:20,108 - INFO - Live hour complete for AUR: 4/4 active trades (2 BUY, 2 SELL), Capital: $100.00
+2025-08-06 12:56:20,108 - INFO - Regenerated: Marked active trade in Excel (hour 12): AUR_1.0_Call - BUY - $25.00 (entered hour 12)
+2025-08-06 12:56:20,108 - INFO - Regenerated: Marked active trade in Excel (hour 12): AUR_2.0_Call - BUY - $25.00 (entered hour 12)
+2025-08-06 12:56:20,115 - INFO - Regenerated: Marked active trade in Excel (hour 12): AUR_3.0_Call - SELL - $25.00 (entered hour 12)
+2025-08-06 12:56:20,115 - INFO - Regenerated: Marked active trade in Excel (hour 12): AUR_14.0_Call - SELL - $25.00 (entered hour 12)
+2025-08-06 12:56:20,151 - INFO - Hourly data updated for AUR hour 12 (2025-08-06): scripts/realtime_output/multi_company_sep19/AUR_hourly_data.xlsx
+2025-08-06 12:56:20,151 - INFO - Regenerated hourly Excel for AUR with 4/4 active trades marked
+2025-08-06 12:56:20,152 - INFO - [2025-08-06 12:56:20] HOUR_COMPLETE - AUR - Live hour processing complete | active_trades: 4/4 | buy_trades: 2 | sell_trades: 2 | capital: $100.00 | hour: 12
+2025-08-06 12:56:20,152 - INFO - Processing live hour for TSLA at 2025-08-06 12:56:20
+2025-08-06 12:56:20,152 - INFO - Fetching live TSLA options data for expiry 2025-09-19
+2025-08-06 12:56:20,152 - INFO - [2025-08-06 12:56:20] DATA_FETCH - TSLA - Fetching live options data | expiry_date: 2025-09-19 | company: TSLA
+2025-08-06 12:56:20,649 - INFO - Found 296 live options for TSLA
+2025-08-06 12:56:28,198 - INFO - Found 148 Call options for TSLA
+2025-08-06 12:56:28,742 - INFO - Live Heston params for TSLA: v0=0.0000, kappa=5.4457, theta=0.2690, sigma=-0.2299, rho=0.4889
+2025-08-06 12:56:28,905 - INFO - Hourly data updated for TSLA hour 12 (2025-08-06): scripts/realtime_output/multi_company_sep19/TSLA_hourly_data.xlsx
+2025-08-06 12:56:28,905 - INFO - Saved hourly data for TSLA hour 12 (2025-08-06): 0 active trades marked, 0 exited trades marked
+2025-08-06 12:56:28,909 - INFO - Live selection for TSLA: 2 BUY opportunities, 2 SELL opportunities
+2025-08-06 12:56:28,909 - INFO - Current active trades: 0 BUY, 0 SELL
+2025-08-06 12:56:28,911 - INFO - [2025-08-06 12:56:28] ENTER - TSLA - TSLA_55.0_Call - BUY - $25.00
+2025-08-06 12:56:28,911 - INFO - ================================================================================
+2025-08-06 12:56:28,911 - INFO - 🎯 TRADE ENTERED: BUY TSLA_55.0_Call
+2025-08-06 12:56:28,911 - INFO -    Company: TSLA
+2025-08-06 12:56:28,911 - INFO -    Entry Time: 2025-08-06 12:56:28
+2025-08-06 12:56:28,911 - INFO -    Entry Price: $240.98
+2025-08-06 12:56:28,911 - INFO -    Heston Price: $264.24
+2025-08-06 12:56:28,911 - INFO -    Strike Price: $55.00
+2025-08-06 12:56:28,911 - INFO -    Stock Price: $318.94
+2025-08-06 12:56:28,911 - INFO -    Contracts: 1
+2025-08-06 12:56:28,911 - INFO -    Position Size: $25.00
+2025-08-06 12:56:28,911 - INFO -    Mispricing: $-23.26
+2025-08-06 12:56:28,911 - INFO -    Active Trades: 1/4
+2025-08-06 12:56:28,913 - INFO -    Current Capital: $100.00
+2025-08-06 12:56:28,913 - INFO -    Capital Status: PROFIT
+2025-08-06 12:56:28,913 - INFO - ================================================================================
+2025-08-06 12:56:28,913 - INFO - [2025-08-06 12:56:28] TRADE_ENTRY - TSLA - Trade entered: BUY TSLA_55.0_Call | entry_price: $240.98 | heston_price: $264.24 | strike: $55.00 | contracts: 1 | position_size: $25.00 | mispricing: $-23.26 | active_trades: 1/4 | capital: $100.00
+2025-08-06 12:56:28,916 - INFO - [2025-08-06 12:56:28] ENTER - TSLA - TSLA_130.0_Call - BUY - $25.00
+2025-08-06 12:56:28,916 - INFO - ================================================================================
+2025-08-06 12:56:28,916 - INFO - 🎯 TRADE ENTERED: BUY TSLA_130.0_Call
+2025-08-06 12:56:28,916 - INFO -    Company: TSLA
+2025-08-06 12:56:28,916 - INFO -    Entry Time: 2025-08-06 12:56:28
+2025-08-06 12:56:28,916 - INFO -    Entry Price: $172.99
+2025-08-06 12:56:28,916 - INFO -    Heston Price: $189.65
+2025-08-06 12:56:28,916 - INFO -    Strike Price: $130.00
+2025-08-06 12:56:28,916 - INFO -    Stock Price: $318.94
+2025-08-06 12:56:28,916 - INFO -    Contracts: 1
+2025-08-06 12:56:28,917 - INFO -    Position Size: $25.00
+2025-08-06 12:56:28,917 - INFO -    Mispricing: $-16.66
+2025-08-06 12:56:28,917 - INFO -    Active Trades: 2/4
+2025-08-06 12:56:28,917 - INFO -    Current Capital: $100.00
+2025-08-06 12:56:28,917 - INFO -    Capital Status: PROFIT
+2025-08-06 12:56:28,917 - INFO - ================================================================================
+2025-08-06 12:56:28,917 - INFO - [2025-08-06 12:56:28] TRADE_ENTRY - TSLA - Trade entered: BUY TSLA_130.0_Call | entry_price: $172.99 | heston_price: $189.65 | strike: $130.00 | contracts: 1 | position_size: $25.00 | mispricing: $-16.66 | active_trades: 2/4 | capital: $100.00
+2025-08-06 12:56:28,917 - INFO - [2025-08-06 12:56:28] ENTER - TSLA - TSLA_110.0_Call - SELL - $25.00
+2025-08-06 12:56:28,917 - INFO - ================================================================================
+2025-08-06 12:56:28,917 - INFO - 🎯 TRADE ENTERED: SELL TSLA_110.0_Call
+2025-08-06 12:56:28,917 - INFO -    Company: TSLA
+2025-08-06 12:56:28,917 - INFO -    Entry Time: 2025-08-06 12:56:28
+2025-08-06 12:56:28,917 - INFO -    Entry Price: $224.57
+2025-08-06 12:56:28,917 - INFO -    Heston Price: $209.54
+2025-08-06 12:56:28,917 - INFO -    Strike Price: $110.00
+2025-08-06 12:56:28,917 - INFO -    Stock Price: $318.94
+2025-08-06 12:56:28,917 - INFO -    Contracts: 1
+2025-08-06 12:56:28,917 - INFO -    Position Size: $25.00
+2025-08-06 12:56:28,917 - INFO -    Mispricing: $15.03
+2025-08-06 12:56:28,917 - INFO -    Active Trades: 3/4
+2025-08-06 12:56:28,917 - INFO -    Current Capital: $100.00
+2025-08-06 12:56:28,917 - INFO -    Capital Status: PROFIT
+2025-08-06 12:56:28,917 - INFO - ================================================================================
+2025-08-06 12:56:28,917 - INFO - [2025-08-06 12:56:28] TRADE_ENTRY - TSLA - Trade entered: SELL TSLA_110.0_Call | entry_price: $224.57 | heston_price: $209.54 | strike: $110.00 | contracts: 1 | position_size: $25.00 | mispricing: $15.03 | active_trades: 3/4 | capital: $100.00
+2025-08-06 12:56:28,917 - INFO - [2025-08-06 12:56:28] ENTER - TSLA - TSLA_25.0_Call - SELL - $25.00
+2025-08-06 12:56:28,917 - INFO - ================================================================================
+2025-08-06 12:56:28,917 - INFO - 🎯 TRADE ENTERED: SELL TSLA_25.0_Call
+2025-08-06 12:56:28,917 - INFO -    Company: TSLA
+2025-08-06 12:56:28,917 - INFO -    Entry Time: 2025-08-06 12:56:28
+2025-08-06 12:56:28,917 - INFO -    Entry Price: $309.00
+2025-08-06 12:56:28,917 - INFO -    Heston Price: $294.07
+2025-08-06 12:56:28,917 - INFO -    Strike Price: $25.00
+2025-08-06 12:56:28,917 - INFO -    Stock Price: $318.94
+2025-08-06 12:56:28,917 - INFO -    Contracts: 1
+2025-08-06 12:56:28,917 - INFO -    Position Size: $25.00
+2025-08-06 12:56:28,917 - INFO -    Mispricing: $14.93
+2025-08-06 12:56:28,917 - INFO -    Active Trades: 4/4
+2025-08-06 12:56:28,917 - INFO -    Current Capital: $100.00
+2025-08-06 12:56:28,917 - INFO -    Capital Status: PROFIT
+2025-08-06 12:56:28,917 - INFO - ================================================================================
+2025-08-06 12:56:28,917 - INFO - [2025-08-06 12:56:28] TRADE_ENTRY - TSLA - Trade entered: SELL TSLA_25.0_Call | entry_price: $309.00 | heston_price: $294.07 | strike: $25.00 | contracts: 1 | position_size: $25.00 | mispricing: $14.93 | active_trades: 4/4 | capital: $100.00
+2025-08-06 12:56:28,917 - INFO - Live hour complete for TSLA: 4/4 active trades (2 BUY, 2 SELL), Capital: $100.00
+2025-08-06 12:56:28,917 - INFO - Regenerated: Marked active trade in Excel (hour 12): TSLA_55.0_Call - BUY - $25.00 (entered hour 12)
+2025-08-06 12:56:28,917 - INFO - Regenerated: Marked active trade in Excel (hour 12): TSLA_130.0_Call - BUY - $25.00 (entered hour 12)
+2025-08-06 12:56:28,917 - INFO - Regenerated: Marked active trade in Excel (hour 12): TSLA_110.0_Call - SELL - $25.00 (entered hour 12)
+2025-08-06 12:56:28,924 - INFO - Regenerated: Marked active trade in Excel (hour 12): TSLA_25.0_Call - SELL - $25.00 (entered hour 12)
+2025-08-06 12:56:28,994 - INFO - Hourly data updated for TSLA hour 12 (2025-08-06): scripts/realtime_output/multi_company_sep19/TSLA_hourly_data.xlsx
+2025-08-06 12:56:28,994 - INFO - Regenerated hourly Excel for TSLA with 4/4 active trades marked
+2025-08-06 12:56:28,994 - INFO - [2025-08-06 12:56:28] HOUR_COMPLETE - TSLA - Live hour processing complete | active_trades: 4/4 | buy_trades: 2 | sell_trades: 2 | capital: $100.00 | hour: 12
+2025-08-06 12:56:28,994 - INFO - Processing live hour for SOFI at 2025-08-06 12:56:28
+2025-08-06 12:56:28,994 - INFO - Fetching live SOFI options data for expiry 2025-09-19
+2025-08-06 12:56:28,994 - INFO - [2025-08-06 12:56:28] DATA_FETCH - SOFI - Fetching live options data | expiry_date: 2025-09-19 | company: SOFI
+2025-08-06 12:56:30,306 - INFO - Found 80 live options for SOFI
+2025-08-06 12:56:33,715 - INFO - Found 40 Call options for SOFI
+2025-08-06 12:56:34,005 - INFO - Live Heston params for SOFI: v0=0.1102, kappa=0.0000, theta=3.0556, sigma=-0.0536, rho=0.3747
+2025-08-06 12:56:34,062 - INFO - Hourly data updated for SOFI hour 12 (2025-08-06): scripts/realtime_output/multi_company_sep19/SOFI_hourly_data.xlsx
+2025-08-06 12:56:34,063 - INFO - Saved hourly data for SOFI hour 12 (2025-08-06): 0 active trades marked, 0 exited trades marked
+2025-08-06 12:56:34,065 - INFO - Live selection for SOFI: 2 BUY opportunities, 2 SELL opportunities
+2025-08-06 12:56:34,065 - INFO - Current active trades: 0 BUY, 0 SELL
+2025-08-06 12:56:34,066 - INFO - [2025-08-06 12:56:34] ENTER - SOFI - SOFI_6.0_Call - BUY - $25.00
+2025-08-06 12:56:34,066 - INFO - ================================================================================
+2025-08-06 12:56:34,066 - INFO - 🎯 TRADE ENTERED: BUY SOFI_6.0_Call
+2025-08-06 12:56:34,066 - INFO -    Company: SOFI
+2025-08-06 12:56:34,066 - INFO -    Entry Time: 2025-08-06 12:56:34
+2025-08-06 12:56:34,067 - INFO -    Entry Price: $14.99
+2025-08-06 12:56:34,067 - INFO -    Heston Price: $15.47
+2025-08-06 12:56:34,067 - INFO -    Strike Price: $6.00
+2025-08-06 12:56:34,067 - INFO -    Stock Price: $21.44
+2025-08-06 12:56:34,067 - INFO -    Contracts: 1
+2025-08-06 12:56:34,067 - INFO -    Position Size: $25.00
+2025-08-06 12:56:34,067 - INFO -    Mispricing: $-0.48
+2025-08-06 12:56:34,067 - INFO -    Active Trades: 1/4
+2025-08-06 12:56:34,067 - INFO -    Current Capital: $100.00
+2025-08-06 12:56:34,067 - INFO -    Capital Status: PROFIT
+2025-08-06 12:56:34,067 - INFO - ================================================================================
+2025-08-06 12:56:34,067 - INFO - [2025-08-06 12:56:34] TRADE_ENTRY - SOFI - Trade entered: BUY SOFI_6.0_Call | entry_price: $14.99 | heston_price: $15.47 | strike: $6.00 | contracts: 1 | position_size: $25.00 | mispricing: $-0.48 | active_trades: 1/4 | capital: $100.00
+2025-08-06 12:56:34,067 - INFO - [2025-08-06 12:56:34] ENTER - SOFI - SOFI_4.0_Call - BUY - $25.00
+2025-08-06 12:56:34,067 - INFO - ================================================================================
+2025-08-06 12:56:34,067 - INFO - 🎯 TRADE ENTERED: BUY SOFI_4.0_Call
+2025-08-06 12:56:34,067 - INFO -    Company: SOFI
+2025-08-06 12:56:34,067 - INFO -    Entry Time: 2025-08-06 12:56:34
+2025-08-06 12:56:34,067 - INFO -    Entry Price: $17.26
+2025-08-06 12:56:34,067 - INFO -    Heston Price: $17.46
+2025-08-06 12:56:34,067 - INFO -    Strike Price: $4.00
+2025-08-06 12:56:34,067 - INFO -    Stock Price: $21.44
+2025-08-06 12:56:34,067 - INFO -    Contracts: 1
+2025-08-06 12:56:34,067 - INFO -    Position Size: $25.00
+2025-08-06 12:56:34,067 - INFO -    Mispricing: $-0.20
+2025-08-06 12:56:34,067 - INFO -    Active Trades: 2/4
+2025-08-06 12:56:34,067 - INFO -    Current Capital: $100.00
+2025-08-06 12:56:34,067 - INFO -    Capital Status: PROFIT
+2025-08-06 12:56:34,067 - INFO - ================================================================================
+2025-08-06 12:56:34,067 - INFO - [2025-08-06 12:56:34] TRADE_ENTRY - SOFI - Trade entered: BUY SOFI_4.0_Call | entry_price: $17.26 | heston_price: $17.46 | strike: $4.00 | contracts: 1 | position_size: $25.00 | mispricing: $-0.20 | active_trades: 2/4 | capital: $100.00
+2025-08-06 12:56:34,072 - INFO - [2025-08-06 12:56:34] ENTER - SOFI - SOFI_3.0_Call - SELL - $25.00
+2025-08-06 12:56:34,072 - INFO - ================================================================================
+2025-08-06 12:56:34,072 - INFO - 🎯 TRADE ENTERED: SELL SOFI_3.0_Call
+2025-08-06 12:56:34,072 - INFO -    Company: SOFI
+2025-08-06 12:56:34,072 - INFO -    Entry Time: 2025-08-06 12:56:34
+2025-08-06 12:56:34,073 - INFO -    Entry Price: $19.75
+2025-08-06 12:56:34,073 - INFO -    Heston Price: $18.45
+2025-08-06 12:56:34,073 - INFO -    Strike Price: $3.00
+2025-08-06 12:56:34,073 - INFO -    Stock Price: $21.44
+2025-08-06 12:56:34,073 - INFO -    Contracts: 1
+2025-08-06 12:56:34,073 - INFO -    Position Size: $25.00
+2025-08-06 12:56:34,073 - INFO -    Mispricing: $1.30
+2025-08-06 12:56:34,073 - INFO -    Active Trades: 3/4
+2025-08-06 12:56:34,073 - INFO -    Current Capital: $100.00
+2025-08-06 12:56:34,073 - INFO -    Capital Status: PROFIT
+2025-08-06 12:56:34,073 - INFO - ================================================================================
+2025-08-06 12:56:34,073 - INFO - [2025-08-06 12:56:34] TRADE_ENTRY - SOFI - Trade entered: SELL SOFI_3.0_Call | entry_price: $19.75 | heston_price: $18.45 | strike: $3.00 | contracts: 1 | position_size: $25.00 | mispricing: $1.30 | active_trades: 3/4 | capital: $100.00
+2025-08-06 12:56:34,074 - INFO - [2025-08-06 12:56:34] ENTER - SOFI - SOFI_10.0_Call - SELL - $25.00
+2025-08-06 12:56:34,074 - INFO - ================================================================================
+2025-08-06 12:56:34,075 - INFO - 🎯 TRADE ENTERED: SELL SOFI_10.0_Call
+2025-08-06 12:56:34,075 - INFO -    Company: SOFI
+2025-08-06 12:56:34,075 - INFO -    Entry Time: 2025-08-06 12:56:34
+2025-08-06 12:56:34,075 - INFO -    Entry Price: $12.08
+2025-08-06 12:56:34,075 - INFO -    Heston Price: $11.50
+2025-08-06 12:56:34,075 - INFO -    Strike Price: $10.00
+2025-08-06 12:56:34,075 - INFO -    Stock Price: $21.44
+2025-08-06 12:56:34,075 - INFO -    Contracts: 1
+2025-08-06 12:56:34,075 - INFO -    Position Size: $25.00
+2025-08-06 12:56:34,075 - INFO -    Mispricing: $0.58
+2025-08-06 12:56:34,075 - INFO -    Active Trades: 4/4
+2025-08-06 12:56:34,075 - INFO -    Current Capital: $100.00
+2025-08-06 12:56:34,075 - INFO -    Capital Status: PROFIT
+2025-08-06 12:56:34,075 - INFO - ================================================================================
+2025-08-06 12:56:34,075 - INFO - [2025-08-06 12:56:34] TRADE_ENTRY - SOFI - Trade entered: SELL SOFI_10.0_Call | entry_price: $12.08 | heston_price: $11.50 | strike: $10.00 | contracts: 1 | position_size: $25.00 | mispricing: $0.58 | active_trades: 4/4 | capital: $100.00
+2025-08-06 12:56:34,075 - INFO - Live hour complete for SOFI: 4/4 active trades (2 BUY, 2 SELL), Capital: $100.00
+2025-08-06 12:56:34,077 - INFO - Regenerated: Marked active trade in Excel (hour 12): SOFI_6.0_Call - BUY - $25.00 (entered hour 12)
+2025-08-06 12:56:34,077 - INFO - Regenerated: Marked active trade in Excel (hour 12): SOFI_4.0_Call - BUY - $25.00 (entered hour 12)
+2025-08-06 12:56:34,077 - INFO - Regenerated: Marked active trade in Excel (hour 12): SOFI_3.0_Call - SELL - $25.00 (entered hour 12)
+2025-08-06 12:56:34,079 - INFO - Regenerated: Marked active trade in Excel (hour 12): SOFI_10.0_Call - SELL - $25.00 (entered hour 12)
+2025-08-06 12:56:34,135 - INFO - Hourly data updated for SOFI hour 12 (2025-08-06): scripts/realtime_output/multi_company_sep19/SOFI_hourly_data.xlsx
+2025-08-06 12:56:34,135 - INFO - Regenerated hourly Excel for SOFI with 4/4 active trades marked
+2025-08-06 12:56:34,135 - INFO - [2025-08-06 12:56:34] HOUR_COMPLETE - SOFI - Live hour processing complete | active_trades: 4/4 | buy_trades: 2 | sell_trades: 2 | capital: $100.00 | hour: 12
+2025-08-06 12:56:34,135 - INFO - Processing live hour for SOUN at 2025-08-06 12:56:34
+2025-08-06 12:56:34,135 - INFO - Fetching live SOUN options data for expiry 2025-09-19
+2025-08-06 12:56:34,135 - INFO - [2025-08-06 12:56:34] DATA_FETCH - SOUN - Fetching live options data | expiry_date: 2025-09-19 | company: SOUN
+2025-08-06 12:56:34,470 - INFO - Found 68 live options for SOUN
+2025-08-06 12:56:36,349 - INFO - Found 34 Call options for SOUN
+2025-08-06 12:56:36,815 - INFO - Live Heston params for SOUN: v0=1.3716, kappa=138.1087, theta=24.1902, sigma=0.9975, rho=0.0000
+2025-08-06 12:56:36,867 - INFO - Hourly data updated for SOUN hour 12 (2025-08-06): scripts/realtime_output/multi_company_sep19/SOUN_hourly_data.xlsx
+2025-08-06 12:56:36,867 - INFO - Saved hourly data for SOUN hour 12 (2025-08-06): 0 active trades marked, 0 exited trades marked
+2025-08-06 12:56:36,867 - INFO - Live selection for SOUN: 2 BUY opportunities, 2 SELL opportunities
+2025-08-06 12:56:36,867 - INFO - Current active trades: 0 BUY, 0 SELL
+2025-08-06 12:56:36,867 - INFO - [2025-08-06 12:56:36] ENTER - SOUN - SOUN_4.0_Call - BUY - $25.00
+2025-08-06 12:56:36,867 - INFO - ================================================================================
+2025-08-06 12:56:36,867 - INFO - 🎯 TRADE ENTERED: BUY SOUN_4.0_Call
+2025-08-06 12:56:36,867 - INFO -    Company: SOUN
+2025-08-06 12:56:36,867 - INFO -    Entry Time: 2025-08-06 12:56:36
+2025-08-06 12:56:36,867 - INFO -    Entry Price: $6.00
+2025-08-06 12:56:36,867 - INFO -    Heston Price: $6.86
+2025-08-06 12:56:36,867 - INFO -    Strike Price: $4.00
+2025-08-06 12:56:36,867 - INFO -    Stock Price: $10.84
+2025-08-06 12:56:36,867 - INFO -    Contracts: 1
+2025-08-06 12:56:36,867 - INFO -    Position Size: $25.00
+2025-08-06 12:56:36,867 - INFO -    Mispricing: $-0.86
+2025-08-06 12:56:36,867 - INFO -    Active Trades: 1/4
+2025-08-06 12:56:36,867 - INFO -    Current Capital: $100.00
+2025-08-06 12:56:36,867 - INFO -    Capital Status: PROFIT
+2025-08-06 12:56:36,867 - INFO - ================================================================================
+2025-08-06 12:56:36,876 - INFO - [2025-08-06 12:56:36] TRADE_ENTRY - SOUN - Trade entered: BUY SOUN_4.0_Call | entry_price: $6.00 | heston_price: $6.86 | strike: $4.00 | contracts: 1 | position_size: $25.00 | mispricing: $-0.86 | active_trades: 1/4 | capital: $100.00
+2025-08-06 12:56:36,876 - INFO - [2025-08-06 12:56:36] ENTER - SOUN - SOUN_2.0_Call - BUY - $25.00
+2025-08-06 12:56:36,877 - INFO - ================================================================================
+2025-08-06 12:56:36,877 - INFO - 🎯 TRADE ENTERED: BUY SOUN_2.0_Call
+2025-08-06 12:56:36,877 - INFO -    Company: SOUN
+2025-08-06 12:56:36,877 - INFO -    Entry Time: 2025-08-06 12:56:36
+2025-08-06 12:56:36,877 - INFO -    Entry Price: $8.51
+2025-08-06 12:56:36,877 - INFO -    Heston Price: $8.85
+2025-08-06 12:56:36,878 - INFO -    Strike Price: $2.00
+2025-08-06 12:56:36,878 - INFO -    Stock Price: $10.84
+2025-08-06 12:56:36,878 - INFO -    Contracts: 1
+2025-08-06 12:56:36,878 - INFO -    Position Size: $25.00
+2025-08-06 12:56:36,878 - INFO -    Mispricing: $-0.34
+2025-08-06 12:56:36,878 - INFO -    Active Trades: 2/4
+2025-08-06 12:56:36,878 - INFO -    Current Capital: $100.00
+2025-08-06 12:56:36,878 - INFO -    Capital Status: PROFIT
+2025-08-06 12:56:36,878 - INFO - ================================================================================
+2025-08-06 12:56:36,878 - INFO - [2025-08-06 12:56:36] TRADE_ENTRY - SOUN - Trade entered: BUY SOUN_2.0_Call | entry_price: $8.51 | heston_price: $8.85 | strike: $2.00 | contracts: 1 | position_size: $25.00 | mispricing: $-0.34 | active_trades: 2/4 | capital: $100.00
+2025-08-06 12:56:36,880 - INFO - [2025-08-06 12:56:36] ENTER - SOUN - SOUN_1.0_Call - SELL - $25.00
+2025-08-06 12:56:36,880 - INFO - ================================================================================
+2025-08-06 12:56:36,880 - INFO - 🎯 TRADE ENTERED: SELL SOUN_1.0_Call
+2025-08-06 12:56:36,880 - INFO -    Company: SOUN
+2025-08-06 12:56:36,880 - INFO -    Entry Time: 2025-08-06 12:56:36
+2025-08-06 12:56:36,880 - INFO -    Entry Price: $10.75
+2025-08-06 12:56:36,880 - INFO -    Heston Price: $9.85
+2025-08-06 12:56:36,880 - INFO -    Strike Price: $1.00
+2025-08-06 12:56:36,880 - INFO -    Stock Price: $10.84
+2025-08-06 12:56:36,880 - INFO -    Contracts: 1
+2025-08-06 12:56:36,880 - INFO -    Position Size: $25.00
+2025-08-06 12:56:36,880 - INFO -    Mispricing: $0.90
+2025-08-06 12:56:36,880 - INFO -    Active Trades: 3/4
+2025-08-06 12:56:36,880 - INFO -    Current Capital: $100.00
+2025-08-06 12:56:36,880 - INFO -    Capital Status: PROFIT
+2025-08-06 12:56:36,880 - INFO - ================================================================================
+2025-08-06 12:56:36,880 - INFO - [2025-08-06 12:56:36] TRADE_ENTRY - SOUN - Trade entered: SELL SOUN_1.0_Call | entry_price: $10.75 | heston_price: $9.85 | strike: $1.00 | contracts: 1 | position_size: $25.00 | mispricing: $0.90 | active_trades: 3/4 | capital: $100.00
+2025-08-06 12:56:36,883 - INFO - [2025-08-06 12:56:36] ENTER - SOUN - SOUN_5.0_Call - SELL - $25.00
+2025-08-06 12:56:36,883 - INFO - ================================================================================
+2025-08-06 12:56:36,883 - INFO - 🎯 TRADE ENTERED: SELL SOUN_5.0_Call
+2025-08-06 12:56:36,883 - INFO -    Company: SOUN
+2025-08-06 12:56:36,883 - INFO -    Entry Time: 2025-08-06 12:56:36
+2025-08-06 12:56:36,884 - INFO -    Entry Price: $6.10
+2025-08-06 12:56:36,884 - INFO -    Heston Price: $5.87
+2025-08-06 12:56:36,884 - INFO -    Strike Price: $5.00
+2025-08-06 12:56:36,884 - INFO -    Stock Price: $10.84
+2025-08-06 12:56:36,884 - INFO -    Contracts: 1
+2025-08-06 12:56:36,884 - INFO -    Position Size: $25.00
+2025-08-06 12:56:36,884 - INFO -    Mispricing: $0.23
+2025-08-06 12:56:36,884 - INFO -    Active Trades: 4/4
+2025-08-06 12:56:36,884 - INFO -    Current Capital: $100.00
+2025-08-06 12:56:36,884 - INFO -    Capital Status: PROFIT
+2025-08-06 12:56:36,884 - INFO - ================================================================================
+2025-08-06 12:56:36,885 - INFO - [2025-08-06 12:56:36] TRADE_ENTRY - SOUN - Trade entered: SELL SOUN_5.0_Call | entry_price: $6.10 | heston_price: $5.87 | strike: $5.00 | contracts: 1 | position_size: $25.00 | mispricing: $0.23 | active_trades: 4/4 | capital: $100.00
+2025-08-06 12:56:36,885 - INFO - Live hour complete for SOUN: 4/4 active trades (2 BUY, 2 SELL), Capital: $100.00
+2025-08-06 12:56:36,885 - INFO - Regenerated: Marked active trade in Excel (hour 12): SOUN_4.0_Call - BUY - $25.00 (entered hour 12)
+2025-08-06 12:56:36,886 - INFO - Regenerated: Marked active trade in Excel (hour 12): SOUN_2.0_Call - BUY - $25.00 (entered hour 12)
+2025-08-06 12:56:36,886 - INFO - Regenerated: Marked active trade in Excel (hour 12): SOUN_1.0_Call - SELL - $25.00 (entered hour 12)
+2025-08-06 12:56:36,886 - INFO - Regenerated: Marked active trade in Excel (hour 12): SOUN_5.0_Call - SELL - $25.00 (entered hour 12)
+2025-08-06 12:56:36,923 - INFO - Hourly data updated for SOUN hour 12 (2025-08-06): scripts/realtime_output/multi_company_sep19/SOUN_hourly_data.xlsx
+2025-08-06 12:56:36,923 - INFO - Regenerated hourly Excel for SOUN with 4/4 active trades marked
+2025-08-06 12:56:36,923 - INFO - [2025-08-06 12:56:36] HOUR_COMPLETE - SOUN - Live hour processing complete | active_trades: 4/4 | buy_trades: 2 | sell_trades: 2 | capital: $100.00 | hour: 12
+2025-08-06 12:56:36,923 - INFO - Processing live hour for AMD at 2025-08-06 12:56:36
+2025-08-06 12:56:36,923 - INFO - Fetching live AMD options data for expiry 2025-09-19
+2025-08-06 12:56:36,923 - INFO - [2025-08-06 12:56:36] DATA_FETCH - AMD - Fetching live options data | expiry_date: 2025-09-19 | company: AMD
+2025-08-06 12:56:37,322 - INFO - Found 96 live options for AMD
+2025-08-06 12:56:40,155 - INFO - Found 48 Call options for AMD
+2025-08-06 12:56:40,597 - INFO - Live Heston params for AMD: v0=0.1979, kappa=68.6515, theta=19.8107, sigma=-0.1143, rho=0.2143
+2025-08-06 12:56:40,665 - INFO - Hourly data updated for AMD hour 12 (2025-08-06): scripts/realtime_output/multi_company_sep19/AMD_hourly_data.xlsx
+2025-08-06 12:56:40,666 - INFO - Saved hourly data for AMD hour 12 (2025-08-06): 0 active trades marked, 0 exited trades marked
+2025-08-06 12:56:40,666 - INFO - Live selection for AMD: 2 BUY opportunities, 2 SELL opportunities
+2025-08-06 12:56:40,666 - INFO - Current active trades: 0 BUY, 0 SELL
+2025-08-06 12:56:40,666 - INFO - [2025-08-06 12:56:40] ENTER - AMD - AMD_60.0_Call - BUY - $25.00
+2025-08-06 12:56:40,666 - INFO - ================================================================================
+2025-08-06 12:56:40,666 - INFO - 🎯 TRADE ENTERED: BUY AMD_60.0_Call
+2025-08-06 12:56:40,666 - INFO -    Company: AMD
+2025-08-06 12:56:40,666 - INFO -    Entry Time: 2025-08-06 12:56:40
+2025-08-06 12:56:40,666 - INFO -    Entry Price: $77.60
+2025-08-06 12:56:40,666 - INFO -    Heston Price: $103.72
+2025-08-06 12:56:40,666 - INFO -    Strike Price: $60.00
+2025-08-06 12:56:40,666 - INFO -    Stock Price: $163.38
+2025-08-06 12:56:40,666 - INFO -    Contracts: 1
+2025-08-06 12:56:40,666 - INFO -    Position Size: $25.00
+2025-08-06 12:56:40,666 - INFO -    Mispricing: $-26.12
+2025-08-06 12:56:40,666 - INFO -    Active Trades: 1/4
+2025-08-06 12:56:40,666 - INFO -    Current Capital: $100.00
+2025-08-06 12:56:40,666 - INFO -    Capital Status: PROFIT
+2025-08-06 12:56:40,666 - INFO - ================================================================================
+2025-08-06 12:56:40,666 - INFO - [2025-08-06 12:56:40] TRADE_ENTRY - AMD - Trade entered: BUY AMD_60.0_Call | entry_price: $77.60 | heston_price: $103.72 | strike: $60.00 | contracts: 1 | position_size: $25.00 | mispricing: $-26.12 | active_trades: 1/4 | capital: $100.00
+2025-08-06 12:56:40,666 - INFO - [2025-08-06 12:56:40] ENTER - AMD - AMD_80.0_Call - BUY - $25.00
+2025-08-06 12:56:40,672 - INFO - ================================================================================
+2025-08-06 12:56:40,672 - INFO - 🎯 TRADE ENTERED: BUY AMD_80.0_Call
+2025-08-06 12:56:40,672 - INFO -    Company: AMD
+2025-08-06 12:56:40,672 - INFO -    Entry Time: 2025-08-06 12:56:40
+2025-08-06 12:56:40,672 - INFO -    Entry Price: $79.95
+2025-08-06 12:56:40,672 - INFO -    Heston Price: $83.88
+2025-08-06 12:56:40,672 - INFO -    Strike Price: $80.00
+2025-08-06 12:56:40,672 - INFO -    Stock Price: $163.38
+2025-08-06 12:56:40,672 - INFO -    Contracts: 1
+2025-08-06 12:56:40,672 - INFO -    Position Size: $25.00
+2025-08-06 12:56:40,672 - INFO -    Mispricing: $-3.93
+2025-08-06 12:56:40,673 - INFO -    Active Trades: 2/4
+2025-08-06 12:56:40,673 - INFO -    Current Capital: $100.00
+2025-08-06 12:56:40,673 - INFO -    Capital Status: PROFIT
+2025-08-06 12:56:40,673 - INFO - ================================================================================
+2025-08-06 12:56:40,673 - INFO - [2025-08-06 12:56:40] TRADE_ENTRY - AMD - Trade entered: BUY AMD_80.0_Call | entry_price: $79.95 | heston_price: $83.88 | strike: $80.00 | contracts: 1 | position_size: $25.00 | mispricing: $-3.93 | active_trades: 2/4 | capital: $100.00
+2025-08-06 12:56:40,674 - INFO - [2025-08-06 12:56:40] ENTER - AMD - AMD_45.0_Call - SELL - $25.00
+2025-08-06 12:56:40,674 - INFO - ================================================================================
+2025-08-06 12:56:40,674 - INFO - 🎯 TRADE ENTERED: SELL AMD_45.0_Call
+2025-08-06 12:56:40,674 - INFO -    Company: AMD
+2025-08-06 12:56:40,674 - INFO -    Entry Time: 2025-08-06 12:56:40
+2025-08-06 12:56:40,674 - INFO -    Entry Price: $133.80
+2025-08-06 12:56:40,675 - INFO -    Heston Price: $118.63
+2025-08-06 12:56:40,675 - INFO -    Strike Price: $45.00
+2025-08-06 12:56:40,675 - INFO -    Stock Price: $163.38
+2025-08-06 12:56:40,675 - INFO -    Contracts: 1
+2025-08-06 12:56:40,675 - INFO -    Position Size: $25.00
+2025-08-06 12:56:40,675 - INFO -    Mispricing: $15.17
+2025-08-06 12:56:40,675 - INFO -    Active Trades: 3/4
+2025-08-06 12:56:40,675 - INFO -    Current Capital: $100.00
+2025-08-06 12:56:40,675 - INFO -    Capital Status: PROFIT
+2025-08-06 12:56:40,675 - INFO - ================================================================================
+2025-08-06 12:56:40,675 - INFO - [2025-08-06 12:56:40] TRADE_ENTRY - AMD - Trade entered: SELL AMD_45.0_Call | entry_price: $133.80 | heston_price: $118.63 | strike: $45.00 | contracts: 1 | position_size: $25.00 | mispricing: $15.17 | active_trades: 3/4 | capital: $100.00
+2025-08-06 12:56:40,678 - INFO - [2025-08-06 12:56:40] ENTER - AMD - AMD_50.0_Call - SELL - $25.00
+2025-08-06 12:56:40,678 - INFO - ================================================================================
+2025-08-06 12:56:40,678 - INFO - 🎯 TRADE ENTERED: SELL AMD_50.0_Call
+2025-08-06 12:56:40,678 - INFO -    Company: AMD
+2025-08-06 12:56:40,678 - INFO -    Entry Time: 2025-08-06 12:56:40
+2025-08-06 12:56:40,678 - INFO -    Entry Price: $128.30
+2025-08-06 12:56:40,678 - INFO -    Heston Price: $113.66
+2025-08-06 12:56:40,678 - INFO -    Strike Price: $50.00
+2025-08-06 12:56:40,678 - INFO -    Stock Price: $163.38
+2025-08-06 12:56:40,680 - INFO -    Contracts: 1
+2025-08-06 12:56:40,680 - INFO -    Position Size: $25.00
+2025-08-06 12:56:40,680 - INFO -    Mispricing: $14.64
+2025-08-06 12:56:40,680 - INFO -    Active Trades: 4/4
+2025-08-06 12:56:40,680 - INFO -    Current Capital: $100.00
+2025-08-06 12:56:40,680 - INFO -    Capital Status: PROFIT
+2025-08-06 12:56:40,680 - INFO - ================================================================================
+2025-08-06 12:56:40,680 - INFO - [2025-08-06 12:56:40] TRADE_ENTRY - AMD - Trade entered: SELL AMD_50.0_Call | entry_price: $128.30 | heston_price: $113.66 | strike: $50.00 | contracts: 1 | position_size: $25.00 | mispricing: $14.64 | active_trades: 4/4 | capital: $100.00
+2025-08-06 12:56:40,680 - INFO - Live hour complete for AMD: 4/4 active trades (2 BUY, 2 SELL), Capital: $100.00
+2025-08-06 12:56:40,681 - INFO - Regenerated: Marked active trade in Excel (hour 12): AMD_60.0_Call - BUY - $25.00 (entered hour 12)
+2025-08-06 12:56:40,682 - INFO - Regenerated: Marked active trade in Excel (hour 12): AMD_80.0_Call - BUY - $25.00 (entered hour 12)
+2025-08-06 12:56:40,682 - INFO - Regenerated: Marked active trade in Excel (hour 12): AMD_45.0_Call - SELL - $25.00 (entered hour 12)
+2025-08-06 12:56:40,682 - INFO - Regenerated: Marked active trade in Excel (hour 12): AMD_50.0_Call - SELL - $25.00 (entered hour 12)
+2025-08-06 12:56:40,720 - INFO - Hourly data updated for AMD hour 12 (2025-08-06): scripts/realtime_output/multi_company_sep19/AMD_hourly_data.xlsx
+2025-08-06 12:56:40,720 - INFO - Regenerated hourly Excel for AMD with 4/4 active trades marked
+2025-08-06 12:56:40,720 - INFO - [2025-08-06 12:56:40] HOUR_COMPLETE - AMD - Live hour processing complete | active_trades: 4/4 | buy_trades: 2 | sell_trades: 2 | capital: $100.00 | hour: 12
+2025-08-06 12:56:40,720 - INFO - Processing live hour for AVGO at 2025-08-06 12:56:40
+2025-08-06 12:56:40,720 - INFO - Fetching live AVGO options data for expiry 2025-09-19
+2025-08-06 12:56:40,720 - INFO - [2025-08-06 12:56:40] DATA_FETCH - AVGO - Fetching live options data | expiry_date: 2025-09-19 | company: AVGO
+2025-08-06 12:56:41,124 - INFO - Found 98 live options for AVGO
+2025-08-06 12:56:43,410 - INFO - Found 49 Call options for AVGO
+2025-08-06 12:56:43,600 - INFO - Live Heston params for AVGO: v0=0.5113, kappa=0.0000, theta=0.3450, sigma=-0.8074, rho=0.5285
+2025-08-06 12:56:43,654 - INFO - Hourly data updated for AVGO hour 12 (2025-08-06): scripts/realtime_output/multi_company_sep19/AVGO_hourly_data.xlsx
+2025-08-06 12:56:43,654 - INFO - Saved hourly data for AVGO hour 12 (2025-08-06): 0 active trades marked, 0 exited trades marked
+2025-08-06 12:56:43,668 - INFO - Live selection for AVGO: 2 BUY opportunities, 0 SELL opportunities
+2025-08-06 12:56:43,668 - INFO - Current active trades: 0 BUY, 0 SELL
+2025-08-06 12:56:43,669 - INFO - [2025-08-06 12:56:43] ENTER - AVGO - AVGO_105.0_Call - BUY - $25.00
+2025-08-06 12:56:43,669 - INFO - ================================================================================
+2025-08-06 12:56:43,670 - INFO - 🎯 TRADE ENTERED: BUY AVGO_105.0_Call
+2025-08-06 12:56:43,670 - INFO -    Company: AVGO
+2025-08-06 12:56:43,670 - INFO -    Entry Time: 2025-08-06 12:56:43
+2025-08-06 12:56:43,670 - INFO -    Entry Price: $158.20
+2025-08-06 12:56:43,670 - INFO -    Heston Price: $197.73
+2025-08-06 12:56:43,670 - INFO -    Strike Price: $105.00
+2025-08-06 12:56:43,670 - INFO -    Stock Price: $302.15
+2025-08-06 12:56:43,670 - INFO -    Contracts: 1
+2025-08-06 12:56:43,670 - INFO -    Position Size: $25.00
+2025-08-06 12:56:43,670 - INFO -    Mispricing: $-39.53
+2025-08-06 12:56:43,670 - INFO -    Active Trades: 1/4
+2025-08-06 12:56:43,670 - INFO -    Current Capital: $100.00
+2025-08-06 12:56:43,670 - INFO -    Capital Status: PROFIT
+2025-08-06 12:56:43,670 - INFO - ================================================================================
+2025-08-06 12:56:43,670 - INFO - [2025-08-06 12:56:43] TRADE_ENTRY - AVGO - Trade entered: BUY AVGO_105.0_Call | entry_price: $158.20 | heston_price: $197.73 | strike: $105.00 | contracts: 1 | position_size: $25.00 | mispricing: $-39.53 | active_trades: 1/4 | capital: $100.00
+2025-08-06 12:56:43,673 - INFO - [2025-08-06 12:56:43] ENTER - AVGO - AVGO_115.0_Call - BUY - $25.00
+2025-08-06 12:56:43,673 - INFO - ================================================================================
+2025-08-06 12:56:43,673 - INFO - 🎯 TRADE ENTERED: BUY AVGO_115.0_Call
+2025-08-06 12:56:43,673 - INFO -    Company: AVGO
+2025-08-06 12:56:43,673 - INFO -    Entry Time: 2025-08-06 12:56:43
+2025-08-06 12:56:43,673 - INFO -    Entry Price: $149.18
+2025-08-06 12:56:43,673 - INFO -    Heston Price: $187.78
+2025-08-06 12:56:43,673 - INFO -    Strike Price: $115.00
+2025-08-06 12:56:43,673 - INFO -    Stock Price: $302.15
+2025-08-06 12:56:43,673 - INFO -    Contracts: 1
+2025-08-06 12:56:43,674 - INFO -    Position Size: $25.00
+2025-08-06 12:56:43,674 - INFO -    Mispricing: $-38.60
+2025-08-06 12:56:43,674 - INFO -    Active Trades: 2/4
+2025-08-06 12:56:43,674 - INFO -    Current Capital: $100.00
+2025-08-06 12:56:43,674 - INFO -    Capital Status: PROFIT
+2025-08-06 12:56:43,674 - INFO - ================================================================================
+2025-08-06 12:56:43,674 - INFO - [2025-08-06 12:56:43] TRADE_ENTRY - AVGO - Trade entered: BUY AVGO_115.0_Call | entry_price: $149.18 | heston_price: $187.78 | strike: $115.00 | contracts: 1 | position_size: $25.00 | mispricing: $-38.60 | active_trades: 2/4 | capital: $100.00
+2025-08-06 12:56:43,674 - INFO - Live hour complete for AVGO: 2/4 active trades (2 BUY, 0 SELL), Capital: $100.00
+2025-08-06 12:56:43,675 - INFO - Regenerated: Marked active trade in Excel (hour 12): AVGO_105.0_Call - BUY - $25.00 (entered hour 12)
+2025-08-06 12:56:43,676 - INFO - Regenerated: Marked active trade in Excel (hour 12): AVGO_115.0_Call - BUY - $25.00 (entered hour 12)
+2025-08-06 12:56:43,710 - INFO - Hourly data updated for AVGO hour 12 (2025-08-06): scripts/realtime_output/multi_company_sep19/AVGO_hourly_data.xlsx
+2025-08-06 12:56:43,719 - INFO - Regenerated hourly Excel for AVGO with 2/2 active trades marked
+2025-08-06 12:56:43,719 - INFO - [2025-08-06 12:56:43] HOUR_COMPLETE - AVGO - Live hour processing complete | active_trades: 2/4 | buy_trades: 2 | sell_trades: 0 | capital: $100.00 | hour: 12
+2025-08-06 12:56:43,719 - INFO - Processing live hour for CRCL at 2025-08-06 12:56:43
+2025-08-06 12:56:43,720 - INFO - Fetching live CRCL options data for expiry 2025-09-19
+2025-08-06 12:56:43,720 - INFO - [2025-08-06 12:56:43] DATA_FETCH - CRCL - Fetching live options data | expiry_date: 2025-09-19 | company: CRCL
+2025-08-06 12:56:44,145 - INFO - Found 126 live options for CRCL
+2025-08-06 12:56:47,219 - INFO - Found 63 Call options for CRCL
+2025-08-06 12:56:47,544 - INFO - Live Heston params for CRCL: v0=0.8153, kappa=0.0000, theta=0.8490, sigma=0.7617, rho=0.8014
+2025-08-06 12:56:47,653 - INFO - Hourly data updated for CRCL hour 12 (2025-08-06): scripts/realtime_output/multi_company_sep19/CRCL_hourly_data.xlsx
+2025-08-06 12:56:47,653 - INFO - Saved hourly data for CRCL hour 12 (2025-08-06): 0 active trades marked, 0 exited trades marked
+2025-08-06 12:56:47,655 - INFO - Live selection for CRCL: 2 BUY opportunities, 2 SELL opportunities
+2025-08-06 12:56:47,655 - INFO - Current active trades: 0 BUY, 0 SELL
+2025-08-06 12:56:47,656 - INFO - [2025-08-06 12:56:47] ENTER - CRCL - CRCL_95.0_Call - BUY - $25.00
+2025-08-06 12:56:47,656 - INFO - ================================================================================
+2025-08-06 12:56:47,656 - INFO - 🎯 TRADE ENTERED: BUY CRCL_95.0_Call
+2025-08-06 12:56:47,656 - INFO -    Company: CRCL
+2025-08-06 12:56:47,656 - INFO -    Entry Time: 2025-08-06 12:56:47
+2025-08-06 12:56:47,656 - INFO -    Entry Price: $59.51
+2025-08-06 12:56:47,656 - INFO -    Heston Price: $66.78
+2025-08-06 12:56:47,657 - INFO -    Strike Price: $95.00
+2025-08-06 12:56:47,657 - INFO -    Stock Price: $160.90
+2025-08-06 12:56:47,657 - INFO -    Contracts: 1
+2025-08-06 12:56:47,657 - INFO -    Position Size: $25.00
+2025-08-06 12:56:47,657 - INFO -    Mispricing: $-7.27
+2025-08-06 12:56:47,657 - INFO -    Active Trades: 1/4
+2025-08-06 12:56:47,657 - INFO -    Current Capital: $100.00
+2025-08-06 12:56:47,657 - INFO -    Capital Status: PROFIT
+2025-08-06 12:56:47,657 - INFO - ================================================================================
+2025-08-06 12:56:47,657 - INFO - [2025-08-06 12:56:47] TRADE_ENTRY - CRCL - Trade entered: BUY CRCL_95.0_Call | entry_price: $59.51 | heston_price: $66.78 | strike: $95.00 | contracts: 1 | position_size: $25.00 | mispricing: $-7.27 | active_trades: 1/4 | capital: $100.00
+2025-08-06 12:56:47,657 - INFO - [2025-08-06 12:56:47] ENTER - CRCL - CRCL_170.0_Call - BUY - $25.00
+2025-08-06 12:56:47,657 - INFO - ================================================================================
+2025-08-06 12:56:47,657 - INFO - 🎯 TRADE ENTERED: BUY CRCL_170.0_Call
+2025-08-06 12:56:47,657 - INFO -    Company: CRCL
+2025-08-06 12:56:47,657 - INFO -    Entry Time: 2025-08-06 12:56:47
+2025-08-06 12:56:47,657 - INFO -    Entry Price: $11.75
+2025-08-06 12:56:47,657 - INFO -    Heston Price: $16.86
+2025-08-06 12:56:47,657 - INFO -    Strike Price: $170.00
+2025-08-06 12:56:47,657 - INFO -    Stock Price: $160.90
+2025-08-06 12:56:47,657 - INFO -    Contracts: 1
+2025-08-06 12:56:47,657 - INFO -    Position Size: $25.00
+2025-08-06 12:56:47,657 - INFO -    Mispricing: $-5.11
+2025-08-06 12:56:47,657 - INFO -    Active Trades: 2/4
+2025-08-06 12:56:47,657 - INFO -    Current Capital: $100.00
+2025-08-06 12:56:47,657 - INFO -    Capital Status: PROFIT
+2025-08-06 12:56:47,657 - INFO - ================================================================================
+2025-08-06 12:56:47,657 - INFO - [2025-08-06 12:56:47] TRADE_ENTRY - CRCL - Trade entered: BUY CRCL_170.0_Call | entry_price: $11.75 | heston_price: $16.86 | strike: $170.00 | contracts: 1 | position_size: $25.00 | mispricing: $-5.11 | active_trades: 2/4 | capital: $100.00
+2025-08-06 12:56:47,657 - INFO - [2025-08-06 12:56:47] ENTER - CRCL - CRCL_125.0_Call - SELL - $25.00
+2025-08-06 12:56:47,657 - INFO - ================================================================================
+2025-08-06 12:56:47,661 - INFO - 🎯 TRADE ENTERED: SELL CRCL_125.0_Call
+2025-08-06 12:56:47,661 - INFO -    Company: CRCL
+2025-08-06 12:56:47,661 - INFO -    Entry Time: 2025-08-06 12:56:47
+2025-08-06 12:56:47,661 - INFO -    Entry Price: $59.00
+2025-08-06 12:56:47,661 - INFO -    Heston Price: $40.98
+2025-08-06 12:56:47,661 - INFO -    Strike Price: $125.00
+2025-08-06 12:56:47,661 - INFO -    Stock Price: $160.90
+2025-08-06 12:56:47,661 - INFO -    Contracts: 1
+2025-08-06 12:56:47,661 - INFO -    Position Size: $25.00
+2025-08-06 12:56:47,661 - INFO -    Mispricing: $18.02
+2025-08-06 12:56:47,661 - INFO -    Active Trades: 3/4
+2025-08-06 12:56:47,661 - INFO -    Current Capital: $100.00
+2025-08-06 12:56:47,661 - INFO -    Capital Status: PROFIT
+2025-08-06 12:56:47,661 - INFO - ================================================================================
+2025-08-06 12:56:47,661 - INFO - [2025-08-06 12:56:47] TRADE_ENTRY - CRCL - Trade entered: SELL CRCL_125.0_Call | entry_price: $59.00 | heston_price: $40.98 | strike: $125.00 | contracts: 1 | position_size: $25.00 | mispricing: $18.02 | active_trades: 3/4 | capital: $100.00
+2025-08-06 12:56:47,662 - INFO - [2025-08-06 12:56:47] ENTER - CRCL - CRCL_115.0_Call - SELL - $25.00
+2025-08-06 12:56:47,662 - INFO - ================================================================================
+2025-08-06 12:56:47,662 - INFO - 🎯 TRADE ENTERED: SELL CRCL_115.0_Call
+2025-08-06 12:56:47,662 - INFO -    Company: CRCL
+2025-08-06 12:56:47,662 - INFO -    Entry Time: 2025-08-06 12:56:47
+2025-08-06 12:56:47,662 - INFO -    Entry Price: $60.60
+2025-08-06 12:56:47,663 - INFO -    Heston Price: $48.84
+2025-08-06 12:56:47,663 - INFO -    Strike Price: $115.00
+2025-08-06 12:56:47,663 - INFO -    Stock Price: $160.90
+2025-08-06 12:56:47,663 - INFO -    Contracts: 1
+2025-08-06 12:56:47,663 - INFO -    Position Size: $25.00
+2025-08-06 12:56:47,663 - INFO -    Mispricing: $11.76
+2025-08-06 12:56:47,663 - INFO -    Active Trades: 4/4
+2025-08-06 12:56:47,663 - INFO -    Current Capital: $100.00
+2025-08-06 12:56:47,663 - INFO -    Capital Status: PROFIT
+2025-08-06 12:56:47,663 - INFO - ================================================================================
+2025-08-06 12:56:47,663 - INFO - [2025-08-06 12:56:47] TRADE_ENTRY - CRCL - Trade entered: SELL CRCL_115.0_Call | entry_price: $60.60 | heston_price: $48.84 | strike: $115.00 | contracts: 1 | position_size: $25.00 | mispricing: $11.76 | active_trades: 4/4 | capital: $100.00
+2025-08-06 12:56:47,663 - INFO - Live hour complete for CRCL: 4/4 active trades (2 BUY, 2 SELL), Capital: $100.00
+2025-08-06 12:56:47,664 - INFO - Regenerated: Marked active trade in Excel (hour 12): CRCL_95.0_Call - BUY - $25.00 (entered hour 12)
+2025-08-06 12:56:47,664 - INFO - Regenerated: Marked active trade in Excel (hour 12): CRCL_170.0_Call - BUY - $25.00 (entered hour 12)
+2025-08-06 12:56:47,664 - INFO - Regenerated: Marked active trade in Excel (hour 12): CRCL_125.0_Call - SELL - $25.00 (entered hour 12)
+2025-08-06 12:56:47,666 - INFO - Regenerated: Marked active trade in Excel (hour 12): CRCL_115.0_Call - SELL - $25.00 (entered hour 12)
+2025-08-06 12:56:47,704 - INFO - Hourly data updated for CRCL hour 12 (2025-08-06): scripts/realtime_output/multi_company_sep19/CRCL_hourly_data.xlsx
+2025-08-06 12:56:47,704 - INFO - Regenerated hourly Excel for CRCL with 4/4 active trades marked
+2025-08-06 12:56:47,704 - INFO - [2025-08-06 12:56:47] HOUR_COMPLETE - CRCL - Live hour processing complete | active_trades: 4/4 | buy_trades: 2 | sell_trades: 2 | capital: $100.00 | hour: 12
+2025-08-06 12:56:47,704 - INFO - Processing live hour for BBAI at 2025-08-06 12:56:47
+2025-08-06 12:56:47,704 - INFO - Fetching live BBAI options data for expiry 2025-09-19
+2025-08-06 12:56:47,704 - INFO - [2025-08-06 12:56:47] DATA_FETCH - BBAI - Fetching live options data | expiry_date: 2025-09-19 | company: BBAI
+2025-08-06 12:56:48,016 - INFO - Found 48 live options for BBAI
+2025-08-06 12:56:49,306 - INFO - Found 24 Call options for BBAI
+2025-08-06 12:56:53,258 - INFO - Live Heston params for BBAI: v0=1.5645, kappa=10.2889, theta=0.5771, sigma=1.0000, rho=1.7215
+2025-08-06 12:56:53,303 - INFO - Hourly data updated for BBAI hour 12 (2025-08-06): scripts/realtime_output/multi_company_sep19/BBAI_hourly_data.xlsx
+2025-08-06 12:56:53,303 - INFO - Saved hourly data for BBAI hour 12 (2025-08-06): 0 active trades marked, 0 exited trades marked
+2025-08-06 12:56:53,303 - INFO - Live selection for BBAI: 2 BUY opportunities, 2 SELL opportunities
+2025-08-06 12:56:53,303 - INFO - Current active trades: 0 BUY, 0 SELL
+2025-08-06 12:56:53,303 - INFO - [2025-08-06 12:56:53] ENTER - BBAI - BBAI_0.5_Call - BUY - $25.00
+2025-08-06 12:56:53,303 - INFO - ================================================================================
+2025-08-06 12:56:53,303 - INFO - 🎯 TRADE ENTERED: BUY BBAI_0.5_Call
+2025-08-06 12:56:53,303 - INFO -    Company: BBAI
+2025-08-06 12:56:53,303 - INFO -    Entry Time: 2025-08-06 12:56:53
+2025-08-06 12:56:53,303 - INFO -    Entry Price: $5.89
+2025-08-06 12:56:53,303 - INFO -    Heston Price: $6.22
+2025-08-06 12:56:53,303 - INFO -    Strike Price: $0.50
+2025-08-06 12:56:53,309 - INFO -    Stock Price: $6.72
+2025-08-06 12:56:53,309 - INFO -    Contracts: 1
+2025-08-06 12:56:53,309 - INFO -    Position Size: $25.00
+2025-08-06 12:56:53,309 - INFO -    Mispricing: $-0.33
+2025-08-06 12:56:53,309 - INFO -    Active Trades: 1/4
+2025-08-06 12:56:53,309 - INFO -    Current Capital: $100.00
+2025-08-06 12:56:53,309 - INFO -    Capital Status: PROFIT
+2025-08-06 12:56:53,309 - INFO - ================================================================================
+2025-08-06 12:56:53,309 - INFO - [2025-08-06 12:56:53] TRADE_ENTRY - BBAI - Trade entered: BUY BBAI_0.5_Call | entry_price: $5.89 | heston_price: $6.22 | strike: $0.50 | contracts: 1 | position_size: $25.00 | mispricing: $-0.33 | active_trades: 1/4 | capital: $100.00
+2025-08-06 12:56:53,311 - INFO - [2025-08-06 12:56:53] ENTER - BBAI - BBAI_6.0_Call - BUY - $25.00
+2025-08-06 12:56:53,311 - INFO - ================================================================================
+2025-08-06 12:56:53,311 - INFO - 🎯 TRADE ENTERED: BUY BBAI_6.0_Call
+2025-08-06 12:56:53,311 - INFO -    Company: BBAI
+2025-08-06 12:56:53,311 - INFO -    Entry Time: 2025-08-06 12:56:53
+2025-08-06 12:56:53,311 - INFO -    Entry Price: $1.40
+2025-08-06 12:56:53,311 - INFO -    Heston Price: $1.53
+2025-08-06 12:56:53,311 - INFO -    Strike Price: $6.00
+2025-08-06 12:56:53,311 - INFO -    Stock Price: $6.72
+2025-08-06 12:56:53,311 - INFO -    Contracts: 1
+2025-08-06 12:56:53,311 - INFO -    Position Size: $25.00
+2025-08-06 12:56:53,312 - INFO -    Mispricing: $-0.13
+2025-08-06 12:56:53,312 - INFO -    Active Trades: 2/4
+2025-08-06 12:56:53,312 - INFO -    Current Capital: $100.00
+2025-08-06 12:56:53,312 - INFO -    Capital Status: PROFIT
+2025-08-06 12:56:53,312 - INFO - ================================================================================
+2025-08-06 12:56:53,313 - INFO - [2025-08-06 12:56:53] TRADE_ENTRY - BBAI - Trade entered: BUY BBAI_6.0_Call | entry_price: $1.40 | heston_price: $1.53 | strike: $6.00 | contracts: 1 | position_size: $25.00 | mispricing: $-0.13 | active_trades: 2/4 | capital: $100.00
+2025-08-06 12:56:53,313 - INFO - [2025-08-06 12:56:53] ENTER - BBAI - BBAI_2.0_Call - SELL - $25.00
+2025-08-06 12:56:53,313 - INFO - ================================================================================
+2025-08-06 12:56:53,313 - INFO - 🎯 TRADE ENTERED: SELL BBAI_2.0_Call
+2025-08-06 12:56:53,313 - INFO -    Company: BBAI
+2025-08-06 12:56:53,313 - INFO -    Entry Time: 2025-08-06 12:56:53
+2025-08-06 12:56:53,313 - INFO -    Entry Price: $5.20
+2025-08-06 12:56:53,313 - INFO -    Heston Price: $4.73
+2025-08-06 12:56:53,313 - INFO -    Strike Price: $2.00
+2025-08-06 12:56:53,313 - INFO -    Stock Price: $6.72
+2025-08-06 12:56:53,313 - INFO -    Contracts: 1
+2025-08-06 12:56:53,313 - INFO -    Position Size: $25.00
+2025-08-06 12:56:53,313 - INFO -    Mispricing: $0.47
+2025-08-06 12:56:53,313 - INFO -    Active Trades: 3/4
+2025-08-06 12:56:53,313 - INFO -    Current Capital: $100.00
+2025-08-06 12:56:53,313 - INFO -    Capital Status: PROFIT
+2025-08-06 12:56:53,313 - INFO - ================================================================================
+2025-08-06 12:56:53,315 - INFO - [2025-08-06 12:56:53] TRADE_ENTRY - BBAI - Trade entered: SELL BBAI_2.0_Call | entry_price: $5.20 | heston_price: $4.73 | strike: $2.00 | contracts: 1 | position_size: $25.00 | mispricing: $0.47 | active_trades: 3/4 | capital: $100.00
+2025-08-06 12:56:53,315 - INFO - [2025-08-06 12:56:53] ENTER - BBAI - BBAI_2.5_Call - SELL - $25.00
+2025-08-06 12:56:53,316 - INFO - ================================================================================
+2025-08-06 12:56:53,316 - INFO - 🎯 TRADE ENTERED: SELL BBAI_2.5_Call
+2025-08-06 12:56:53,316 - INFO -    Company: BBAI
+2025-08-06 12:56:53,316 - INFO -    Entry Time: 2025-08-06 12:56:53
+2025-08-06 12:56:53,316 - INFO -    Entry Price: $4.70
+2025-08-06 12:56:53,316 - INFO -    Heston Price: $4.24
+2025-08-06 12:56:53,316 - INFO -    Strike Price: $2.50
+2025-08-06 12:56:53,316 - INFO -    Stock Price: $6.72
+2025-08-06 12:56:53,316 - INFO -    Contracts: 1
+2025-08-06 12:56:53,316 - INFO -    Position Size: $25.00
+2025-08-06 12:56:53,316 - INFO -    Mispricing: $0.46
+2025-08-06 12:56:53,316 - INFO -    Active Trades: 4/4
+2025-08-06 12:56:53,316 - INFO -    Current Capital: $100.00
+2025-08-06 12:56:53,316 - INFO -    Capital Status: PROFIT
+2025-08-06 12:56:53,316 - INFO - ================================================================================
+2025-08-06 12:56:53,316 - INFO - [2025-08-06 12:56:53] TRADE_ENTRY - BBAI - Trade entered: SELL BBAI_2.5_Call | entry_price: $4.70 | heston_price: $4.24 | strike: $2.50 | contracts: 1 | position_size: $25.00 | mispricing: $0.46 | active_trades: 4/4 | capital: $100.00
+2025-08-06 12:56:53,316 - INFO - Live hour complete for BBAI: 4/4 active trades (2 BUY, 2 SELL), Capital: $100.00
+2025-08-06 12:56:53,319 - INFO - Regenerated: Marked active trade in Excel (hour 12): BBAI_0.5_Call - BUY - $25.00 (entered hour 12)
+2025-08-06 12:56:53,319 - INFO - Regenerated: Marked active trade in Excel (hour 12): BBAI_6.0_Call - BUY - $25.00 (entered hour 12)
+2025-08-06 12:56:53,319 - INFO - Regenerated: Marked active trade in Excel (hour 12): BBAI_2.0_Call - SELL - $25.00 (entered hour 12)
+2025-08-06 12:56:53,319 - INFO - Regenerated: Marked active trade in Excel (hour 12): BBAI_2.5_Call - SELL - $25.00 (entered hour 12)
+2025-08-06 12:56:53,352 - INFO - Hourly data updated for BBAI hour 12 (2025-08-06): scripts/realtime_output/multi_company_sep19/BBAI_hourly_data.xlsx
+2025-08-06 12:56:53,352 - INFO - Regenerated hourly Excel for BBAI with 4/4 active trades marked
+2025-08-06 12:56:53,353 - INFO - [2025-08-06 12:56:53] HOUR_COMPLETE - BBAI - Live hour processing complete | active_trades: 4/4 | buy_trades: 2 | sell_trades: 2 | capital: $100.00 | hour: 12
+2025-08-06 12:56:53,353 - INFO - Processing live hour for SLDB at 2025-08-06 12:56:53
+2025-08-06 12:56:53,353 - INFO - Fetching live SLDB options data for expiry 2025-09-19
+2025-08-06 12:56:53,354 - INFO - [2025-08-06 12:56:53] DATA_FETCH - SLDB - Fetching live options data | expiry_date: 2025-09-19 | company: SLDB
+2025-08-06 12:56:53,622 - INFO - Found 10 live options for SLDB
+2025-08-06 12:56:54,959 - INFO - Found 5 Call options for SLDB
+2025-08-06 12:56:54,978 - INFO - Live Heston params for SLDB: v0=2.1817, kappa=0.0000, theta=0.3333, sigma=-0.7788, rho=2.2097
+2025-08-06 12:56:55,006 - INFO - Hourly data updated for SLDB hour 12 (2025-08-06): scripts/realtime_output/multi_company_sep19/SLDB_hourly_data.xlsx
+2025-08-06 12:56:55,006 - INFO - Saved hourly data for SLDB hour 12 (2025-08-06): 0 active trades marked, 0 exited trades marked
+2025-08-06 12:56:55,008 - INFO - Live selection for SLDB: 2 BUY opportunities, 1 SELL opportunities
+2025-08-06 12:56:55,008 - INFO - Current active trades: 0 BUY, 0 SELL
+2025-08-06 12:56:55,008 - INFO - [2025-08-06 12:56:55] ENTER - SLDB - SLDB_7.5_Call - BUY - $25.00
+2025-08-06 12:56:55,008 - INFO - ================================================================================
+2025-08-06 12:56:55,008 - INFO - 🎯 TRADE ENTERED: BUY SLDB_7.5_Call
+2025-08-06 12:56:55,008 - INFO -    Company: SLDB
+2025-08-06 12:56:55,008 - INFO -    Entry Time: 2025-08-06 12:56:54
+2025-08-06 12:56:55,008 - INFO -    Entry Price: $0.50
+2025-08-06 12:56:55,008 - INFO -    Heston Price: $0.99
+2025-08-06 12:56:55,008 - INFO -    Strike Price: $7.50
+2025-08-06 12:56:55,008 - INFO -    Stock Price: $6.51
+2025-08-06 12:56:55,008 - INFO -    Contracts: 1
+2025-08-06 12:56:55,008 - INFO -    Position Size: $25.00
+2025-08-06 12:56:55,008 - INFO -    Mispricing: $-0.49
+2025-08-06 12:56:55,008 - INFO -    Active Trades: 1/4
+2025-08-06 12:56:55,008 - INFO -    Current Capital: $100.00
+2025-08-06 12:56:55,008 - INFO -    Capital Status: PROFIT
+2025-08-06 12:56:55,008 - INFO - ================================================================================
+2025-08-06 12:56:55,008 - INFO - [2025-08-06 12:56:55] TRADE_ENTRY - SLDB - Trade entered: BUY SLDB_7.5_Call | entry_price: $0.50 | heston_price: $0.99 | strike: $7.50 | contracts: 1 | position_size: $25.00 | mispricing: $-0.49 | active_trades: 1/4 | capital: $100.00
+2025-08-06 12:56:55,008 - INFO - [2025-08-06 12:56:55] ENTER - SLDB - SLDB_10.0_Call - BUY - $25.00
+2025-08-06 12:56:55,008 - INFO - ================================================================================
+2025-08-06 12:56:55,008 - INFO - 🎯 TRADE ENTERED: BUY SLDB_10.0_Call
+2025-08-06 12:56:55,008 - INFO -    Company: SLDB
+2025-08-06 12:56:55,008 - INFO -    Entry Time: 2025-08-06 12:56:54
+2025-08-06 12:56:55,008 - INFO -    Entry Price: $0.15
+2025-08-06 12:56:55,008 - INFO -    Heston Price: $0.45
+2025-08-06 12:56:55,008 - INFO -    Strike Price: $10.00
+2025-08-06 12:56:55,008 - INFO -    Stock Price: $6.51
+2025-08-06 12:56:55,008 - INFO -    Contracts: 1
+2025-08-06 12:56:55,008 - INFO -    Position Size: $25.00
+2025-08-06 12:56:55,008 - INFO -    Mispricing: $-0.30
+2025-08-06 12:56:55,008 - INFO -    Active Trades: 2/4
+2025-08-06 12:56:55,008 - INFO -    Current Capital: $100.00
+2025-08-06 12:56:55,008 - INFO -    Capital Status: PROFIT
+2025-08-06 12:56:55,008 - INFO - ================================================================================
+2025-08-06 12:56:55,008 - INFO - [2025-08-06 12:56:55] TRADE_ENTRY - SLDB - Trade entered: BUY SLDB_10.0_Call | entry_price: $0.15 | heston_price: $0.45 | strike: $10.00 | contracts: 1 | position_size: $25.00 | mispricing: $-0.30 | active_trades: 2/4 | capital: $100.00
+2025-08-06 12:56:55,008 - INFO - [2025-08-06 12:56:55] ENTER - SLDB - SLDB_2.5_Call - SELL - $25.00
+2025-08-06 12:56:55,008 - INFO - ================================================================================
+2025-08-06 12:56:55,008 - INFO - 🎯 TRADE ENTERED: SELL SLDB_2.5_Call
+2025-08-06 12:56:55,016 - INFO -    Company: SLDB
+2025-08-06 12:56:55,016 - INFO -    Entry Time: 2025-08-06 12:56:54
+2025-08-06 12:56:55,016 - INFO -    Entry Price: $4.81
+2025-08-06 12:56:55,016 - INFO -    Heston Price: $4.06
+2025-08-06 12:56:55,016 - INFO -    Strike Price: $2.50
+2025-08-06 12:56:55,016 - INFO -    Stock Price: $6.51
+2025-08-06 12:56:55,016 - INFO -    Contracts: 1
+2025-08-06 12:56:55,016 - INFO -    Position Size: $25.00
+2025-08-06 12:56:55,016 - INFO -    Mispricing: $0.75
+2025-08-06 12:56:55,016 - INFO -    Active Trades: 3/4
+2025-08-06 12:56:55,016 - INFO -    Current Capital: $100.00
+2025-08-06 12:56:55,016 - INFO -    Capital Status: PROFIT
+2025-08-06 12:56:55,016 - INFO - ================================================================================
+2025-08-06 12:56:55,017 - INFO - [2025-08-06 12:56:55] TRADE_ENTRY - SLDB - Trade entered: SELL SLDB_2.5_Call | entry_price: $4.81 | heston_price: $4.06 | strike: $2.50 | contracts: 1 | position_size: $25.00 | mispricing: $0.75 | active_trades: 3/4 | capital: $100.00
+2025-08-06 12:56:55,017 - INFO - Live hour complete for SLDB: 3/4 active trades (2 BUY, 1 SELL), Capital: $100.00
+2025-08-06 12:56:55,018 - INFO - Regenerated: Marked active trade in Excel (hour 12): SLDB_7.5_Call - BUY - $25.00 (entered hour 12)
+2025-08-06 12:56:55,019 - INFO - Regenerated: Marked active trade in Excel (hour 12): SLDB_10.0_Call - BUY - $25.00 (entered hour 12)
+2025-08-06 12:56:55,019 - INFO - Regenerated: Marked active trade in Excel (hour 12): SLDB_2.5_Call - SELL - $25.00 (entered hour 12)
+2025-08-06 12:56:55,044 - INFO - Hourly data updated for SLDB hour 12 (2025-08-06): scripts/realtime_output/multi_company_sep19/SLDB_hourly_data.xlsx
+2025-08-06 12:56:55,044 - INFO - Regenerated hourly Excel for SLDB with 3/3 active trades marked
+2025-08-06 12:56:55,044 - INFO - [2025-08-06 12:56:55] HOUR_COMPLETE - SLDB - Live hour processing complete | active_trades: 3/4 | buy_trades: 2 | sell_trades: 1 | capital: $100.00 | hour: 12
+2025-08-06 12:56:55,044 - INFO - ================================================================================
+2025-08-06 12:56:55,044 - INFO - 📊 PORTFOLIO STATUS:
+2025-08-06 12:56:55,044 - INFO -    Total Active Trades: 37
+2025-08-06 12:56:55,044 - INFO -    Total Trades Executed: 37
+2025-08-06 12:56:55,044 - INFO -    Total Portfolio PnL: $0.00
+2025-08-06 12:56:55,044 - INFO -    Current Portfolio Capital: $1000.00
+2025-08-06 12:56:55,044 - INFO -    Portfolio Return: 0.00%
+2025-08-06 12:56:55,044 - INFO - ================================================================================
+2025-08-06 12:56:55,064 - INFO - Incremental portfolio results saved at 2025-08-06 12:56:55
+2025-08-06 12:56:55,065 - INFO - Waiting for next hour... (will process at 2025-08-06 13:56:09 PST)
+2025-08-06 13:56:54,952 - INFO - Market is closed. Waiting 30 minutes before checking again...
+2025-08-06 14:26:54,871 - INFO - Market is closed. Waiting 30 minutes before checking again...
+2025-08-06 14:56:54,819 - INFO - Market is closed. Waiting 30 minutes before checking again...
+2025-08-06 15:26:54,780 - INFO - Market is closed. Waiting 30 minutes before checking again...
+2025-08-06 15:56:54,739 - INFO - Market is closed. Waiting 30 minutes before checking again...
+2025-08-06 16:26:54,700 - INFO - Market is closed. Waiting 30 minutes before checking again...
+2025-08-06 16:56:54,660 - INFO - Market is closed. Waiting 30 minutes before checking again...
+2025-08-06 17:26:54,620 - INFO - Market is closed. Waiting 30 minutes before checking again...
+2025-08-06 17:56:54,579 - INFO - Market is closed. Waiting 30 minutes before checking again...
+2025-08-06 18:26:54,514 - INFO - Market is closed. Waiting 30 minutes before checking again...
+2025-08-06 18:56:54,434 - INFO - Market is closed. Waiting 30 minutes before checking again...
+2025-08-06 19:26:54,377 - INFO - Market is closed. Waiting 30 minutes before checking again...
+2025-08-06 19:56:54,337 - INFO - Market is closed. Waiting 30 minutes before checking again...
+2025-08-06 20:26:54,297 - INFO - Market is closed. Waiting 30 minutes before checking again...
+2025-08-06 20:56:54,256 - INFO - Market is closed. Waiting 30 minutes before checking again...
+2025-08-06 21:26:54,215 - INFO - Market is closed. Waiting 30 minutes before checking again...
+2025-08-06 21:56:54,176 - INFO - Market is closed. Waiting 30 minutes before checking again...
+2025-08-06 22:26:54,140 - INFO - Market is closed. Waiting 30 minutes before checking again...
+2025-08-06 22:56:54,080 - INFO - Market is closed. Waiting 30 minutes before checking again...
+2025-08-06 23:26:54,003 - INFO - Market is closed. Waiting 30 minutes before checking again...
+2025-08-06 23:56:53,943 - INFO - Market is closed. Waiting 30 minutes before checking again...

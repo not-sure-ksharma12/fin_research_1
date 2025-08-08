@@ -1,15 +1,46 @@
-[2025-08-05 10:00:19] SYSTEM - CRCL - Trading system initialized | initial_capital: $100.0 | company: CRCL
-[2025-08-05 10:00:55] DATA_FETCH - CRCL - Fetching live options data | expiry_date: 2025-09-19 | company: CRCL
-[2025-08-05 10:01:00] ENTER - CRCL - CRCL_155.0_Call - BUY - $25.00
-[2025-08-05 10:01:00] TRADE_ENTRY - CRCL - Trade entered: BUY CRCL_155.0_Call | entry_price: $18.55 | heston_price: $23.20 | strike: $155.00 | contracts: 1 | position_size: $25.00 | mispricing: $-4.65 | active_trades: 1/4 | capital: $100.00
-[2025-08-05 10:01:00] ENTER - CRCL - CRCL_160.0_Call - BUY - $25.00
-[2025-08-05 10:01:00] TRADE_ENTRY - CRCL - Trade entered: BUY CRCL_160.0_Call | entry_price: $16.45 | heston_price: $21.03 | strike: $160.00 | contracts: 1 | position_size: $25.00 | mispricing: $-4.58 | active_trades: 2/4 | capital: $100.00
-[2025-08-05 10:01:00] ENTER - CRCL - CRCL_125.0_Call - SELL - $25.00
-[2025-08-05 10:01:00] TRADE_ENTRY - CRCL - Trade entered: SELL CRCL_125.0_Call | entry_price: $59.00 | heston_price: $40.71 | strike: $125.00 | contracts: 1 | position_size: $25.00 | mispricing: $18.29 | active_trades: 3/4 | capital: $100.00
-[2025-08-05 10:01:00] ENTER - CRCL - CRCL_145.0_Call - SELL - $25.00
-[2025-08-05 10:01:00] TRADE_ENTRY - CRCL - Trade entered: SELL CRCL_145.0_Call | entry_price: $43.50 | heston_price: $28.16 | strike: $145.00 | contracts: 1 | position_size: $25.00 | mispricing: $15.34 | active_trades: 4/4 | capital: $100.00
-[2025-08-05 10:01:00] HOUR_COMPLETE - CRCL - Live hour processing complete | active_trades: 4/4 | buy_trades: 2 | sell_trades: 2 | capital: $100.00 | hour: 10
-[2025-08-05 11:01:52] DATA_FETCH - CRCL - Fetching live options data | expiry_date: 2025-09-19 | company: CRCL
-[2025-08-05 11:01:57] HOUR_COMPLETE - CRCL - Live hour processing complete | active_trades: 4/4 | buy_trades: 2 | sell_trades: 2 | capital: $100.00 | hour: 11
-[2025-08-05 12:02:56] DATA_FETCH - CRCL - Fetching live options data | expiry_date: 2025-09-19 | company: CRCL
-[2025-08-05 12:03:21] HOUR_COMPLETE - CRCL - Live hour processing complete | active_trades: 4/4 | buy_trades: 2 | sell_trades: 2 | capital: $100.00 | hour: 12
+[2025-08-06 12:56:09] SYSTEM - CRCL - Trading system initialized | initial_capital: $100.0 | company: CRCL
+[2025-08-06 12:56:43] DATA_FETCH - CRCL - Fetching live options data | expiry_date: 2025-09-19 | company: CRCL
+[2025-08-06 12:56:47] ENTER - CRCL - CRCL_95.0_Call - BUY - $25.00
+[2025-08-06 12:56:47] TRADE_ENTRY - CRCL - Trade entered: BUY CRCL_95.0_Call | entry_price: $59.51 | heston_price: $66.78 | strike: $95.00 | contracts: 1 | position_size: $25.00 | mispricing: $-7.27 | active_trades: 1/4 | capital: $100.00
+[2025-08-06 12:56:47] ENTER - CRCL - CRCL_170.0_Call - BUY - $25.00
+[2025-08-06 12:56:47] TRADE_ENTRY - CRCL - Trade entered: BUY CRCL_170.0_Call | entry_price: $11.75 | heston_price: $16.86 | strike: $170.00 | contracts: 1 | position_size: $25.00 | mispricing: $-5.11 | active_trades: 2/4 | capital: $100.00
+[2025-08-06 12:56:47] ENTER - CRCL - CRCL_125.0_Call - SELL - $25.00
+[2025-08-06 12:56:47] TRADE_ENTRY - CRCL - Trade entered: SELL CRCL_125.0_Call | entry_price: $59.00 | heston_price: $40.98 | strike: $125.00 | contracts: 1 | position_size: $25.00 | mispricing: $18.02 | active_trades: 3/4 | capital: $100.00
+[2025-08-06 12:56:47] ENTER - CRCL - CRCL_115.0_Call - SELL - $25.00
+[2025-08-06 12:56:47] TRADE_ENTRY - CRCL - Trade entered: SELL CRCL_115.0_Call | entry_price: $60.60 | heston_price: $48.84 | strike: $115.00 | contracts: 1 | position_size: $25.00 | mispricing: $11.76 | active_trades: 4/4 | capital: $100.00
+[2025-08-06 12:56:47] HOUR_COMPLETE - CRCL - Live hour processing complete | active_trades: 4/4 | buy_trades: 2 | sell_trades: 2 | capital: $100.00 | hour: 12
+[2025-08-07 06:58:30] DATA_FETCH - CRCL - Fetching live options data | expiry_date: 2025-09-19 | company: CRCL
+[2025-08-07 06:58:34] EXIT - CRCL - CRCL_95.0_Call - BUY - $25.00 - PnL: $13.79 - Return: 55.16%
+[2025-08-07 06:58:34] TRADE_EXIT - CRCL - Trade exited: BUY CRCL_95.0_Call | entry_price: $59.51 | exit_price: $73.30 | pnl: $13.79 | return_pct: 55.16% | duration_hours: -6 | contracts: 1 | active_trades: 3/4 | capital: $113.79 | total_pnl: $13.79
+[2025-08-07 06:58:34] ENTER - CRCL - CRCL_105.0_Call - BUY - $25.00
+[2025-08-07 06:58:34] TRADE_ENTRY - CRCL - Trade entered: BUY CRCL_105.0_Call | entry_price: $53.50 | heston_price: $60.89 | strike: $105.00 | contracts: 1 | position_size: $25.00 | mispricing: $-7.39 | active_trades: 4/4 | capital: $113.79
+[2025-08-07 06:58:34] HOUR_COMPLETE - CRCL - Live hour processing complete | active_trades: 4/4 | buy_trades: 2 | sell_trades: 2 | capital: $113.79 | hour: 6
+[2025-08-07 07:59:12] DATA_FETCH - CRCL - Fetching live options data | expiry_date: 2025-09-19 | company: CRCL
+[2025-08-07 07:59:28] HOUR_COMPLETE - CRCL - Live hour processing complete | active_trades: 4/4 | buy_trades: 2 | sell_trades: 2 | capital: $113.79 | hour: 7
+[2025-08-07 09:00:16] DATA_FETCH - CRCL - Fetching live options data | expiry_date: 2025-09-19 | company: CRCL
+[2025-08-07 09:00:20] EXIT - CRCL - CRCL_105.0_Call - BUY - $25.00 - PnL: $0.00 - Return: 0.00%
+[2025-08-07 09:00:20] TRADE_EXIT - CRCL - Trade exited: BUY CRCL_105.0_Call | entry_price: $53.50 | exit_price: $53.50 | pnl: $0.00 | return_pct: 0.00% | duration_hours: 3 | contracts: 1 | active_trades: 3/4 | capital: $113.79 | total_pnl: $13.79
+[2025-08-07 09:00:20] ENTER - CRCL - CRCL_160.0_Call - BUY - $25.00
+[2025-08-07 09:00:20] TRADE_ENTRY - CRCL - Trade entered: BUY CRCL_160.0_Call | entry_price: $13.15 | heston_price: $16.95 | strike: $160.00 | contracts: 1 | position_size: $25.00 | mispricing: $-3.80 | active_trades: 4/4 | capital: $113.79
+[2025-08-07 09:00:21] HOUR_COMPLETE - CRCL - Live hour processing complete | active_trades: 4/4 | buy_trades: 2 | sell_trades: 2 | capital: $113.79 | hour: 9
+[2025-08-07 10:01:05] DATA_FETCH - CRCL - Fetching live options data | expiry_date: 2025-09-19 | company: CRCL
+[2025-08-07 10:01:10] HOUR_COMPLETE - CRCL - Live hour processing complete | active_trades: 4/4 | buy_trades: 2 | sell_trades: 2 | capital: $113.79 | hour: 10
+[2025-08-07 11:01:58] DATA_FETCH - CRCL - Fetching live options data | expiry_date: 2025-09-19 | company: CRCL
+[2025-08-07 11:02:09] HOUR_COMPLETE - CRCL - Live hour processing complete | active_trades: 4/4 | buy_trades: 2 | sell_trades: 2 | capital: $113.79 | hour: 11
+[2025-08-07 12:02:58] DATA_FETCH - CRCL - Fetching live options data | expiry_date: 2025-09-19 | company: CRCL
+[2025-08-07 12:03:14] EXIT - CRCL - CRCL_125.0_Call - SELL - $25.00 - PnL: $27.10 - Return: 108.40%
+[2025-08-07 12:03:14] TRADE_EXIT - CRCL - Trade exited: SELL CRCL_125.0_Call | entry_price: $59.00 | exit_price: $31.90 | pnl: $27.10 | return_pct: 108.40% | duration_hours: 0 | contracts: 1 | active_trades: 3/4 | capital: $140.89 | total_pnl: $40.89
+[2025-08-07 12:03:15] HOUR_COMPLETE - CRCL - Live hour processing complete | active_trades: 3/4 | buy_trades: 2 | sell_trades: 1 | capital: $140.89 | hour: 12
+[2025-08-08 06:34:01] DATA_FETCH - CRCL - Fetching live options data | expiry_date: 2025-09-19 | company: CRCL
+[2025-08-08 06:34:17] HOUR_COMPLETE - CRCL - Live hour processing complete | active_trades: 3/4 | buy_trades: 2 | sell_trades: 1 | capital: $140.89 | hour: 6
+[2025-08-08 07:34:57] DATA_FETCH - CRCL - Fetching live options data | expiry_date: 2025-09-19 | company: CRCL
+[2025-08-08 07:35:02] HOUR_COMPLETE - CRCL - Live hour processing complete | active_trades: 3/4 | buy_trades: 2 | sell_trades: 1 | capital: $140.89 | hour: 7
+[2025-08-08 08:35:53] DATA_FETCH - CRCL - Fetching live options data | expiry_date: 2025-09-19 | company: CRCL
+[2025-08-08 08:36:09] HOUR_COMPLETE - CRCL - Live hour processing complete | active_trades: 3/4 | buy_trades: 2 | sell_trades: 1 | capital: $140.89 | hour: 8
+[2025-08-08 08:45:56] DATA_FETCH - CRCL - Fetching live options data | expiry_date: 2025-09-19 | company: CRCL
+[2025-08-08 08:46:05] EXIT - CRCL - CRCL_170.0_Call - BUY - $25.00 - PnL: $-0.41 - Return: -1.64%
+[2025-08-08 08:46:05] TRADE_EXIT - CRCL - Trade exited: BUY CRCL_170.0_Call | entry_price: $11.75 | exit_price: $11.34 | pnl: $-0.41 | return_pct: -1.64% | duration_hours: -4 | contracts: 1 | active_trades: 2/4 | capital: $140.48 | total_pnl: $40.48
+[2025-08-08 08:46:05] EXIT - CRCL - CRCL_115.0_Call - SELL - $25.00 - PnL: $0.00 - Return: 0.00%
+[2025-08-08 08:46:05] TRADE_EXIT - CRCL - Trade exited: SELL CRCL_115.0_Call | entry_price: $60.60 | exit_price: $60.60 | pnl: $0.00 | return_pct: 0.00% | duration_hours: -4 | contracts: 1 | active_trades: 1/4 | capital: $140.48 | total_pnl: $40.48
+[2025-08-08 08:46:05] EXIT - CRCL - CRCL_160.0_Call - BUY - $25.00 - PnL: $1.85 - Return: 7.40%
+[2025-08-08 08:46:05] TRADE_EXIT - CRCL - Trade exited: BUY CRCL_160.0_Call | entry_price: $13.15 | exit_price: $15.00 | pnl: $1.85 | return_pct: 7.40% | duration_hours: -1 | contracts: 1 | active_trades: 0/4 | capital: $142.33 | total_pnl: $42.33

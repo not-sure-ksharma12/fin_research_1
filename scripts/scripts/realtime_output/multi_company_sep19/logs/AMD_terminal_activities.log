@@ -1,15 +1,38 @@
-[2025-08-05 10:00:19] SYSTEM - AMD - Trading system initialized | initial_capital: $100.0 | company: AMD
-[2025-08-05 10:00:47] DATA_FETCH - AMD - Fetching live options data | expiry_date: 2025-09-19 | company: AMD
-[2025-08-05 10:00:51] ENTER - AMD - AMD_60.0_Call - BUY - $25.00
-[2025-08-05 10:00:51] TRADE_ENTRY - AMD - Trade entered: BUY AMD_60.0_Call | entry_price: $77.60 | heston_price: $115.69 | strike: $60.00 | contracts: 1 | position_size: $25.00 | mispricing: $-38.09 | active_trades: 1/4 | capital: $100.00
-[2025-08-05 10:00:51] ENTER - AMD - AMD_65.0_Call - BUY - $25.00
-[2025-08-05 10:00:51] TRADE_ENTRY - AMD - Trade entered: BUY AMD_65.0_Call | entry_price: $95.25 | heston_price: $110.72 | strike: $65.00 | contracts: 1 | position_size: $25.00 | mispricing: $-15.47 | active_trades: 2/4 | capital: $100.00
-[2025-08-05 10:00:51] ENTER - AMD - AMD_45.0_Call - SELL - $25.00
-[2025-08-05 10:00:51] TRADE_ENTRY - AMD - Trade entered: SELL AMD_45.0_Call | entry_price: $133.80 | heston_price: $130.61 | strike: $45.00 | contracts: 1 | position_size: $25.00 | mispricing: $3.19 | active_trades: 3/4 | capital: $100.00
-[2025-08-05 10:00:51] ENTER - AMD - AMD_50.0_Call - SELL - $25.00
-[2025-08-05 10:00:51] TRADE_ENTRY - AMD - Trade entered: SELL AMD_50.0_Call | entry_price: $128.30 | heston_price: $125.64 | strike: $50.00 | contracts: 1 | position_size: $25.00 | mispricing: $2.66 | active_trades: 4/4 | capital: $100.00
-[2025-08-05 10:00:51] HOUR_COMPLETE - AMD - Live hour processing complete | active_trades: 4/4 | buy_trades: 2 | sell_trades: 2 | capital: $100.00 | hour: 10
-[2025-08-05 11:01:33] DATA_FETCH - AMD - Fetching live options data | expiry_date: 2025-09-19 | company: AMD
-[2025-08-05 11:01:37] HOUR_COMPLETE - AMD - Live hour processing complete | active_trades: 4/4 | buy_trades: 2 | sell_trades: 2 | capital: $100.00 | hour: 11
-[2025-08-05 12:02:48] DATA_FETCH - AMD - Fetching live options data | expiry_date: 2025-09-19 | company: AMD
-[2025-08-05 12:02:52] HOUR_COMPLETE - AMD - Live hour processing complete | active_trades: 4/4 | buy_trades: 2 | sell_trades: 2 | capital: $100.00 | hour: 12
+[2025-08-06 12:56:09] SYSTEM - AMD - Trading system initialized | initial_capital: $100.0 | company: AMD
+[2025-08-06 12:56:36] DATA_FETCH - AMD - Fetching live options data | expiry_date: 2025-09-19 | company: AMD
+[2025-08-06 12:56:40] ENTER - AMD - AMD_60.0_Call - BUY - $25.00
+[2025-08-06 12:56:40] TRADE_ENTRY - AMD - Trade entered: BUY AMD_60.0_Call | entry_price: $77.60 | heston_price: $103.72 | strike: $60.00 | contracts: 1 | position_size: $25.00 | mispricing: $-26.12 | active_trades: 1/4 | capital: $100.00
+[2025-08-06 12:56:40] ENTER - AMD - AMD_80.0_Call - BUY - $25.00
+[2025-08-06 12:56:40] TRADE_ENTRY - AMD - Trade entered: BUY AMD_80.0_Call | entry_price: $79.95 | heston_price: $83.88 | strike: $80.00 | contracts: 1 | position_size: $25.00 | mispricing: $-3.93 | active_trades: 2/4 | capital: $100.00
+[2025-08-06 12:56:40] ENTER - AMD - AMD_45.0_Call - SELL - $25.00
+[2025-08-06 12:56:40] TRADE_ENTRY - AMD - Trade entered: SELL AMD_45.0_Call | entry_price: $133.80 | heston_price: $118.63 | strike: $45.00 | contracts: 1 | position_size: $25.00 | mispricing: $15.17 | active_trades: 3/4 | capital: $100.00
+[2025-08-06 12:56:40] ENTER - AMD - AMD_50.0_Call - SELL - $25.00
+[2025-08-06 12:56:40] TRADE_ENTRY - AMD - Trade entered: SELL AMD_50.0_Call | entry_price: $128.30 | heston_price: $113.66 | strike: $50.00 | contracts: 1 | position_size: $25.00 | mispricing: $14.64 | active_trades: 4/4 | capital: $100.00
+[2025-08-06 12:56:40] HOUR_COMPLETE - AMD - Live hour processing complete | active_trades: 4/4 | buy_trades: 2 | sell_trades: 2 | capital: $100.00 | hour: 12
+[2025-08-07 06:58:14] DATA_FETCH - AMD - Fetching live options data | expiry_date: 2025-09-19 | company: AMD
+[2025-08-07 06:58:18] HOUR_COMPLETE - AMD - Live hour processing complete | active_trades: 4/4 | buy_trades: 2 | sell_trades: 2 | capital: $100.00 | hour: 6
+[2025-08-07 07:59:06] DATA_FETCH - AMD - Fetching live options data | expiry_date: 2025-09-19 | company: AMD
+[2025-08-07 07:59:09] HOUR_COMPLETE - AMD - Live hour processing complete | active_trades: 4/4 | buy_trades: 2 | sell_trades: 2 | capital: $100.00 | hour: 7
+[2025-08-07 09:00:07] DATA_FETCH - AMD - Fetching live options data | expiry_date: 2025-09-19 | company: AMD
+[2025-08-07 09:00:11] HOUR_COMPLETE - AMD - Live hour processing complete | active_trades: 4/4 | buy_trades: 2 | sell_trades: 2 | capital: $100.00 | hour: 9
+[2025-08-07 10:00:57] DATA_FETCH - AMD - Fetching live options data | expiry_date: 2025-09-19 | company: AMD
+[2025-08-07 10:01:01] HOUR_COMPLETE - AMD - Live hour processing complete | active_trades: 4/4 | buy_trades: 2 | sell_trades: 2 | capital: $100.00 | hour: 10
+[2025-08-07 11:01:42] DATA_FETCH - AMD - Fetching live options data | expiry_date: 2025-09-19 | company: AMD
+[2025-08-07 11:01:46] HOUR_COMPLETE - AMD - Live hour processing complete | active_trades: 4/4 | buy_trades: 2 | sell_trades: 2 | capital: $100.00 | hour: 11
+[2025-08-07 12:02:41] DATA_FETCH - AMD - Fetching live options data | expiry_date: 2025-09-19 | company: AMD
+[2025-08-07 12:02:46] HOUR_COMPLETE - AMD - Live hour processing complete | active_trades: 4/4 | buy_trades: 2 | sell_trades: 2 | capital: $100.00 | hour: 12
+[2025-08-08 06:33:46] DATA_FETCH - AMD - Fetching live options data | expiry_date: 2025-09-19 | company: AMD
+[2025-08-08 06:33:50] HOUR_COMPLETE - AMD - Live hour processing complete | active_trades: 4/4 | buy_trades: 2 | sell_trades: 2 | capital: $100.00 | hour: 6
+[2025-08-08 07:34:49] DATA_FETCH - AMD - Fetching live options data | expiry_date: 2025-09-19 | company: AMD
+[2025-08-08 07:34:53] HOUR_COMPLETE - AMD - Live hour processing complete | active_trades: 4/4 | buy_trades: 2 | sell_trades: 2 | capital: $100.00 | hour: 7
+[2025-08-08 08:35:37] DATA_FETCH - AMD - Fetching live options data | expiry_date: 2025-09-19 | company: AMD
+[2025-08-08 08:35:41] HOUR_COMPLETE - AMD - Live hour processing complete | active_trades: 4/4 | buy_trades: 2 | sell_trades: 2 | capital: $100.00 | hour: 8
+[2025-08-08 08:45:49] DATA_FETCH - AMD - Fetching live options data | expiry_date: 2025-09-19 | company: AMD
+[2025-08-08 08:45:53] EXIT - AMD - AMD_60.0_Call - BUY - $25.00 - PnL: $0.00 - Return: 0.00%
+[2025-08-08 08:45:53] TRADE_EXIT - AMD - Trade exited: BUY AMD_60.0_Call | entry_price: $77.60 | exit_price: $77.60 | pnl: $0.00 | return_pct: 0.00% | duration_hours: -4 | contracts: 1 | active_trades: 3/4 | capital: $100.00 | total_pnl: $0.00
+[2025-08-08 08:45:53] EXIT - AMD - AMD_80.0_Call - BUY - $25.00 - PnL: $0.00 - Return: 0.00%
+[2025-08-08 08:45:53] TRADE_EXIT - AMD - Trade exited: BUY AMD_80.0_Call | entry_price: $79.95 | exit_price: $79.95 | pnl: $0.00 | return_pct: 0.00% | duration_hours: -4 | contracts: 1 | active_trades: 2/4 | capital: $100.00 | total_pnl: $0.00
+[2025-08-08 08:45:53] EXIT - AMD - AMD_45.0_Call - SELL - $25.00 - PnL: $0.00 - Return: 0.00%
+[2025-08-08 08:45:53] TRADE_EXIT - AMD - Trade exited: SELL AMD_45.0_Call | entry_price: $133.80 | exit_price: $133.80 | pnl: $0.00 | return_pct: 0.00% | duration_hours: -4 | contracts: 1 | active_trades: 1/4 | capital: $100.00 | total_pnl: $0.00
+[2025-08-08 08:45:53] EXIT - AMD - AMD_50.0_Call - SELL - $25.00 - PnL: $0.00 - Return: 0.00%
+[2025-08-08 08:45:53] TRADE_EXIT - AMD - Trade exited: SELL AMD_50.0_Call | entry_price: $128.30 | exit_price: $128.30 | pnl: $0.00 | return_pct: 0.00% | duration_hours: -4 | contracts: 1 | active_trades: 0/4 | capital: $100.00 | total_pnl: $0.00

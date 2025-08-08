@@ -287,6 +287,7 @@ class CompanyRealTimeTrading:
         save_data['Trade_Status'] = 'No_Trade'
         save_data['Trade_Type'] = ''
         save_data['Position_Size'] = 0.0
+        save_data['pnl'] = 0.0  # Add PnL column for color coding
         
         # Mark trades based on hour logic
         active_trades_marked = 0
@@ -362,8 +363,9 @@ class CompanyRealTimeTrading:
                     save_data.loc[mask, 'Trade_Status'] = 'Exited'
                     save_data.loc[mask, 'Trade_Type'] = trade['trade_type']
                     save_data.loc[mask, 'Position_Size'] = trade['position_size']
+                    save_data.loc[mask, 'pnl'] = trade.get('pnl', 0.0)  # Add PnL for color coding
                     exited_trades_marked += 1
-                    logger.info(f"Marked exited trade in Excel: {trade['option_id']} - {trade['trade_type']} - ${trade['position_size']:.2f}")
+                    logger.info(f"Marked exited trade in Excel: {trade['option_id']} - {trade['trade_type']} - ${trade['position_size']:.2f} - PnL: ${trade.get('pnl', 0.0):.2f}")
         
         # Add to history
         self.hourly_data_history.append(save_data)
@@ -372,7 +374,8 @@ class CompanyRealTimeTrading:
         self.update_hourly_excel(save_data, hour)
         
         # Log summary of what was saved
-        logger.info(f"Saved hourly data for {self.company} hour {hour}: {active_trades_marked} active trades marked, {exited_trades_marked} exited trades marked")
+        current_date = datetime.now().strftime('%Y-%m-%d')
+        logger.info(f"Saved hourly data for {self.company} hour {hour} ({current_date}): {active_trades_marked} active trades marked, {exited_trades_marked} exited trades marked")
         
         # If we have active trades but couldn't mark them in current data, force regenerate
         if len(self.active_trades) > 0 and active_trades_marked < len(self.active_trades):
@@ -386,15 +389,19 @@ class CompanyRealTimeTrading:
         # Single filename for the company
         filename = f"scripts/realtime_output/multi_company_sep19/{self.company}_hourly_data.xlsx"
         
+        # Get current date for unique sheet naming
+        current_date = datetime.now().strftime('%Y-%m-%d')
+        sheet_name = f"Hour_{hour}_{current_date}"
+        
         try:
             # Try to load existing workbook
             from openpyxl import load_workbook
             wb = load_workbook(filename)
             
-            # Check if hour sheet already exists
-            if f"Hour_{hour}" in wb.sheetnames:
-                # Remove existing sheet for this hour
-                wb.remove(wb[f"Hour_{hour}"])
+            # Check if hour sheet already exists for this date
+            if sheet_name in wb.sheetnames:
+                # Remove existing sheet for this hour and date
+                wb.remove(wb[sheet_name])
             
         except FileNotFoundError:
             # Create new workbook if file doesn't exist
@@ -402,8 +409,8 @@ class CompanyRealTimeTrading:
             # Remove default sheet
             wb.remove(wb.active)
         
-        # Create new sheet for this hour
-        ws = wb.create_sheet(f"Hour_{hour}")
+        # Create new sheet for this hour and date
+        ws = wb.create_sheet(sheet_name)
         
         # Define colors
         yellow_fill = PatternFill(start_color='FFFF00', end_color='FFFF00', fill_type='solid')  # BUY entered
@@ -443,10 +450,19 @@ class CompanyRealTimeTrading:
                         
                         for col in range(1, len(data.columns) + 1):
                             ws.cell(row=row, column=col).fill = fill_color
+                        
+                        # Log color coding for debugging
+                        option_id = ws.cell(row=row, column=data.columns.get_loc('Option_ID') + 1).value
+                        logger.info(f"Color coded exited trade: {option_id} - {trade_type} - PnL: ${pnl_value:.2f} - Color: {'GREEN' if pnl_value > 0 else 'RED'}")
+                    else:
+                        logger.warning(f"No PnL value found for exited trade in row {row}")
+                else:
+                    logger.warning(f"PnL column not found in data for exited trade in row {row}")
         
         # Save file
         wb.save(filename)
-        logger.info(f"Hourly data updated for {self.company} hour {hour}: {filename}")
+        current_date = datetime.now().strftime('%Y-%m-%d')
+        logger.info(f"Hourly data updated for {self.company} hour {hour} ({current_date}): {filename}")
     
     def save_hourly_excel(self, data: pd.DataFrame, hour: int):
         """
@@ -904,6 +920,10 @@ class CompanyRealTimeTrading:
         # Get the most recent hourly data
         latest_data = self.hourly_data_history[-1].copy()
         
+        # Ensure PnL column exists
+        if 'pnl' not in latest_data.columns:
+            latest_data['pnl'] = 0.0
+        
         # Mark active trades based on hour logic
         active_trades_marked = 0
         hour = latest_data['Hour'].iloc[0] if 'Hour' in latest_data.columns else datetime.now().hour
@@ -971,10 +991,24 @@ class CompanyRealTimeTrading:
                         active_trades_marked += 1
                         logger.info(f"Regenerated: Marked active trade (fallback): {option_id} - {trade['trade_type']} - ${trade['position_size']:.2f}")
         
+        # Mark exited trades that should be visible in this hour
+        exited_trades_marked = 0
+        for trade in self.trade_history:
+            # Mark trades that were exited in this hour or are still relevant
+            if trade.get('exit_hour') == hour:
+                mask = latest_data['Option_ID'] == trade['option_id']
+                if mask.any():
+                    latest_data.loc[mask, 'Trade_Status'] = 'Exited'
+                    latest_data.loc[mask, 'Trade_Type'] = trade['trade_type']
+                    latest_data.loc[mask, 'Position_Size'] = trade['position_size']
+                    latest_data.loc[mask, 'pnl'] = trade.get('pnl', 0.0)
+                    exited_trades_marked += 1
+                    logger.info(f"Regenerated: Marked exited trade: {trade['option_id']} - {trade['trade_type']} - ${trade['position_size']:.2f} - PnL: ${trade.get('pnl', 0.0):.2f}")
+        
         # Update the Excel file
         self.update_hourly_excel(latest_data, hour)
         
-        logger.info(f"Regenerated hourly Excel for {self.company} with {active_trades_marked}/{len(self.active_trades)} active trades marked")
+        logger.info(f"Regenerated hourly Excel for {self.company} with {active_trades_marked}/{len(self.active_trades)} active trades marked and {exited_trades_marked} exited trades marked")
         
         # If we still couldn't mark all trades, log a warning
         if active_trades_marked < len(self.active_trades):

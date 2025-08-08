@@ -1,17 +1,50 @@
-[2025-08-05 10:00:19] SYSTEM - AUR - Trading system initialized | initial_capital: $100.0 | company: AUR
-[2025-08-05 10:00:28] DATA_FETCH - AUR - Fetching live options data | expiry_date: 2025-09-19 | company: AUR
-[2025-08-05 10:00:30] ENTER - AUR - AUR_1.0_Call - BUY - $25.00
-[2025-08-05 10:00:30] TRADE_ENTRY - AUR - Trade entered: BUY AUR_1.0_Call | entry_price: $4.47 | heston_price: $5.00 | strike: $1.00 | contracts: 1 | position_size: $25.00 | mispricing: $-0.53 | active_trades: 1/4 | capital: $100.00
-[2025-08-05 10:00:30] ENTER - AUR - AUR_6.0_Call - BUY - $25.00
-[2025-08-05 10:00:30] TRADE_ENTRY - AUR - Trade entered: BUY AUR_6.0_Call | entry_price: $0.62 | heston_price: $1.13 | strike: $6.00 | contracts: 1 | position_size: $25.00 | mispricing: $-0.51 | active_trades: 2/4 | capital: $100.00
-[2025-08-05 10:00:30] ENTER - AUR - AUR_3.0_Call - SELL - $25.00
-[2025-08-05 10:00:30] TRADE_ENTRY - AUR - Trade entered: SELL AUR_3.0_Call | entry_price: $3.14 | heston_price: $3.08 | strike: $3.00 | contracts: 1 | position_size: $25.00 | mispricing: $0.06 | active_trades: 3/4 | capital: $100.00
-[2025-08-05 10:00:30] ENTER - AUR - AUR_14.0_Call - SELL - $25.00
-[2025-08-05 10:00:30] TRADE_ENTRY - AUR - Trade entered: SELL AUR_14.0_Call | entry_price: $0.05 | heston_price: $0.05 | strike: $14.00 | contracts: 1 | position_size: $25.00 | mispricing: $0.00 | active_trades: 4/4 | capital: $100.00
-[2025-08-05 10:00:30] HOUR_COMPLETE - AUR - Live hour processing complete | active_trades: 4/4 | buy_trades: 2 | sell_trades: 2 | capital: $100.00 | hour: 10
-[2025-08-05 11:01:12] DATA_FETCH - AUR - Fetching live options data | expiry_date: 2025-09-19 | company: AUR
-[2025-08-05 11:01:14] HOUR_COMPLETE - AUR - Live hour processing complete | active_trades: 4/4 | buy_trades: 2 | sell_trades: 2 | capital: $100.00 | hour: 11
-[2025-08-05 12:02:18] DATA_FETCH - AUR - Fetching live options data | expiry_date: 2025-09-19 | company: AUR
-[2025-08-05 12:02:20] EXIT - AUR - AUR_3.0_Call - SELL - $25.00 - PnL: $0.00 - Return: 0.00%
-[2025-08-05 12:02:20] TRADE_EXIT - AUR - Trade exited: SELL AUR_3.0_Call | entry_price: $3.14 | exit_price: $3.14 | pnl: $0.00 | return_pct: 0.00% | duration_hours: 2 | contracts: 1 | active_trades: 3/4 | capital: $100.00 | total_pnl: $0.00
-[2025-08-05 12:02:20] HOUR_COMPLETE - AUR - Live hour processing complete | active_trades: 3/4 | buy_trades: 2 | sell_trades: 1 | capital: $100.00 | hour: 12
+[2025-08-06 12:56:09] SYSTEM - AUR - Trading system initialized | initial_capital: $100.0 | company: AUR
+[2025-08-06 12:56:18] DATA_FETCH - AUR - Fetching live options data | expiry_date: 2025-09-19 | company: AUR
+[2025-08-06 12:56:20] ENTER - AUR - AUR_1.0_Call - BUY - $25.00
+[2025-08-06 12:56:20] TRADE_ENTRY - AUR - Trade entered: BUY AUR_1.0_Call | entry_price: $4.47 | heston_price: $5.08 | strike: $1.00 | contracts: 1 | position_size: $25.00 | mispricing: $-0.61 | active_trades: 1/4 | capital: $100.00
+[2025-08-06 12:56:20] ENTER - AUR - AUR_2.0_Call - BUY - $25.00
+[2025-08-06 12:56:20] TRADE_ENTRY - AUR - Trade entered: BUY AUR_2.0_Call | entry_price: $3.80 | heston_price: $4.08 | strike: $2.00 | contracts: 1 | position_size: $25.00 | mispricing: $-0.28 | active_trades: 2/4 | capital: $100.00
+[2025-08-06 12:56:20] ENTER - AUR - AUR_3.0_Call - SELL - $25.00
+[2025-08-06 12:56:20] TRADE_ENTRY - AUR - Trade entered: SELL AUR_3.0_Call | entry_price: $3.20 | heston_price: $3.09 | strike: $3.00 | contracts: 1 | position_size: $25.00 | mispricing: $0.11 | active_trades: 3/4 | capital: $100.00
+[2025-08-06 12:56:20] ENTER - AUR - AUR_14.0_Call - SELL - $25.00
+[2025-08-06 12:56:20] TRADE_ENTRY - AUR - Trade entered: SELL AUR_14.0_Call | entry_price: $0.05 | heston_price: $0.03 | strike: $14.00 | contracts: 1 | position_size: $25.00 | mispricing: $0.02 | active_trades: 4/4 | capital: $100.00
+[2025-08-06 12:56:20] HOUR_COMPLETE - AUR - Live hour processing complete | active_trades: 4/4 | buy_trades: 2 | sell_trades: 2 | capital: $100.00 | hour: 12
+[2025-08-07 06:57:56] DATA_FETCH - AUR - Fetching live options data | expiry_date: 2025-09-19 | company: AUR
+[2025-08-07 06:57:58] EXIT - AUR - AUR_3.0_Call - SELL - $25.00 - PnL: $0.00 - Return: 0.00%
+[2025-08-07 06:57:58] TRADE_EXIT - AUR - Trade exited: SELL AUR_3.0_Call | entry_price: $3.20 | exit_price: $3.20 | pnl: $0.00 | return_pct: 0.00% | duration_hours: -6 | contracts: 1 | active_trades: 3/4 | capital: $100.00 | total_pnl: $0.00
+[2025-08-07 06:57:58] HOUR_COMPLETE - AUR - Live hour processing complete | active_trades: 3/4 | buy_trades: 2 | sell_trades: 1 | capital: $100.00 | hour: 6
+[2025-08-07 07:58:47] DATA_FETCH - AUR - Fetching live options data | expiry_date: 2025-09-19 | company: AUR
+[2025-08-07 07:58:49] ENTER - AUR - AUR_3.0_Call - SELL - $25.00
+[2025-08-07 07:58:49] TRADE_ENTRY - AUR - Trade entered: SELL AUR_3.0_Call | entry_price: $3.20 | heston_price: $3.12 | strike: $3.00 | contracts: 1 | position_size: $25.00 | mispricing: $0.08 | active_trades: 4/4 | capital: $100.00
+[2025-08-07 07:58:49] HOUR_COMPLETE - AUR - Live hour processing complete | active_trades: 4/4 | buy_trades: 2 | sell_trades: 2 | capital: $100.00 | hour: 7
+[2025-08-07 08:59:44] DATA_FETCH - AUR - Fetching live options data | expiry_date: 2025-09-19 | company: AUR
+[2025-08-07 08:59:49] HOUR_COMPLETE - AUR - Live hour processing complete | active_trades: 4/4 | buy_trades: 2 | sell_trades: 2 | capital: $100.00 | hour: 8
+[2025-08-07 10:00:33] DATA_FETCH - AUR - Fetching live options data | expiry_date: 2025-09-19 | company: AUR
+[2025-08-07 10:00:35] EXIT - AUR - AUR_14.0_Call - SELL - $25.00 - PnL: $0.00 - Return: 0.00%
+[2025-08-07 10:00:35] TRADE_EXIT - AUR - Trade exited: SELL AUR_14.0_Call | entry_price: $0.05 | exit_price: $0.05 | pnl: $0.00 | return_pct: 0.00% | duration_hours: -2 | contracts: 1 | active_trades: 3/4 | capital: $100.00 | total_pnl: $0.00
+[2025-08-07 10:00:35] EXIT - AUR - AUR_3.0_Call - SELL - $25.00 - PnL: $0.00 - Return: 0.00%
+[2025-08-07 10:00:35] TRADE_EXIT - AUR - Trade exited: SELL AUR_3.0_Call | entry_price: $3.20 | exit_price: $3.20 | pnl: $0.00 | return_pct: 0.00% | duration_hours: 3 | contracts: 1 | active_trades: 2/4 | capital: $100.00 | total_pnl: $0.00
+[2025-08-07 10:00:35] HOUR_COMPLETE - AUR - Live hour processing complete | active_trades: 2/4 | buy_trades: 2 | sell_trades: 0 | capital: $100.00 | hour: 10
+[2025-08-07 11:01:23] DATA_FETCH - AUR - Fetching live options data | expiry_date: 2025-09-19 | company: AUR
+[2025-08-07 11:01:25] ENTER - AUR - AUR_14.0_Call - SELL - $25.00
+[2025-08-07 11:01:25] TRADE_ENTRY - AUR - Trade entered: SELL AUR_14.0_Call | entry_price: $0.05 | heston_price: $0.01 | strike: $14.00 | contracts: 1 | position_size: $25.00 | mispricing: $0.04 | active_trades: 3/4 | capital: $100.00
+[2025-08-07 11:01:25] ENTER - AUR - AUR_11.0_Call - SELL - $25.00
+[2025-08-07 11:01:25] TRADE_ENTRY - AUR - Trade entered: SELL AUR_11.0_Call | entry_price: $0.07 | heston_price: $0.04 | strike: $11.00 | contracts: 1 | position_size: $25.00 | mispricing: $0.03 | active_trades: 4/4 | capital: $100.00
+[2025-08-07 11:01:25] HOUR_COMPLETE - AUR - Live hour processing complete | active_trades: 4/4 | buy_trades: 2 | sell_trades: 2 | capital: $100.00 | hour: 11
+[2025-08-07 12:02:21] DATA_FETCH - AUR - Fetching live options data | expiry_date: 2025-09-19 | company: AUR
+[2025-08-07 12:02:23] EXIT - AUR - AUR_11.0_Call - SELL - $25.00 - PnL: $0.00 - Return: 0.00%
+[2025-08-07 12:02:23] TRADE_EXIT - AUR - Trade exited: SELL AUR_11.0_Call | entry_price: $0.07 | exit_price: $0.07 | pnl: $0.00 | return_pct: 0.00% | duration_hours: 1 | contracts: 1 | active_trades: 3/4 | capital: $100.00 | total_pnl: $0.00
+[2025-08-07 12:02:23] HOUR_COMPLETE - AUR - Live hour processing complete | active_trades: 3/4 | buy_trades: 2 | sell_trades: 1 | capital: $100.00 | hour: 12
+[2025-08-08 06:33:27] DATA_FETCH - AUR - Fetching live options data | expiry_date: 2025-09-19 | company: AUR
+[2025-08-08 06:33:29] EXIT - AUR - AUR_14.0_Call - SELL - $25.00 - PnL: $0.00 - Return: 0.00%
+[2025-08-08 06:33:29] TRADE_EXIT - AUR - Trade exited: SELL AUR_14.0_Call | entry_price: $0.05 | exit_price: $0.05 | pnl: $0.00 | return_pct: 0.00% | duration_hours: -5 | contracts: 1 | active_trades: 2/4 | capital: $100.00 | total_pnl: $0.00
+[2025-08-08 06:33:29] HOUR_COMPLETE - AUR - Live hour processing complete | active_trades: 2/4 | buy_trades: 2 | sell_trades: 0 | capital: $100.00 | hour: 6
+[2025-08-08 07:34:31] DATA_FETCH - AUR - Fetching live options data | expiry_date: 2025-09-19 | company: AUR
+[2025-08-08 07:34:33] HOUR_COMPLETE - AUR - Live hour processing complete | active_trades: 2/4 | buy_trades: 2 | sell_trades: 0 | capital: $100.00 | hour: 7
+[2025-08-08 08:35:17] DATA_FETCH - AUR - Fetching live options data | expiry_date: 2025-09-19 | company: AUR
+[2025-08-08 08:35:19] HOUR_COMPLETE - AUR - Live hour processing complete | active_trades: 2/4 | buy_trades: 2 | sell_trades: 0 | capital: $100.00 | hour: 8
+[2025-08-08 08:45:32] DATA_FETCH - AUR - Fetching live options data | expiry_date: 2025-09-19 | company: AUR
+[2025-08-08 08:45:34] EXIT - AUR - AUR_1.0_Call - BUY - $25.00 - PnL: $0.00 - Return: 0.00%
+[2025-08-08 08:45:34] TRADE_EXIT - AUR - Trade exited: BUY AUR_1.0_Call | entry_price: $4.47 | exit_price: $4.47 | pnl: $0.00 | return_pct: 0.00% | duration_hours: -4 | contracts: 1 | active_trades: 1/4 | capital: $100.00 | total_pnl: $0.00
+[2025-08-08 08:45:34] EXIT - AUR - AUR_2.0_Call - BUY - $25.00 - PnL: $0.00 - Return: 0.00%
+[2025-08-08 08:45:34] TRADE_EXIT - AUR - Trade exited: BUY AUR_2.0_Call | entry_price: $3.80 | exit_price: $3.80 | pnl: $0.00 | return_pct: 0.00% | duration_hours: -4 | contracts: 1 | active_trades: 0/4 | capital: $100.00 | total_pnl: $0.00

@@ -1,15 +1,54 @@
-[2025-08-05 10:00:19] SYSTEM - SOUN - Trading system initialized | initial_capital: $100.0 | company: SOUN
-[2025-08-05 10:00:43] DATA_FETCH - SOUN - Fetching live options data | expiry_date: 2025-09-19 | company: SOUN
-[2025-08-05 10:00:47] ENTER - SOUN - SOUN_4.0_Call - BUY - $25.00
-[2025-08-05 10:00:47] TRADE_ENTRY - SOUN - Trade entered: BUY SOUN_4.0_Call | entry_price: $6.00 | heston_price: $7.10 | strike: $4.00 | contracts: 1 | position_size: $25.00 | mispricing: $-1.10 | active_trades: 1/4 | capital: $100.00
-[2025-08-05 10:00:47] ENTER - SOUN - SOUN_2.0_Call - BUY - $25.00
-[2025-08-05 10:00:47] TRADE_ENTRY - SOUN - Trade entered: BUY SOUN_2.0_Call | entry_price: $8.51 | heston_price: $9.09 | strike: $2.00 | contracts: 1 | position_size: $25.00 | mispricing: $-0.58 | active_trades: 2/4 | capital: $100.00
-[2025-08-05 10:00:47] ENTER - SOUN - SOUN_1.0_Call - SELL - $25.00
-[2025-08-05 10:00:47] TRADE_ENTRY - SOUN - Trade entered: SELL SOUN_1.0_Call | entry_price: $10.75 | heston_price: $10.09 | strike: $1.00 | contracts: 1 | position_size: $25.00 | mispricing: $0.66 | active_trades: 3/4 | capital: $100.00
-[2025-08-05 10:00:47] ENTER - SOUN - SOUN_7.0_Call - SELL - $25.00
-[2025-08-05 10:00:47] TRADE_ENTRY - SOUN - Trade entered: SELL SOUN_7.0_Call | entry_price: $4.30 | heston_price: $4.14 | strike: $7.00 | contracts: 1 | position_size: $25.00 | mispricing: $0.16 | active_trades: 4/4 | capital: $100.00
-[2025-08-05 10:00:47] HOUR_COMPLETE - SOUN - Live hour processing complete | active_trades: 4/4 | buy_trades: 2 | sell_trades: 2 | capital: $100.00 | hour: 10
-[2025-08-05 11:01:29] DATA_FETCH - SOUN - Fetching live options data | expiry_date: 2025-09-19 | company: SOUN
-[2025-08-05 11:01:33] HOUR_COMPLETE - SOUN - Live hour processing complete | active_trades: 4/4 | buy_trades: 2 | sell_trades: 2 | capital: $100.00 | hour: 11
-[2025-08-05 12:02:34] DATA_FETCH - SOUN - Fetching live options data | expiry_date: 2025-09-19 | company: SOUN
-[2025-08-05 12:02:48] HOUR_COMPLETE - SOUN - Live hour processing complete | active_trades: 4/4 | buy_trades: 2 | sell_trades: 2 | capital: $100.00 | hour: 12
+[2025-08-06 12:56:09] SYSTEM - SOUN - Trading system initialized | initial_capital: $100.0 | company: SOUN
+[2025-08-06 12:56:34] DATA_FETCH - SOUN - Fetching live options data | expiry_date: 2025-09-19 | company: SOUN
+[2025-08-06 12:56:36] ENTER - SOUN - SOUN_4.0_Call - BUY - $25.00
+[2025-08-06 12:56:36] TRADE_ENTRY - SOUN - Trade entered: BUY SOUN_4.0_Call | entry_price: $6.00 | heston_price: $6.86 | strike: $4.00 | contracts: 1 | position_size: $25.00 | mispricing: $-0.86 | active_trades: 1/4 | capital: $100.00
+[2025-08-06 12:56:36] ENTER - SOUN - SOUN_2.0_Call - BUY - $25.00
+[2025-08-06 12:56:36] TRADE_ENTRY - SOUN - Trade entered: BUY SOUN_2.0_Call | entry_price: $8.51 | heston_price: $8.85 | strike: $2.00 | contracts: 1 | position_size: $25.00 | mispricing: $-0.34 | active_trades: 2/4 | capital: $100.00
+[2025-08-06 12:56:36] ENTER - SOUN - SOUN_1.0_Call - SELL - $25.00
+[2025-08-06 12:56:36] TRADE_ENTRY - SOUN - Trade entered: SELL SOUN_1.0_Call | entry_price: $10.75 | heston_price: $9.85 | strike: $1.00 | contracts: 1 | position_size: $25.00 | mispricing: $0.90 | active_trades: 3/4 | capital: $100.00
+[2025-08-06 12:56:36] ENTER - SOUN - SOUN_5.0_Call - SELL - $25.00
+[2025-08-06 12:56:36] TRADE_ENTRY - SOUN - Trade entered: SELL SOUN_5.0_Call | entry_price: $6.10 | heston_price: $5.87 | strike: $5.00 | contracts: 1 | position_size: $25.00 | mispricing: $0.23 | active_trades: 4/4 | capital: $100.00
+[2025-08-06 12:56:36] HOUR_COMPLETE - SOUN - Live hour processing complete | active_trades: 4/4 | buy_trades: 2 | sell_trades: 2 | capital: $100.00 | hour: 12
+[2025-08-07 06:58:11] DATA_FETCH - SOUN - Fetching live options data | expiry_date: 2025-09-19 | company: SOUN
+[2025-08-07 06:58:14] HOUR_COMPLETE - SOUN - Live hour processing complete | active_trades: 4/4 | buy_trades: 2 | sell_trades: 2 | capital: $100.00 | hour: 6
+[2025-08-07 07:59:02] DATA_FETCH - SOUN - Fetching live options data | expiry_date: 2025-09-19 | company: SOUN
+[2025-08-07 07:59:06] HOUR_COMPLETE - SOUN - Live hour processing complete | active_trades: 4/4 | buy_trades: 2 | sell_trades: 2 | capital: $100.00 | hour: 7
+[2025-08-07 09:00:04] DATA_FETCH - SOUN - Fetching live options data | expiry_date: 2025-09-19 | company: SOUN
+[2025-08-07 09:00:07] HOUR_COMPLETE - SOUN - Live hour processing complete | active_trades: 4/4 | buy_trades: 2 | sell_trades: 2 | capital: $100.00 | hour: 9
+[2025-08-07 10:00:48] DATA_FETCH - SOUN - Fetching live options data | expiry_date: 2025-09-19 | company: SOUN
+[2025-08-07 10:00:57] HOUR_COMPLETE - SOUN - Live hour processing complete | active_trades: 4/4 | buy_trades: 2 | sell_trades: 2 | capital: $100.00 | hour: 10
+[2025-08-07 11:01:39] DATA_FETCH - SOUN - Fetching live options data | expiry_date: 2025-09-19 | company: SOUN
+[2025-08-07 11:01:42] EXIT - SOUN - SOUN_5.0_Call - SELL - $25.00 - PnL: $0.43 - Return: 1.72%
+[2025-08-07 11:01:42] TRADE_EXIT - SOUN - Trade exited: SELL SOUN_5.0_Call | entry_price: $6.10 | exit_price: $5.67 | pnl: $0.43 | return_pct: 1.72% | duration_hours: -1 | contracts: 1 | active_trades: 3/4 | capital: $100.43 | total_pnl: $0.43
+[2025-08-07 11:01:42] HOUR_COMPLETE - SOUN - Live hour processing complete | active_trades: 3/4 | buy_trades: 2 | sell_trades: 1 | capital: $100.43 | hour: 11
+[2025-08-07 12:02:38] DATA_FETCH - SOUN - Fetching live options data | expiry_date: 2025-09-19 | company: SOUN
+[2025-08-07 12:02:41] HOUR_COMPLETE - SOUN - Live hour processing complete | active_trades: 3/4 | buy_trades: 2 | sell_trades: 1 | capital: $100.43 | hour: 12
+[2025-08-08 06:33:42] DATA_FETCH - SOUN - Fetching live options data | expiry_date: 2025-09-19 | company: SOUN
+[2025-08-08 06:33:46] HOUR_COMPLETE - SOUN - Live hour processing complete | active_trades: 3/4 | buy_trades: 2 | sell_trades: 1 | capital: $100.43 | hour: 6
+[2025-08-08 07:34:46] DATA_FETCH - SOUN - Fetching live options data | expiry_date: 2025-09-19 | company: SOUN
+[2025-08-08 07:34:49] EXIT - SOUN - SOUN_1.0_Call - SELL - $25.00 - PnL: $0.00 - Return: 0.00%
+[2025-08-08 07:34:49] TRADE_EXIT - SOUN - Trade exited: SELL SOUN_1.0_Call | entry_price: $10.75 | exit_price: $10.75 | pnl: $0.00 | return_pct: 0.00% | duration_hours: -5 | contracts: 1 | active_trades: 2/4 | capital: $100.43 | total_pnl: $0.43
+[2025-08-08 07:34:49] ENTER - SOUN - SOUN_30.0_Call - SELL - $25.00
+[2025-08-08 07:34:49] TRADE_ENTRY - SOUN - Trade entered: SELL SOUN_30.0_Call | entry_price: $0.20 | heston_price: $0.04 | strike: $30.00 | contracts: 1 | position_size: $25.00 | mispricing: $0.16 | active_trades: 3/4 | capital: $100.43
+[2025-08-08 07:34:49] ENTER - SOUN - SOUN_31.0_Call - SELL - $25.00
+[2025-08-08 07:34:49] TRADE_ENTRY - SOUN - Trade entered: SELL SOUN_31.0_Call | entry_price: $0.18 | heston_price: $0.03 | strike: $31.00 | contracts: 1 | position_size: $25.00 | mispricing: $0.15 | active_trades: 4/4 | capital: $100.43
+[2025-08-08 07:34:49] HOUR_COMPLETE - SOUN - Live hour processing complete | active_trades: 4/4 | buy_trades: 2 | sell_trades: 2 | capital: $100.43 | hour: 7
+[2025-08-08 08:35:33] DATA_FETCH - SOUN - Fetching live options data | expiry_date: 2025-09-19 | company: SOUN
+[2025-08-08 08:35:37] EXIT - SOUN - SOUN_30.0_Call - SELL - $25.00 - PnL: $0.00 - Return: 0.00%
+[2025-08-08 08:35:37] TRADE_EXIT - SOUN - Trade exited: SELL SOUN_30.0_Call | entry_price: $0.20 | exit_price: $0.20 | pnl: $0.00 | return_pct: 0.00% | duration_hours: 1 | contracts: 1 | active_trades: 3/4 | capital: $100.43 | total_pnl: $0.43
+[2025-08-08 08:35:37] EXIT - SOUN - SOUN_31.0_Call - SELL - $25.00 - PnL: $0.00 - Return: 0.00%
+[2025-08-08 08:35:37] TRADE_EXIT - SOUN - Trade exited: SELL SOUN_31.0_Call | entry_price: $0.18 | exit_price: $0.18 | pnl: $0.00 | return_pct: 0.00% | duration_hours: 1 | contracts: 1 | active_trades: 2/4 | capital: $100.43 | total_pnl: $0.43
+[2025-08-08 08:35:37] ENTER - SOUN - SOUN_5.0_Call - SELL - $25.00
+[2025-08-08 08:35:37] TRADE_ENTRY - SOUN - Trade entered: SELL SOUN_5.0_Call | entry_price: $9.20 | heston_price: $8.84 | strike: $5.00 | contracts: 1 | position_size: $25.00 | mispricing: $0.36 | active_trades: 3/4 | capital: $100.43
+[2025-08-08 08:35:37] ENTER - SOUN - SOUN_3.0_Call - SELL - $25.00
+[2025-08-08 08:35:37] TRADE_ENTRY - SOUN - Trade entered: SELL SOUN_3.0_Call | entry_price: $11.17 | heston_price: $10.83 | strike: $3.00 | contracts: 1 | position_size: $25.00 | mispricing: $0.34 | active_trades: 4/4 | capital: $100.43
+[2025-08-08 08:35:37] HOUR_COMPLETE - SOUN - Live hour processing complete | active_trades: 4/4 | buy_trades: 2 | sell_trades: 2 | capital: $100.43 | hour: 8
+[2025-08-08 08:45:46] DATA_FETCH - SOUN - Fetching live options data | expiry_date: 2025-09-19 | company: SOUN
+[2025-08-08 08:45:49] EXIT - SOUN - SOUN_4.0_Call - BUY - $25.00 - PnL: $0.00 - Return: 0.00%
+[2025-08-08 08:45:49] TRADE_EXIT - SOUN - Trade exited: BUY SOUN_4.0_Call | entry_price: $6.00 | exit_price: $6.00 | pnl: $0.00 | return_pct: 0.00% | duration_hours: -4 | contracts: 1 | active_trades: 3/4 | capital: $100.43 | total_pnl: $0.43
+[2025-08-08 08:45:49] EXIT - SOUN - SOUN_2.0_Call - BUY - $25.00 - PnL: $0.00 - Return: 0.00%
+[2025-08-08 08:45:49] TRADE_EXIT - SOUN - Trade exited: BUY SOUN_2.0_Call | entry_price: $8.51 | exit_price: $8.51 | pnl: $0.00 | return_pct: 0.00% | duration_hours: -4 | contracts: 1 | active_trades: 2/4 | capital: $100.43 | total_pnl: $0.43
+[2025-08-08 08:45:49] EXIT - SOUN - SOUN_5.0_Call - SELL - $25.00 - PnL: $0.00 - Return: 0.00%
+[2025-08-08 08:45:49] TRADE_EXIT - SOUN - Trade exited: SELL SOUN_5.0_Call | entry_price: $9.20 | exit_price: $9.20 | pnl: $0.00 | return_pct: 0.00% | duration_hours: 0 | contracts: 1 | active_trades: 1/4 | capital: $100.43 | total_pnl: $0.43
+[2025-08-08 08:45:49] EXIT - SOUN - SOUN_3.0_Call - SELL - $25.00 - PnL: $0.00 - Return: 0.00%
+[2025-08-08 08:45:49] TRADE_EXIT - SOUN - Trade exited: SELL SOUN_3.0_Call | entry_price: $11.17 | exit_price: $11.17 | pnl: $0.00 | return_pct: 0.00% | duration_hours: 0 | contracts: 1 | active_trades: 0/4 | capital: $100.43 | total_pnl: $0.43

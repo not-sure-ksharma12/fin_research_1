@@ -1,15 +1,38 @@
-[2025-08-05 10:00:19] SYSTEM - TSLA - Trading system initialized | initial_capital: $100.0 | company: TSLA
-[2025-08-05 10:00:30] DATA_FETCH - TSLA - Fetching live options data | expiry_date: 2025-09-19 | company: TSLA
-[2025-08-05 10:00:40] ENTER - TSLA - TSLA_55.0_Call - BUY - $25.00
-[2025-08-05 10:00:40] TRADE_ENTRY - TSLA - Trade entered: BUY TSLA_55.0_Call | entry_price: $240.98 | heston_price: $252.11 | strike: $55.00 | contracts: 1 | position_size: $25.00 | mispricing: $-11.13 | active_trades: 1/4 | capital: $100.00
-[2025-08-05 10:00:40] ENTER - TSLA - TSLA_50.0_Call - BUY - $25.00
-[2025-08-05 10:00:40] TRADE_ENTRY - TSLA - Trade entered: BUY TSLA_50.0_Call | entry_price: $247.95 | heston_price: $257.08 | strike: $50.00 | contracts: 1 | position_size: $25.00 | mispricing: $-9.13 | active_trades: 2/4 | capital: $100.00
-[2025-08-05 10:00:40] ENTER - TSLA - TSLA_110.0_Call - SELL - $25.00
-[2025-08-05 10:00:40] TRADE_ENTRY - TSLA - Trade entered: SELL TSLA_110.0_Call | entry_price: $224.57 | heston_price: $197.41 | strike: $110.00 | contracts: 1 | position_size: $25.00 | mispricing: $27.16 | active_trades: 3/4 | capital: $100.00
-[2025-08-05 10:00:40] ENTER - TSLA - TSLA_25.0_Call - SELL - $25.00
-[2025-08-05 10:00:40] TRADE_ENTRY - TSLA - Trade entered: SELL TSLA_25.0_Call | entry_price: $309.00 | heston_price: $281.94 | strike: $25.00 | contracts: 1 | position_size: $25.00 | mispricing: $27.06 | active_trades: 4/4 | capital: $100.00
-[2025-08-05 10:00:40] HOUR_COMPLETE - TSLA - Live hour processing complete | active_trades: 4/4 | buy_trades: 2 | sell_trades: 2 | capital: $100.00 | hour: 10
-[2025-08-05 11:01:14] DATA_FETCH - TSLA - Fetching live options data | expiry_date: 2025-09-19 | company: TSLA
-[2025-08-05 11:01:25] HOUR_COMPLETE - TSLA - Live hour processing complete | active_trades: 4/4 | buy_trades: 2 | sell_trades: 2 | capital: $100.00 | hour: 11
-[2025-08-05 12:02:20] DATA_FETCH - TSLA - Fetching live options data | expiry_date: 2025-09-19 | company: TSLA
-[2025-08-05 12:02:30] HOUR_COMPLETE - TSLA - Live hour processing complete | active_trades: 4/4 | buy_trades: 2 | sell_trades: 2 | capital: $100.00 | hour: 12
+[2025-08-06 12:56:09] SYSTEM - TSLA - Trading system initialized | initial_capital: $100.0 | company: TSLA
+[2025-08-06 12:56:20] DATA_FETCH - TSLA - Fetching live options data | expiry_date: 2025-09-19 | company: TSLA
+[2025-08-06 12:56:28] ENTER - TSLA - TSLA_55.0_Call - BUY - $25.00
+[2025-08-06 12:56:28] TRADE_ENTRY - TSLA - Trade entered: BUY TSLA_55.0_Call | entry_price: $240.98 | heston_price: $264.24 | strike: $55.00 | contracts: 1 | position_size: $25.00 | mispricing: $-23.26 | active_trades: 1/4 | capital: $100.00
+[2025-08-06 12:56:28] ENTER - TSLA - TSLA_130.0_Call - BUY - $25.00
+[2025-08-06 12:56:28] TRADE_ENTRY - TSLA - Trade entered: BUY TSLA_130.0_Call | entry_price: $172.99 | heston_price: $189.65 | strike: $130.00 | contracts: 1 | position_size: $25.00 | mispricing: $-16.66 | active_trades: 2/4 | capital: $100.00
+[2025-08-06 12:56:28] ENTER - TSLA - TSLA_110.0_Call - SELL - $25.00
+[2025-08-06 12:56:28] TRADE_ENTRY - TSLA - Trade entered: SELL TSLA_110.0_Call | entry_price: $224.57 | heston_price: $209.54 | strike: $110.00 | contracts: 1 | position_size: $25.00 | mispricing: $15.03 | active_trades: 3/4 | capital: $100.00
+[2025-08-06 12:56:28] ENTER - TSLA - TSLA_25.0_Call - SELL - $25.00
+[2025-08-06 12:56:28] TRADE_ENTRY - TSLA - Trade entered: SELL TSLA_25.0_Call | entry_price: $309.00 | heston_price: $294.07 | strike: $25.00 | contracts: 1 | position_size: $25.00 | mispricing: $14.93 | active_trades: 4/4 | capital: $100.00
+[2025-08-06 12:56:28] HOUR_COMPLETE - TSLA - Live hour processing complete | active_trades: 4/4 | buy_trades: 2 | sell_trades: 2 | capital: $100.00 | hour: 12
+[2025-08-07 06:57:58] DATA_FETCH - TSLA - Fetching live options data | expiry_date: 2025-09-19 | company: TSLA
+[2025-08-07 06:58:07] HOUR_COMPLETE - TSLA - Live hour processing complete | active_trades: 4/4 | buy_trades: 2 | sell_trades: 2 | capital: $100.00 | hour: 6
+[2025-08-07 07:58:49] DATA_FETCH - TSLA - Fetching live options data | expiry_date: 2025-09-19 | company: TSLA
+[2025-08-07 07:58:58] HOUR_COMPLETE - TSLA - Live hour processing complete | active_trades: 4/4 | buy_trades: 2 | sell_trades: 2 | capital: $100.00 | hour: 7
+[2025-08-07 08:59:49] DATA_FETCH - TSLA - Fetching live options data | expiry_date: 2025-09-19 | company: TSLA
+[2025-08-07 09:00:00] HOUR_COMPLETE - TSLA - Live hour processing complete | active_trades: 4/4 | buy_trades: 2 | sell_trades: 2 | capital: $100.00 | hour: 8
+[2025-08-07 10:00:35] DATA_FETCH - TSLA - Fetching live options data | expiry_date: 2025-09-19 | company: TSLA
+[2025-08-07 10:00:44] HOUR_COMPLETE - TSLA - Live hour processing complete | active_trades: 4/4 | buy_trades: 2 | sell_trades: 2 | capital: $100.00 | hour: 10
+[2025-08-07 11:01:25] DATA_FETCH - TSLA - Fetching live options data | expiry_date: 2025-09-19 | company: TSLA
+[2025-08-07 11:01:35] HOUR_COMPLETE - TSLA - Live hour processing complete | active_trades: 4/4 | buy_trades: 2 | sell_trades: 2 | capital: $100.00 | hour: 11
+[2025-08-07 12:02:23] DATA_FETCH - TSLA - Fetching live options data | expiry_date: 2025-09-19 | company: TSLA
+[2025-08-07 12:02:33] HOUR_COMPLETE - TSLA - Live hour processing complete | active_trades: 4/4 | buy_trades: 2 | sell_trades: 2 | capital: $100.00 | hour: 12
+[2025-08-08 06:33:29] DATA_FETCH - TSLA - Fetching live options data | expiry_date: 2025-09-19 | company: TSLA
+[2025-08-08 06:33:38] HOUR_COMPLETE - TSLA - Live hour processing complete | active_trades: 4/4 | buy_trades: 2 | sell_trades: 2 | capital: $100.00 | hour: 6
+[2025-08-08 07:34:33] DATA_FETCH - TSLA - Fetching live options data | expiry_date: 2025-09-19 | company: TSLA
+[2025-08-08 07:34:42] HOUR_COMPLETE - TSLA - Live hour processing complete | active_trades: 4/4 | buy_trades: 2 | sell_trades: 2 | capital: $100.00 | hour: 7
+[2025-08-08 08:35:19] DATA_FETCH - TSLA - Fetching live options data | expiry_date: 2025-09-19 | company: TSLA
+[2025-08-08 08:35:29] HOUR_COMPLETE - TSLA - Live hour processing complete | active_trades: 4/4 | buy_trades: 2 | sell_trades: 2 | capital: $100.00 | hour: 8
+[2025-08-08 08:45:34] DATA_FETCH - TSLA - Fetching live options data | expiry_date: 2025-09-19 | company: TSLA
+[2025-08-08 08:45:43] EXIT - TSLA - TSLA_55.0_Call - BUY - $25.00 - PnL: $0.00 - Return: 0.00%
+[2025-08-08 08:45:43] TRADE_EXIT - TSLA - Trade exited: BUY TSLA_55.0_Call | entry_price: $240.98 | exit_price: $240.98 | pnl: $0.00 | return_pct: 0.00% | duration_hours: -4 | contracts: 1 | active_trades: 3/4 | capital: $100.00 | total_pnl: $0.00
+[2025-08-08 08:45:43] EXIT - TSLA - TSLA_130.0_Call - BUY - $25.00 - PnL: $0.00 - Return: 0.00%
+[2025-08-08 08:45:43] TRADE_EXIT - TSLA - Trade exited: BUY TSLA_130.0_Call | entry_price: $172.99 | exit_price: $172.99 | pnl: $0.00 | return_pct: 0.00% | duration_hours: -4 | contracts: 1 | active_trades: 2/4 | capital: $100.00 | total_pnl: $0.00
+[2025-08-08 08:45:43] EXIT - TSLA - TSLA_110.0_Call - SELL - $25.00 - PnL: $0.00 - Return: 0.00%
+[2025-08-08 08:45:43] TRADE_EXIT - TSLA - Trade exited: SELL TSLA_110.0_Call | entry_price: $224.57 | exit_price: $224.57 | pnl: $0.00 | return_pct: 0.00% | duration_hours: -4 | contracts: 1 | active_trades: 1/4 | capital: $100.00 | total_pnl: $0.00
+[2025-08-08 08:45:43] EXIT - TSLA - TSLA_25.0_Call - SELL - $25.00 - PnL: $0.00 - Return: 0.00%
+[2025-08-08 08:45:43] TRADE_EXIT - TSLA - Trade exited: SELL TSLA_25.0_Call | entry_price: $309.00 | exit_price: $309.00 | pnl: $0.00 | return_pct: 0.00% | duration_hours: -4 | contracts: 1 | active_trades: 0/4 | capital: $100.00 | total_pnl: $0.00

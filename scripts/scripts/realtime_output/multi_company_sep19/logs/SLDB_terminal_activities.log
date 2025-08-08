@@ -1,13 +1,37 @@
-[2025-08-05 10:00:19] SYSTEM - SLDB - Trading system initialized | initial_capital: $100.0 | company: SLDB
-[2025-08-05 10:01:01] DATA_FETCH - SLDB - Fetching live options data | expiry_date: 2025-09-19 | company: SLDB
-[2025-08-05 10:01:03] ENTER - SLDB - SLDB_7.5_Call - BUY - $25.00
-[2025-08-05 10:01:03] TRADE_ENTRY - SLDB - Trade entered: BUY SLDB_7.5_Call | entry_price: $0.60 | heston_price: $1.13 | strike: $7.50 | contracts: 1 | position_size: $25.00 | mispricing: $-0.53 | active_trades: 1/4 | capital: $100.00
-[2025-08-05 10:01:03] ENTER - SLDB - SLDB_5.0_Call - BUY - $25.00
-[2025-08-05 10:01:03] TRADE_ENTRY - SLDB - Trade entered: BUY SLDB_5.0_Call | entry_price: $2.00 | heston_price: $2.30 | strike: $5.00 | contracts: 1 | position_size: $25.00 | mispricing: $-0.30 | active_trades: 2/4 | capital: $100.00
-[2025-08-05 10:01:03] ENTER - SLDB - SLDB_2.5_Call - SELL - $25.00
-[2025-08-05 10:01:03] TRADE_ENTRY - SLDB - Trade entered: SELL SLDB_2.5_Call | entry_price: $4.81 | heston_price: $4.28 | strike: $2.50 | contracts: 1 | position_size: $25.00 | mispricing: $0.53 | active_trades: 3/4 | capital: $100.00
-[2025-08-05 10:01:03] HOUR_COMPLETE - SLDB - Live hour processing complete | active_trades: 3/4 | buy_trades: 2 | sell_trades: 1 | capital: $100.00 | hour: 10
-[2025-08-05 11:02:06] DATA_FETCH - SLDB - Fetching live options data | expiry_date: 2025-09-19 | company: SLDB
-[2025-08-05 11:02:07] HOUR_COMPLETE - SLDB - Live hour processing complete | active_trades: 3/4 | buy_trades: 2 | sell_trades: 1 | capital: $100.00 | hour: 11
-[2025-08-05 12:03:26] DATA_FETCH - SLDB - Fetching live options data | expiry_date: 2025-09-19 | company: SLDB
-[2025-08-05 12:03:27] HOUR_COMPLETE - SLDB - Live hour processing complete | active_trades: 3/4 | buy_trades: 2 | sell_trades: 1 | capital: $100.00 | hour: 12
+[2025-08-06 12:56:09] SYSTEM - SLDB - Trading system initialized | initial_capital: $100.0 | company: SLDB
+[2025-08-06 12:56:53] DATA_FETCH - SLDB - Fetching live options data | expiry_date: 2025-09-19 | company: SLDB
+[2025-08-06 12:56:55] ENTER - SLDB - SLDB_7.5_Call - BUY - $25.00
+[2025-08-06 12:56:55] TRADE_ENTRY - SLDB - Trade entered: BUY SLDB_7.5_Call | entry_price: $0.50 | heston_price: $0.99 | strike: $7.50 | contracts: 1 | position_size: $25.00 | mispricing: $-0.49 | active_trades: 1/4 | capital: $100.00
+[2025-08-06 12:56:55] ENTER - SLDB - SLDB_10.0_Call - BUY - $25.00
+[2025-08-06 12:56:55] TRADE_ENTRY - SLDB - Trade entered: BUY SLDB_10.0_Call | entry_price: $0.15 | heston_price: $0.45 | strike: $10.00 | contracts: 1 | position_size: $25.00 | mispricing: $-0.30 | active_trades: 2/4 | capital: $100.00
+[2025-08-06 12:56:55] ENTER - SLDB - SLDB_2.5_Call - SELL - $25.00
+[2025-08-06 12:56:55] TRADE_ENTRY - SLDB - Trade entered: SELL SLDB_2.5_Call | entry_price: $4.81 | heston_price: $4.06 | strike: $2.50 | contracts: 1 | position_size: $25.00 | mispricing: $0.75 | active_trades: 3/4 | capital: $100.00
+[2025-08-06 12:56:55] HOUR_COMPLETE - SLDB - Live hour processing complete | active_trades: 3/4 | buy_trades: 2 | sell_trades: 1 | capital: $100.00 | hour: 12
+[2025-08-07 06:58:36] DATA_FETCH - SLDB - Fetching live options data | expiry_date: 2025-09-19 | company: SLDB
+[2025-08-07 06:58:38] HOUR_COMPLETE - SLDB - Live hour processing complete | active_trades: 3/4 | buy_trades: 2 | sell_trades: 1 | capital: $100.00 | hour: 6
+[2025-08-07 07:59:33] DATA_FETCH - SLDB - Fetching live options data | expiry_date: 2025-09-19 | company: SLDB
+[2025-08-07 07:59:35] EXIT - SLDB - SLDB_7.5_Call - BUY - $25.00 - PnL: $0.15 - Return: 0.60%
+[2025-08-07 07:59:35] TRADE_EXIT - SLDB - Trade exited: BUY SLDB_7.5_Call | entry_price: $0.50 | exit_price: $0.65 | pnl: $0.15 | return_pct: 0.60% | duration_hours: -5 | contracts: 1 | active_trades: 2/4 | capital: $100.15 | total_pnl: $0.15
+[2025-08-07 07:59:35] HOUR_COMPLETE - SLDB - Live hour processing complete | active_trades: 2/4 | buy_trades: 1 | sell_trades: 1 | capital: $100.15 | hour: 7
+[2025-08-07 09:00:23] DATA_FETCH - SLDB - Fetching live options data | expiry_date: 2025-09-19 | company: SLDB
+[2025-08-07 09:00:24] HOUR_COMPLETE - SLDB - Live hour processing complete | active_trades: 2/4 | buy_trades: 1 | sell_trades: 1 | capital: $100.15 | hour: 9
+[2025-08-07 10:01:12] DATA_FETCH - SLDB - Fetching live options data | expiry_date: 2025-09-19 | company: SLDB
+[2025-08-07 10:01:14] HOUR_COMPLETE - SLDB - Live hour processing complete | active_trades: 2/4 | buy_trades: 1 | sell_trades: 1 | capital: $100.15 | hour: 10
+[2025-08-07 11:02:11] DATA_FETCH - SLDB - Fetching live options data | expiry_date: 2025-09-19 | company: SLDB
+[2025-08-07 11:02:12] HOUR_COMPLETE - SLDB - Live hour processing complete | active_trades: 2/4 | buy_trades: 1 | sell_trades: 1 | capital: $100.15 | hour: 11
+[2025-08-07 12:03:17] DATA_FETCH - SLDB - Fetching live options data | expiry_date: 2025-09-19 | company: SLDB
+[2025-08-07 12:03:18] HOUR_COMPLETE - SLDB - Live hour processing complete | active_trades: 2/4 | buy_trades: 1 | sell_trades: 1 | capital: $100.15 | hour: 12
+[2025-08-08 06:34:19] DATA_FETCH - SLDB - Fetching live options data | expiry_date: 2025-09-19 | company: SLDB
+[2025-08-08 07:35:05] DATA_FETCH - SLDB - Fetching live options data | expiry_date: 2025-09-19 | company: SLDB
+[2025-08-08 07:35:06] EXIT - SLDB - SLDB_2.5_Call - SELL - $25.00 - PnL: $1.12 - Return: 4.48%
+[2025-08-08 07:35:06] TRADE_EXIT - SLDB - Trade exited: SELL SLDB_2.5_Call | entry_price: $4.81 | exit_price: $3.69 | pnl: $1.12 | return_pct: 4.48% | duration_hours: -5 | contracts: 1 | active_trades: 1/4 | capital: $101.27 | total_pnl: $1.27
+[2025-08-08 07:35:06] ENTER - SLDB - SLDB_7.5_Call - BUY - $25.00
+[2025-08-08 07:35:06] TRADE_ENTRY - SLDB - Trade entered: BUY SLDB_7.5_Call | entry_price: $0.50 | heston_price: $1.42 | strike: $7.50 | contracts: 1 | position_size: $25.00 | mispricing: $-0.92 | active_trades: 2/4 | capital: $101.27
+[2025-08-08 07:35:06] HOUR_COMPLETE - SLDB - Live hour processing complete | active_trades: 2/4 | buy_trades: 2 | sell_trades: 0 | capital: $101.27 | hour: 7
+[2025-08-08 08:36:12] DATA_FETCH - SLDB - Fetching live options data | expiry_date: 2025-09-19 | company: SLDB
+[2025-08-08 08:36:13] HOUR_COMPLETE - SLDB - Live hour processing complete | active_trades: 2/4 | buy_trades: 2 | sell_trades: 0 | capital: $101.27 | hour: 8
+[2025-08-08 08:46:11] DATA_FETCH - SLDB - Fetching live options data | expiry_date: 2025-09-19 | company: SLDB
+[2025-08-08 08:46:12] EXIT - SLDB - SLDB_10.0_Call - BUY - $25.00 - PnL: $0.00 - Return: 0.00%
+[2025-08-08 08:46:12] TRADE_EXIT - SLDB - Trade exited: BUY SLDB_10.0_Call | entry_price: $0.15 | exit_price: $0.15 | pnl: $0.00 | return_pct: 0.00% | duration_hours: -4 | contracts: 1 | active_trades: 1/4 | capital: $101.27 | total_pnl: $1.27
+[2025-08-08 08:46:12] EXIT - SLDB - SLDB_7.5_Call - BUY - $25.00 - PnL: $0.00 - Return: 0.00%
+[2025-08-08 08:46:12] TRADE_EXIT - SLDB - Trade exited: BUY SLDB_7.5_Call | entry_price: $0.50 | exit_price: $0.50 | pnl: $0.00 | return_pct: 0.00% | duration_hours: 1 | contracts: 1 | active_trades: 0/4 | capital: $101.27 | total_pnl: $1.27

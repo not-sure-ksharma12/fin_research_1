@@ -1,15 +1,46 @@
-[2025-08-05 10:00:19] SYSTEM - BBAI - Trading system initialized | initial_capital: $100.0 | company: BBAI
-[2025-08-05 10:01:00] DATA_FETCH - BBAI - Fetching live options data | expiry_date: 2025-09-19 | company: BBAI
-[2025-08-05 10:01:01] ENTER - BBAI - BBAI_0.5_Call - BUY - $25.00
-[2025-08-05 10:01:01] TRADE_ENTRY - BBAI - Trade entered: BUY BBAI_0.5_Call | entry_price: $5.89 | heston_price: $6.55 | strike: $0.50 | contracts: 1 | position_size: $25.00 | mispricing: $-0.66 | active_trades: 1/4 | capital: $100.00
-[2025-08-05 10:01:01] ENTER - BBAI - BBAI_1.5_Call - BUY - $25.00
-[2025-08-05 10:01:01] TRADE_ENTRY - BBAI - Trade entered: BUY BBAI_1.5_Call | entry_price: $5.26 | heston_price: $5.55 | strike: $1.50 | contracts: 1 | position_size: $25.00 | mispricing: $-0.29 | active_trades: 2/4 | capital: $100.00
-[2025-08-05 10:01:01] ENTER - BBAI - BBAI_17.0_Call - SELL - $25.00
-[2025-08-05 10:01:01] TRADE_ENTRY - BBAI - Trade entered: SELL BBAI_17.0_Call | entry_price: $0.19 | heston_price: $0.03 | strike: $17.00 | contracts: 1 | position_size: $25.00 | mispricing: $0.16 | active_trades: 3/4 | capital: $100.00
-[2025-08-05 10:01:01] ENTER - BBAI - BBAI_2.0_Call - SELL - $25.00
-[2025-08-05 10:01:01] TRADE_ENTRY - BBAI - Trade entered: SELL BBAI_2.0_Call | entry_price: $5.20 | heston_price: $5.06 | strike: $2.00 | contracts: 1 | position_size: $25.00 | mispricing: $0.14 | active_trades: 4/4 | capital: $100.00
-[2025-08-05 10:01:01] HOUR_COMPLETE - BBAI - Live hour processing complete | active_trades: 4/4 | buy_trades: 2 | sell_trades: 2 | capital: $100.00 | hour: 10
-[2025-08-05 11:01:57] DATA_FETCH - BBAI - Fetching live options data | expiry_date: 2025-09-19 | company: BBAI
-[2025-08-05 11:02:06] HOUR_COMPLETE - BBAI - Live hour processing complete | active_trades: 4/4 | buy_trades: 2 | sell_trades: 2 | capital: $100.00 | hour: 11
-[2025-08-05 12:03:21] DATA_FETCH - BBAI - Fetching live options data | expiry_date: 2025-09-19 | company: BBAI
-[2025-08-05 12:03:26] HOUR_COMPLETE - BBAI - Live hour processing complete | active_trades: 4/4 | buy_trades: 2 | sell_trades: 2 | capital: $100.00 | hour: 12
+[2025-08-06 12:56:09] SYSTEM - BBAI - Trading system initialized | initial_capital: $100.0 | company: BBAI
+[2025-08-06 12:56:47] DATA_FETCH - BBAI - Fetching live options data | expiry_date: 2025-09-19 | company: BBAI
+[2025-08-06 12:56:53] ENTER - BBAI - BBAI_0.5_Call - BUY - $25.00
+[2025-08-06 12:56:53] TRADE_ENTRY - BBAI - Trade entered: BUY BBAI_0.5_Call | entry_price: $5.89 | heston_price: $6.22 | strike: $0.50 | contracts: 1 | position_size: $25.00 | mispricing: $-0.33 | active_trades: 1/4 | capital: $100.00
+[2025-08-06 12:56:53] ENTER - BBAI - BBAI_6.0_Call - BUY - $25.00
+[2025-08-06 12:56:53] TRADE_ENTRY - BBAI - Trade entered: BUY BBAI_6.0_Call | entry_price: $1.40 | heston_price: $1.53 | strike: $6.00 | contracts: 1 | position_size: $25.00 | mispricing: $-0.13 | active_trades: 2/4 | capital: $100.00
+[2025-08-06 12:56:53] ENTER - BBAI - BBAI_2.0_Call - SELL - $25.00
+[2025-08-06 12:56:53] TRADE_ENTRY - BBAI - Trade entered: SELL BBAI_2.0_Call | entry_price: $5.20 | heston_price: $4.73 | strike: $2.00 | contracts: 1 | position_size: $25.00 | mispricing: $0.47 | active_trades: 3/4 | capital: $100.00
+[2025-08-06 12:56:53] ENTER - BBAI - BBAI_2.5_Call - SELL - $25.00
+[2025-08-06 12:56:53] TRADE_ENTRY - BBAI - Trade entered: SELL BBAI_2.5_Call | entry_price: $4.70 | heston_price: $4.24 | strike: $2.50 | contracts: 1 | position_size: $25.00 | mispricing: $0.46 | active_trades: 4/4 | capital: $100.00
+[2025-08-06 12:56:53] HOUR_COMPLETE - BBAI - Live hour processing complete | active_trades: 4/4 | buy_trades: 2 | sell_trades: 2 | capital: $100.00 | hour: 12
+[2025-08-07 06:58:34] DATA_FETCH - BBAI - Fetching live options data | expiry_date: 2025-09-19 | company: BBAI
+[2025-08-07 06:58:36] HOUR_COMPLETE - BBAI - Live hour processing complete | active_trades: 4/4 | buy_trades: 2 | sell_trades: 2 | capital: $100.00 | hour: 6
+[2025-08-07 07:59:28] DATA_FETCH - BBAI - Fetching live options data | expiry_date: 2025-09-19 | company: BBAI
+[2025-08-07 07:59:33] EXIT - BBAI - BBAI_2.0_Call - SELL - $25.00 - PnL: $0.70 - Return: 2.80%
+[2025-08-07 07:59:33] TRADE_EXIT - BBAI - Trade exited: SELL BBAI_2.0_Call | entry_price: $5.20 | exit_price: $4.50 | pnl: $0.70 | return_pct: 2.80% | duration_hours: -5 | contracts: 1 | active_trades: 3/4 | capital: $100.70 | total_pnl: $0.70
+[2025-08-07 07:59:33] HOUR_COMPLETE - BBAI - Live hour processing complete | active_trades: 3/4 | buy_trades: 2 | sell_trades: 1 | capital: $100.70 | hour: 7
+[2025-08-07 09:00:21] DATA_FETCH - BBAI - Fetching live options data | expiry_date: 2025-09-19 | company: BBAI
+[2025-08-07 09:00:22] EXIT - BBAI - BBAI_6.0_Call - BUY - $25.00 - PnL: $-0.18 - Return: -0.72%
+[2025-08-07 09:00:22] TRADE_EXIT - BBAI - Trade exited: BUY BBAI_6.0_Call | entry_price: $1.40 | exit_price: $1.22 | pnl: $-0.18 | return_pct: -0.72% | duration_hours: -3 | contracts: 1 | active_trades: 2/4 | capital: $100.52 | total_pnl: $0.52
+[2025-08-07 09:00:23] HOUR_COMPLETE - BBAI - Live hour processing complete | active_trades: 2/4 | buy_trades: 1 | sell_trades: 1 | capital: $100.52 | hour: 9
+[2025-08-07 10:01:10] DATA_FETCH - BBAI - Fetching live options data | expiry_date: 2025-09-19 | company: BBAI
+[2025-08-07 10:01:12] ENTER - BBAI - BBAI_6.0_Call - BUY - $25.00
+[2025-08-07 10:01:12] TRADE_ENTRY - BBAI - Trade entered: BUY BBAI_6.0_Call | entry_price: $1.22 | heston_price: $1.38 | strike: $6.00 | contracts: 1 | position_size: $25.00 | mispricing: $-0.16 | active_trades: 3/4 | capital: $100.52
+[2025-08-07 10:01:12] HOUR_COMPLETE - BBAI - Live hour processing complete | active_trades: 3/4 | buy_trades: 2 | sell_trades: 1 | capital: $100.52 | hour: 10
+[2025-08-07 11:02:09] DATA_FETCH - BBAI - Fetching live options data | expiry_date: 2025-09-19 | company: BBAI
+[2025-08-07 11:02:11] EXIT - BBAI - BBAI_6.0_Call - BUY - $25.00 - PnL: $0.01 - Return: 0.04%
+[2025-08-07 11:02:11] TRADE_EXIT - BBAI - Trade exited: BUY BBAI_6.0_Call | entry_price: $1.22 | exit_price: $1.23 | pnl: $0.01 | return_pct: 0.04% | duration_hours: 1 | contracts: 1 | active_trades: 2/4 | capital: $100.53 | total_pnl: $0.53
+[2025-08-07 11:02:11] HOUR_COMPLETE - BBAI - Live hour processing complete | active_trades: 2/4 | buy_trades: 1 | sell_trades: 1 | capital: $100.53 | hour: 11
+[2025-08-07 12:03:15] DATA_FETCH - BBAI - Fetching live options data | expiry_date: 2025-09-19 | company: BBAI
+[2025-08-07 12:03:16] ENTER - BBAI - BBAI_6.0_Call - BUY - $25.00
+[2025-08-07 12:03:16] TRADE_ENTRY - BBAI - Trade entered: BUY BBAI_6.0_Call | entry_price: $1.16 | heston_price: $1.33 | strike: $6.00 | contracts: 1 | position_size: $25.00 | mispricing: $-0.17 | active_trades: 3/4 | capital: $100.53
+[2025-08-07 12:03:17] HOUR_COMPLETE - BBAI - Live hour processing complete | active_trades: 3/4 | buy_trades: 2 | sell_trades: 1 | capital: $100.53 | hour: 12
+[2025-08-08 06:34:17] DATA_FETCH - BBAI - Fetching live options data | expiry_date: 2025-09-19 | company: BBAI
+[2025-08-08 06:34:19] HOUR_COMPLETE - BBAI - Live hour processing complete | active_trades: 3/4 | buy_trades: 2 | sell_trades: 1 | capital: $100.53 | hour: 6
+[2025-08-08 07:35:02] DATA_FETCH - BBAI - Fetching live options data | expiry_date: 2025-09-19 | company: BBAI
+[2025-08-08 07:35:05] HOUR_COMPLETE - BBAI - Live hour processing complete | active_trades: 3/4 | buy_trades: 2 | sell_trades: 1 | capital: $100.53 | hour: 7
+[2025-08-08 08:36:09] DATA_FETCH - BBAI - Fetching live options data | expiry_date: 2025-09-19 | company: BBAI
+[2025-08-08 08:36:12] HOUR_COMPLETE - BBAI - Live hour processing complete | active_trades: 3/4 | buy_trades: 2 | sell_trades: 1 | capital: $100.53 | hour: 8
+[2025-08-08 08:46:05] DATA_FETCH - BBAI - Fetching live options data | expiry_date: 2025-09-19 | company: BBAI
+[2025-08-08 08:46:11] EXIT - BBAI - BBAI_0.5_Call - BUY - $25.00 - PnL: $0.01 - Return: 0.04%
+[2025-08-08 08:46:11] TRADE_EXIT - BBAI - Trade exited: BUY BBAI_0.5_Call | entry_price: $5.89 | exit_price: $5.90 | pnl: $0.01 | return_pct: 0.04% | duration_hours: -4 | contracts: 1 | active_trades: 2/4 | capital: $100.54 | total_pnl: $0.54
+[2025-08-08 08:46:11] EXIT - BBAI - BBAI_2.5_Call - SELL - $25.00 - PnL: $0.00 - Return: 0.00%
+[2025-08-08 08:46:11] TRADE_EXIT - BBAI - Trade exited: SELL BBAI_2.5_Call | entry_price: $4.70 | exit_price: $4.70 | pnl: $0.00 | return_pct: 0.00% | duration_hours: -4 | contracts: 1 | active_trades: 1/4 | capital: $100.54 | total_pnl: $0.54
+[2025-08-08 08:46:11] EXIT - BBAI - BBAI_6.0_Call - BUY - $25.00 - PnL: $0.44 - Return: 1.76%
+[2025-08-08 08:46:11] TRADE_EXIT - BBAI - Trade exited: BUY BBAI_6.0_Call | entry_price: $1.16 | exit_price: $1.60 | pnl: $0.44 | return_pct: 1.76% | duration_hours: -4 | contracts: 1 | active_trades: 0/4 | capital: $100.98 | total_pnl: $0.98

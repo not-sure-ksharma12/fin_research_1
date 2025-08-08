@@ -1,15 +1,50 @@
-[2025-08-05 10:00:19] SYSTEM - AVGO - Trading system initialized | initial_capital: $100.0 | company: AVGO
-[2025-08-05 10:00:51] DATA_FETCH - AVGO - Fetching live options data | expiry_date: 2025-09-19 | company: AVGO
-[2025-08-05 10:00:55] ENTER - AVGO - AVGO_105.0_Call - BUY - $25.00
-[2025-08-05 10:00:55] TRADE_ENTRY - AVGO - Trade entered: BUY AVGO_105.0_Call | entry_price: $158.20 | heston_price: $189.45 | strike: $105.00 | contracts: 1 | position_size: $25.00 | mispricing: $-31.25 | active_trades: 1/4 | capital: $100.00
-[2025-08-05 10:00:55] ENTER - AVGO - AVGO_115.0_Call - BUY - $25.00
-[2025-08-05 10:00:55] TRADE_ENTRY - AVGO - Trade entered: BUY AVGO_115.0_Call | entry_price: $149.18 | heston_price: $179.51 | strike: $115.00 | contracts: 1 | position_size: $25.00 | mispricing: $-30.33 | active_trades: 2/4 | capital: $100.00
-[2025-08-05 10:00:55] ENTER - AVGO - AVGO_185.0_Call - SELL - $25.00
-[2025-08-05 10:00:55] TRADE_ENTRY - AVGO - Trade entered: SELL AVGO_185.0_Call | entry_price: $117.20 | heston_price: $111.30 | strike: $185.00 | contracts: 1 | position_size: $25.00 | mispricing: $5.90 | active_trades: 3/4 | capital: $100.00
-[2025-08-05 10:00:55] ENTER - AVGO - AVGO_90.0_Call - SELL - $25.00
-[2025-08-05 10:00:55] TRADE_ENTRY - AVGO - Trade entered: SELL AVGO_90.0_Call | entry_price: $210.16 | heston_price: $204.36 | strike: $90.00 | contracts: 1 | position_size: $25.00 | mispricing: $5.80 | active_trades: 4/4 | capital: $100.00
-[2025-08-05 10:00:55] HOUR_COMPLETE - AVGO - Live hour processing complete | active_trades: 4/4 | buy_trades: 2 | sell_trades: 2 | capital: $100.00 | hour: 10
-[2025-08-05 11:01:37] DATA_FETCH - AVGO - Fetching live options data | expiry_date: 2025-09-19 | company: AVGO
-[2025-08-05 11:01:52] HOUR_COMPLETE - AVGO - Live hour processing complete | active_trades: 4/4 | buy_trades: 2 | sell_trades: 2 | capital: $100.00 | hour: 11
-[2025-08-05 12:02:52] DATA_FETCH - AVGO - Fetching live options data | expiry_date: 2025-09-19 | company: AVGO
-[2025-08-05 12:02:56] HOUR_COMPLETE - AVGO - Live hour processing complete | active_trades: 4/4 | buy_trades: 2 | sell_trades: 2 | capital: $100.00 | hour: 12
+[2025-08-06 12:56:09] SYSTEM - AVGO - Trading system initialized | initial_capital: $100.0 | company: AVGO
+[2025-08-06 12:56:40] DATA_FETCH - AVGO - Fetching live options data | expiry_date: 2025-09-19 | company: AVGO
+[2025-08-06 12:56:43] ENTER - AVGO - AVGO_105.0_Call - BUY - $25.00
+[2025-08-06 12:56:43] TRADE_ENTRY - AVGO - Trade entered: BUY AVGO_105.0_Call | entry_price: $158.20 | heston_price: $197.73 | strike: $105.00 | contracts: 1 | position_size: $25.00 | mispricing: $-39.53 | active_trades: 1/4 | capital: $100.00
+[2025-08-06 12:56:43] ENTER - AVGO - AVGO_115.0_Call - BUY - $25.00
+[2025-08-06 12:56:43] TRADE_ENTRY - AVGO - Trade entered: BUY AVGO_115.0_Call | entry_price: $149.18 | heston_price: $187.78 | strike: $115.00 | contracts: 1 | position_size: $25.00 | mispricing: $-38.60 | active_trades: 2/4 | capital: $100.00
+[2025-08-06 12:56:43] HOUR_COMPLETE - AVGO - Live hour processing complete | active_trades: 2/4 | buy_trades: 2 | sell_trades: 0 | capital: $100.00 | hour: 12
+[2025-08-07 06:58:18] DATA_FETCH - AVGO - Fetching live options data | expiry_date: 2025-09-19 | company: AVGO
+[2025-08-07 06:58:30] HOUR_COMPLETE - AVGO - Live hour processing complete | active_trades: 2/4 | buy_trades: 2 | sell_trades: 0 | capital: $100.00 | hour: 6
+[2025-08-07 07:59:09] DATA_FETCH - AVGO - Fetching live options data | expiry_date: 2025-09-19 | company: AVGO
+[2025-08-07 07:59:12] ENTER - AVGO - AVGO_170.0_Call - SELL - $25.00
+[2025-08-07 07:59:12] TRADE_ENTRY - AVGO - Trade entered: SELL AVGO_170.0_Call | entry_price: $140.00 | heston_price: $137.33 | strike: $170.00 | contracts: 1 | position_size: $25.00 | mispricing: $2.67 | active_trades: 3/4 | capital: $100.00
+[2025-08-07 07:59:12] ENTER - AVGO - AVGO_195.0_Call - SELL - $25.00
+[2025-08-07 07:59:12] TRADE_ENTRY - AVGO - Trade entered: SELL AVGO_195.0_Call | entry_price: $114.30 | heston_price: $113.45 | strike: $195.00 | contracts: 1 | position_size: $25.00 | mispricing: $0.85 | active_trades: 4/4 | capital: $100.00
+[2025-08-07 07:59:12] HOUR_COMPLETE - AVGO - Live hour processing complete | active_trades: 4/4 | buy_trades: 2 | sell_trades: 2 | capital: $100.00 | hour: 7
+[2025-08-07 09:00:11] DATA_FETCH - AVGO - Fetching live options data | expiry_date: 2025-09-19 | company: AVGO
+[2025-08-07 09:00:16] EXIT - AVGO - AVGO_170.0_Call - SELL - $25.00 - PnL: $4.85 - Return: 19.40%
+[2025-08-07 09:00:16] TRADE_EXIT - AVGO - Trade exited: SELL AVGO_170.0_Call | entry_price: $140.00 | exit_price: $135.15 | pnl: $4.85 | return_pct: 19.40% | duration_hours: 2 | contracts: 1 | active_trades: 3/4 | capital: $104.85 | total_pnl: $4.85
+[2025-08-07 09:00:16] HOUR_COMPLETE - AVGO - Live hour processing complete | active_trades: 3/4 | buy_trades: 2 | sell_trades: 1 | capital: $104.85 | hour: 9
+[2025-08-07 10:01:01] DATA_FETCH - AVGO - Fetching live options data | expiry_date: 2025-09-19 | company: AVGO
+[2025-08-07 10:01:05] HOUR_COMPLETE - AVGO - Live hour processing complete | active_trades: 3/4 | buy_trades: 2 | sell_trades: 1 | capital: $104.85 | hour: 10
+[2025-08-07 11:01:46] DATA_FETCH - AVGO - Fetching live options data | expiry_date: 2025-09-19 | company: AVGO
+[2025-08-07 11:01:58] EXIT - AVGO - AVGO_195.0_Call - SELL - $25.00 - PnL: $4.78 - Return: 19.12%
+[2025-08-07 11:01:58] TRADE_EXIT - AVGO - Trade exited: SELL AVGO_195.0_Call | entry_price: $114.30 | exit_price: $109.52 | pnl: $4.78 | return_pct: 19.12% | duration_hours: 4 | contracts: 1 | active_trades: 2/4 | capital: $109.63 | total_pnl: $9.63
+[2025-08-07 11:01:58] ENTER - AVGO - AVGO_175.0_Call - SELL - $25.00
+[2025-08-07 11:01:58] TRADE_ENTRY - AVGO - Trade entered: SELL AVGO_175.0_Call | entry_price: $131.70 | heston_price: $129.44 | strike: $175.00 | contracts: 1 | position_size: $25.00 | mispricing: $2.26 | active_trades: 3/4 | capital: $109.63
+[2025-08-07 11:01:58] ENTER - AVGO - AVGO_130.0_Call - SELL - $25.00
+[2025-08-07 11:01:58] TRADE_ENTRY - AVGO - Trade entered: SELL AVGO_130.0_Call | entry_price: $174.60 | heston_price: $173.80 | strike: $130.00 | contracts: 1 | position_size: $25.00 | mispricing: $0.80 | active_trades: 4/4 | capital: $109.63
+[2025-08-07 11:01:58] HOUR_COMPLETE - AVGO - Live hour processing complete | active_trades: 4/4 | buy_trades: 2 | sell_trades: 2 | capital: $109.63 | hour: 11
+[2025-08-07 12:02:46] DATA_FETCH - AVGO - Fetching live options data | expiry_date: 2025-09-19 | company: AVGO
+[2025-08-07 12:02:58] HOUR_COMPLETE - AVGO - Live hour processing complete | active_trades: 4/4 | buy_trades: 2 | sell_trades: 2 | capital: $109.63 | hour: 12
+[2025-08-08 06:33:50] DATA_FETCH - AVGO - Fetching live options data | expiry_date: 2025-09-19 | company: AVGO
+[2025-08-08 06:34:00] EXIT - AVGO - AVGO_175.0_Call - SELL - $25.00 - PnL: $3.68 - Return: 14.72%
+[2025-08-08 06:34:00] TRADE_EXIT - AVGO - Trade exited: SELL AVGO_175.0_Call | entry_price: $131.70 | exit_price: $128.02 | pnl: $3.68 | return_pct: 14.72% | duration_hours: -5 | contracts: 1 | active_trades: 3/4 | capital: $113.31 | total_pnl: $13.31
+[2025-08-08 06:34:00] ENTER - AVGO - AVGO_190.0_Call - SELL - $25.00
+[2025-08-08 06:34:00] TRADE_ENTRY - AVGO - Trade entered: SELL AVGO_190.0_Call | entry_price: $115.71 | heston_price: $115.02 | strike: $190.00 | contracts: 1 | position_size: $25.00 | mispricing: $0.69 | active_trades: 4/4 | capital: $113.31
+[2025-08-08 06:34:01] HOUR_COMPLETE - AVGO - Live hour processing complete | active_trades: 4/4 | buy_trades: 2 | sell_trades: 2 | capital: $113.31 | hour: 6
+[2025-08-08 07:34:53] DATA_FETCH - AVGO - Fetching live options data | expiry_date: 2025-09-19 | company: AVGO
+[2025-08-08 07:34:57] EXIT - AVGO - AVGO_130.0_Call - SELL - $25.00 - PnL: $-2.40 - Return: -9.60%
+[2025-08-08 07:34:57] TRADE_EXIT - AVGO - Trade exited: SELL AVGO_130.0_Call | entry_price: $174.60 | exit_price: $177.00 | pnl: $-2.40 | return_pct: -9.60% | duration_hours: -4 | contracts: 1 | active_trades: 3/4 | capital: $110.91 | total_pnl: $10.91
+[2025-08-08 07:34:57] EXIT - AVGO - AVGO_190.0_Call - SELL - $25.00 - PnL: $0.00 - Return: 0.00%
+[2025-08-08 07:34:57] TRADE_EXIT - AVGO - Trade exited: SELL AVGO_190.0_Call | entry_price: $115.71 | exit_price: $115.71 | pnl: $0.00 | return_pct: 0.00% | duration_hours: 1 | contracts: 1 | active_trades: 2/4 | capital: $110.91 | total_pnl: $10.91
+[2025-08-08 07:34:57] HOUR_COMPLETE - AVGO - Live hour processing complete | active_trades: 2/4 | buy_trades: 2 | sell_trades: 0 | capital: $110.91 | hour: 7
+[2025-08-08 08:35:41] DATA_FETCH - AVGO - Fetching live options data | expiry_date: 2025-09-19 | company: AVGO
+[2025-08-08 08:35:53] HOUR_COMPLETE - AVGO - Live hour processing complete | active_trades: 2/4 | buy_trades: 2 | sell_trades: 0 | capital: $110.91 | hour: 8
+[2025-08-08 08:45:53] DATA_FETCH - AVGO - Fetching live options data | expiry_date: 2025-09-19 | company: AVGO
+[2025-08-08 08:45:56] EXIT - AVGO - AVGO_105.0_Call - BUY - $25.00 - PnL: $nan - Return: nan%
+[2025-08-08 08:45:56] TRADE_EXIT - AVGO - Trade exited: BUY AVGO_105.0_Call | entry_price: $158.20 | exit_price: $nan | pnl: $nan | return_pct: nan% | duration_hours: -4 | contracts: 1 | active_trades: 1/4 | capital: $nan | total_pnl: $nan
+[2025-08-08 08:45:56] EXIT - AVGO - AVGO_115.0_Call - BUY - $25.00 - PnL: $nan - Return: nan%
+[2025-08-08 08:45:56] TRADE_EXIT - AVGO - Trade exited: BUY AVGO_115.0_Call | entry_price: $149.18 | exit_price: $nan | pnl: $nan | return_pct: nan% | duration_hours: -4 | contracts: 1 | active_trades: 0/4 | capital: $nan | total_pnl: $nan
