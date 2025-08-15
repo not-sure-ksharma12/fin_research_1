@@ -1,0 +1,1400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CRCL Trading Dashboard</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        .dashboard-container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+            margin: 20px;
+            padding: 30px;
+        }
+        
+        .header-section {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 15px;
+        }
+        
+        .control-panel {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 30px;
+            border: 1px solid #e9ecef;
+        }
+        
+        .control-group {
+            margin-bottom: 20px;
+        }
+        
+        .control-label {
+            font-weight: 600;
+            color: #495057;
+            margin-bottom: 8px;
+        }
+        
+        .form-select, .form-control {
+            border-radius: 10px;
+            border: 2px solid #e9ecef;
+            transition: all 0.3s ease;
+        }
+        
+        .form-select:focus, .form-control:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border: none;
+            border-radius: 10px;
+            padding: 12px 30px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+        
+        .stats-card {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            border-left: 5px solid #667eea;
+            transition: transform 0.3s ease;
+        }
+        
+        .stats-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .stats-number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #667eea;
+        }
+        
+        .stats-label {
+            color: #6c757d;
+            font-weight: 500;
+        }
+        
+        .chart-container {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+        }
+        
+        .trades-table {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+        }
+        
+        .table {
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        
+        .table thead th {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            font-weight: 600;
+        }
+        
+        .badge-enter {
+            background: #28a745;
+            color: white;
+            padding: 0.375rem 0.75rem;
+            border-radius: 0.375rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+        
+        .badge-exit {
+            background: #dc3545;
+            color: white;
+            padding: 0.375rem 0.75rem;
+            border-radius: 0.375rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+        
+        .badge-buy {
+            background: #17a2b8;
+            color: white;
+            padding: 0.375rem 0.75rem;
+            border-radius: 0.375rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+        
+        .badge-sell {
+            background: #ffc107;
+            color: #212529;
+            padding: 0.375rem 0.75rem;
+            border-radius: 0.375rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: #6c757d;
+        }
+        
+        .error-message {
+            background: #f8d7da;
+            color: #721c24;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border: 1px solid #f5c6cb;
+        }
+        
+        .period-summary {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border: 1px solid #dee2e6;
+            border-radius: 15px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+        
+        .summary-metric {
+            text-align: center;
+            padding: 15px;
+        }
+        
+        .summary-metric .h4 {
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+        
+        .summary-metric .text-muted {
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+        
+        .text-success {
+            color: #28a745 !important;
+        }
+        
+        .text-danger {
+            color: #dc3545 !important;
+        }
+        
+        .text-primary {
+            color: #007bff !important;
+        }
+        
+        #hourlyOptions {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border: 1px solid #dee2e6;
+            border-radius: 15px;
+            padding: 20px;
+            margin-top: 15px;
+        }
+        
+        .form-check {
+            margin-bottom: 10px;
+        }
+        
+        .form-check-input:checked {
+            background-color: #667eea;
+            border-color: #667eea;
+        }
+        
+        #chartControls {
+            text-align: center;
+        }
+        
+        .form-check-label {
+            font-weight: 500;
+            color: #495057;
+        }
+        
+        /* Line Toggle Button Styles */
+        #lineToggles .btn-group .btn {
+            min-width: 120px;
+            font-size: 0.9em;
+        }
+        
+        #lineToggles .btn.active {
+            font-weight: 600;
+        }
+        
+        #lineToggles .btn:not(.active) {
+            opacity: 0.7;
+        }
+        
+        #lineToggles .btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .chart-container {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="dashboard-container">
+            <!-- Header Section -->
+            <div class="header-section">
+                <h1><i class="fas fa-chart-line me-3"></i>Trading Dashboard</h1>
+                <p class="mb-0">Real-time trading data visualization and analysis</p>
+            </div>
+            
+            <!-- Control Panel -->
+            <div class="control-panel">
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="control-group">
+                            <label class="control-label">Company Ticker</label>
+                            <select class="form-select" id="tickerSelect">
+                                <option value="CRCL" selected>CRCL</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="control-group">
+                            <label class="control-label">Start Date</label>
+                            <input type="date" class="form-control" id="startDate">
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="control-group">
+                            <label class="control-label">End Date</label>
+                            <input type="date" class="form-control" id="endDate">
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="control-group">
+                            <label class="control-label">Data Type</label>
+                            <select class="form-select" id="dataTypeSelect" onchange="toggleHourlyOptions()">
+                                <option value="hourly">Hourly Data Graph</option>
+                                <option value="trades">Trades Log</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <!-- Hourly Graph Options -->
+                    <div id="hourlyOptions" class="row mb-3" style="display: none;">
+                        <div class="col-md-6">
+                            <div class="control-group">
+                                <label class="control-label">View Type</label>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="hourlyView" id="strikeView" value="strike" checked onchange="toggleHourlyView()">
+                                    <label class="form-check-label" for="strikeView">
+                                        Strike-based View
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="hourlyView" id="dateTimeView" value="datetime" onchange="toggleHourlyView()">
+                                    <label class="form-check-label" for="dateTimeView">
+                                        Date/Time-based View
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <!-- Strike Selection (for Strike-based View) -->
+                            <div id="strikeSelection" class="control-group">
+                                <label class="control-label">Select Strike Price</label>
+                                <select class="form-select" id="strikeSelect">
+                                    <option value="">Loading strikes...</option>
+                                </select>
+                            </div>
+                            
+                            <!-- Date/Time Selection (for Date/Time-based View) -->
+                            <div id="dateTimeSelection" class="control-group" style="display: none;">
+                                <label class="control-label">Select Date & Time</label>
+                                <select class="form-select" id="dateTimeSelect">
+                                    <option value="">Loading dates...</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 text-center">
+                        <button class="btn btn-primary btn-lg" onclick="loadData()">
+                            <i class="fas fa-sync-alt me-2"></i>Load Data
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Summary Statistics -->
+            <div class="row" id="summaryStats">
+                <div class="col-md-3">
+                    <div class="stats-card">
+                        <div class="stats-number" id="totalTrades">-</div>
+                        <div class="stats-label">Total Trades</div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="stats-card">
+                        <div class="stats-number" id="totalPnL">-</div>
+                        <div class="stats-label">Total P&L</div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="stats-card">
+                        <div class="stats-number" id="avgReturn">-</div>
+                        <div class="stats-label">Avg Return %</div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="stats-card">
+                        <div class="stats-number" id="dataPoints">-</div>
+                        <div class="stats-label">Data Points</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Data Display Area -->
+            <div id="dataDisplay">
+                <div class="loading">
+                    <i class="fas fa-spinner fa-spin fa-2x mb-3"></i>
+                    <p>Select parameters and click "Load Data" to view information</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // Set default dates (last 7 days)
+        document.addEventListener('DOMContentLoaded', function() {
+            const today = new Date();
+            const weekAgo = new Date(today.getTime() - 7 * 24 * 60 * 60 * 1000);
+            
+            document.getElementById('startDate').value = weekAgo.toISOString().split('T')[0];
+            document.getElementById('endDate').value = today.toISOString().split('T')[0];
+            
+            // Load summary stats on page load
+            loadSummaryStats();
+            
+            // If hourly is selected by default, load the options
+            setTimeout(() => {
+                if (document.getElementById('dataTypeSelect').value === 'hourly') {
+                    console.log('Hourly selected by default, loading options...');
+                    toggleHourlyOptions();
+                }
+            }, 500);
+        });
+        
+        function loadData() {
+            const ticker = document.getElementById('tickerSelect').value;
+            const startDate = document.getElementById('startDate').value;
+            const endDate = document.getElementById('endDate').value;
+            const dataType = document.getElementById('dataTypeSelect').value;
+            
+            if (!startDate || !endDate) {
+                showError('Please select both start and end dates');
+                return;
+            }
+            
+            if (startDate > endDate) {
+                showError('Start date cannot be after end date');
+                return;
+            }
+            
+            showLoading();
+            
+            const apiUrl = `/api/data?type=${dataType}&start_date=${startDate}&end_date=${endDate}`;
+            console.log('Fetching from:', apiUrl);
+            
+            fetch(apiUrl)
+                .then(response => response.json())
+                .then(data => {
+                    console.log('API response:', data);
+                    if (data.success) {
+                        if (dataType === 'hourly') {
+                            displayHourlyData(data.data);
+                        } else {
+                            displayTradesData(data.data);
+                        }
+                    } else {
+                        showError(data.error || 'Failed to load data');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    showError('Failed to load data. Please try again.');
+                });
+        }
+        
+        function toggleHourlyOptions() {
+            try {
+                console.log('toggleHourlyOptions called');
+                const dataType = document.getElementById('dataTypeSelect').value;
+                const hourlyOptions = document.getElementById('hourlyOptions');
+                
+                console.log('toggleHourlyOptions called with dataType:', dataType);
+                
+                if (dataType === 'hourly') {
+                    console.log('Showing hourly options');
+                    hourlyOptions.style.display = 'block';
+                    console.log('Calling loadHourlyOptions...');
+                    
+                    // Add a small delay to ensure DOM is ready
+                    setTimeout(() => {
+                        loadHourlyOptions();
+                    }, 100);
+                } else {
+                    console.log('Hiding hourly options');
+                    hourlyOptions.style.display = 'none';
+                }
+            } catch (error) {
+                console.error('Error in toggleHourlyOptions:', error);
+            }
+        }
+        
+        function toggleHourlyView() {
+            const strikeView = document.getElementById('strikeView');
+            const strikeSelection = document.getElementById('strikeSelection');
+            const dateTimeSelection = document.getElementById('dateTimeSelection');
+            
+            if (strikeView.checked) {
+                strikeSelection.style.display = 'block';
+                dateTimeSelection.style.display = 'none';
+                // Clear date/time data when switching to strike view
+                window.currentDateTimeData = null;
+                window.currentDateTimeSheet = null;
+                console.log('Switched to strike view, cleared date/time data');
+            } else {
+                strikeSelection.style.display = 'none';
+                dateTimeSelection.style.display = 'block';
+                // Clear strike data when switching to date/time view
+                window.currentStrikeData = null;
+                window.currentStrike = null;
+                console.log('Switched to date/time view, cleared strike data');
+            }
+        }
+        
+        function loadHourlyOptions() {
+            try {
+                console.log('Loading hourly options...');
+                
+                // Load strikes and dates from all available data
+                loadAllStrikesAndDates();
+                
+            } catch (error) {
+                console.error('Error in loadHourlyOptions:', error);
+            }
+        }
+        
+        function loadAllStrikesAndDates() {
+            console.log('Loading all strikes and dates...');
+            
+            const startDate = document.getElementById('startDate').value;
+            const endDate = document.getElementById('endDate').value;
+            
+            if (!startDate || !endDate) {
+                console.log('Missing dates, returning early');
+                return;
+            }
+            
+            // Load data from the first available sheet to get strikes and dates
+            const apiUrl = `/api/data?type=hourly&start_date=${startDate}&end_date=${endDate}`;
+            console.log('Fetching from:', apiUrl);
+            
+            fetch(apiUrl)
+                .then(response => {
+                    console.log('Response status:', response.status);
+                    if (!response.ok) {
+                        throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log('Hourly data API response:', data);
+                    if (data.success && data.data.length > 0) {
+                        console.log('Data received, length:', data.data.length);
+                        console.log('Sample data item:', data.data[0]);
+                        populateStrikeOptions(data.data);
+                        populateDateTimeOptions(data.data);
+                    } else {
+                        console.log('No data or unsuccessful response');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error loading hourly data:', error);
+                });
+        }
+        
+        function populateStrikeOptions(hourlyData) {
+            try {
+                console.log('populateStrikeOptions function called');
+                console.log('Populating strike options with data:', hourlyData);
+                
+                if (!hourlyData || !Array.isArray(hourlyData)) {
+                    console.error('Invalid hourly data:', hourlyData);
+                    return;
+                }
+                
+                const strikeSelect = document.getElementById('strikeSelect');
+                if (!strikeSelect) {
+                    console.error('Strike select element not found');
+                    return;
+                }
+                
+                // Extract unique strikes and filter out NaN values
+                const strikes = [...new Set(hourlyData.map(item => item.Strike))]
+                    .filter(strike => !isNaN(strike) && strike !== null && strike !== undefined)
+                    .sort((a, b) => a - b);
+                
+                console.log('Extracted strikes:', strikes);
+                
+                strikeSelect.innerHTML = '<option value="">Select Strike Price</option>';
+                strikes.forEach(strike => {
+                    const option = document.createElement('option');
+                    option.value = strike;
+                    option.textContent = `$${strike}`;
+                    strikeSelect.appendChild(option);
+                    console.log(`Added strike option: $${strike}`);
+                });
+                
+                console.log('Final strike select options:', strikeSelect.options.length);
+                
+                // Add change event listener to load strike data when selected
+                strikeSelect.onchange = function() {
+                    const selectedStrike = this.value;
+                    if (selectedStrike) {
+                        console.log('Strike selected:', selectedStrike);
+                        loadStrikeData(selectedStrike);
+                    }
+                };
+                
+            } catch (error) {
+                console.error('Error in populateStrikeOptions function:', error);
+                console.error('Error details:', {
+                    name: error.name,
+                    message: error.message,
+                    stack: error.stack
+                });
+            }
+        }
+        
+        function loadStrikeData(strike) {
+            console.log(`Loading data for strike $${strike} across all sheets...`);
+            
+            fetch(`/api/strike-data?strike=${encodeURIComponent(strike)}`)
+                .then(response => {
+                    console.log('Strike data response status:', response.status);
+                    if (!response.ok) {
+                        throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log('Strike data API response:', data);
+                    if (data.success && data.data.length > 0) {
+                        console.log(`Found ${data.total_points} data points for strike $${strike} across ${data.sheets_processed} sheets`);
+                        console.log('Sample data item:', data.data[0]);
+                        
+                        // Store the strike data globally for chart creation
+                        window.currentStrikeData = data.data;
+                        window.currentStrike = strike;
+                        
+                        // Create chart with the strike data
+                        createStrikeChart(data.data, strike);
+                    } else {
+                        console.log('No strike data available:', data.error);
+                        showError(data.error || 'No data found for this strike price');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error loading strike data:', error);
+                    showError(`Failed to load strike data: ${error.message}`);
+                });
+        }
+        
+        function createStrikeChart(strikeData, strike) {
+            try {
+                console.log('Creating strike chart with data:', strikeData);
+                console.log('Strike:', strike);
+                
+                // Get toggle states
+                const pxLastVisible = document.getElementById('togglePX_LAST').classList.contains('active');
+                const lastHestonVisible = document.getElementById('toggleLastHeston').classList.contains('active');
+                const hestonPriceVisible = document.getElementById('toggleHeston_Price').classList.contains('active');
+                
+                console.log('Toggle states - PX_LAST:', pxLastVisible, 'Last Heston:', lastHestonVisible, 'Heston_Price:', hestonPriceVisible);
+                
+                // Prepare chart data based on toggle states
+                const datasets = [];
+                
+                if (pxLastVisible) {
+                    datasets.push({
+                        label: 'PX_LAST',
+                        data: strikeData.map(item => item.PX_LAST),
+                        borderColor: 'rgb(75, 192, 192)',
+                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                        tension: 0.1
+                    });
+                }
+                
+                if (lastHestonVisible) {
+                    datasets.push({
+                        label: 'Last heston',
+                        data: strikeData.map(item => item['Last heston']),
+                        borderColor: 'rgb(255, 99, 132)',
+                        backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                        tension: 0.1
+                    });
+                }
+                
+                if (hestonPriceVisible) {
+                    datasets.push({
+                        label: 'Heston_Price',
+                        data: strikeData.map(item => item.Heston_Price),
+                        borderColor: 'rgb(54, 162, 235)',
+                        backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                        tension: 0.1
+                    });
+                }
+                
+                const chartData = {
+                    labels: strikeData.map(item => {
+                        // Create readable time labels
+                        if (item.sheet_name && item.sheet_name.includes('Hour_')) {
+                            const parts = item.sheet_name.split('_');
+                            if (parts.length >= 3) {
+                                const hour = parts[1];
+                                const date = parts[2];
+                                return `${date} ${hour}:00`;
+                            }
+                        }
+                        return item.sheet_name || 'Unknown';
+                    }),
+                    datasets: datasets
+                };
+                
+                console.log('Chart data created with', datasets.length, 'datasets:', datasets.map(d => d.label));
+                
+                const chartOptions = {
+                    responsive: true,
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: `Strike $${strike} - Price Evolution Across Hours`
+                        },
+                        legend: {
+                            display: true,
+                            position: 'top'
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: false,
+                            title: {
+                                display: true,
+                                text: 'Price ($)'
+                            }
+                        },
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Time (Hour)'
+                            }
+                        }
+                    }
+                };
+                
+                // Destroy existing chart if it exists
+                if (window.hourlyChart && typeof window.hourlyChart.destroy === 'function') {
+                    console.log('Destroying existing chart...');
+                    window.hourlyChart.destroy();
+                }
+                
+                // Create new chart
+                console.log('Creating new strike chart with data:', chartData);
+                console.log('Chart options:', chartOptions);
+                
+                const canvas = document.getElementById('hourlyChart');
+                if (!canvas) {
+                    console.error('Canvas element not found');
+                    showError('Chart canvas not found');
+                    return;
+                }
+                
+                const ctx = canvas.getContext('2d');
+                if (!ctx) {
+                    console.error('Could not get 2D context from canvas');
+                    showError('Could not initialize chart context');
+                    return;
+                }
+                
+                try {
+                    window.hourlyChart = new Chart(ctx, {
+                        type: 'line',
+                        data: chartData,
+                        options: chartOptions
+                    });
+                    console.log('Strike chart created successfully:', window.hourlyChart);
+                } catch (chartError) {
+                    console.error('Error creating Chart.js chart:', chartError);
+                    showError(`Error creating chart: ${chartError.message}`);
+                }
+                
+            } catch (error) {
+                console.error('Error in createStrikeChart:', error);
+                showError(`Error creating strike chart: ${error.message}`);
+            }
+        }
+        
+        function loadSheetDataForDateTimeView(sheetName) {
+            console.log(`Loading sheet data for date/time view: ${sheetName}`);
+            
+            const startDate = document.getElementById('startDate').value;
+            const endDate = document.getElementById('endDate').value;
+            
+            if (!startDate || !endDate) {
+                showError('Please select both start and end dates');
+                return;
+            }
+            
+            // Load data from the specific sheet
+            const apiUrl = `/api/data?type=hourly&start_date=${startDate}&end_date=${endDate}&sheet=${encodeURIComponent(sheetName)}`;
+            console.log('Fetching sheet data from:', apiUrl);
+            
+            fetch(apiUrl)
+                .then(response => {
+                    console.log('Sheet data response status:', response.status);
+                    if (!response.ok) {
+                        throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log('Sheet data API response:', data);
+                    if (data.success && data.data.length > 0) {
+                        console.log(`Found ${data.data.length} data points for sheet ${sheetName}`);
+                        console.log('Sample data item:', data.data[0]);
+                        
+                        // Store data globally for toggle updates
+                        window.currentDateTimeData = data.data;
+                        window.currentDateTimeSheet = sheetName;
+                        console.log('Stored date/time data globally:', window.currentDateTimeData);
+                        
+                        // Create date/time chart with the sheet data
+                        createDateTimeChart(data.data, sheetName);
+                    } else {
+                        console.log('No data found for selected sheet');
+                        showError(`No data found for ${sheetName}`);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error loading sheet data:', error);
+                    showError(`Failed to load sheet data: ${error.message}`);
+                });
+        }
+        
+        function toggleLine(lineName) {
+            console.log('toggleLine called with lineName:', lineName);
+            
+            // Map line names to button IDs
+            let buttonId;
+            switch(lineName) {
+                case 'PX_LAST':
+                    buttonId = 'togglePX_LAST';
+                    break;
+                case 'Last heston':
+                    buttonId = 'toggleLastHeston';
+                    break;
+                case 'Heston_Price':
+                    buttonId = 'toggleHeston_Price';
+                    break;
+                default:
+                    console.error('Unknown line name:', lineName);
+                    return;
+            }
+            
+            console.log('Looking for button with ID:', buttonId);
+            const button = document.getElementById(buttonId);
+            console.log('Button found:', button);
+            
+            if (button) {
+                const wasActive = button.classList.contains('active');
+                button.classList.toggle('active');
+                const isNowActive = button.classList.contains('active');
+                
+                console.log(`Button ${buttonId}: was ${wasActive ? 'active' : 'inactive'}, now ${isNowActive ? 'active' : 'inactive'}`);
+                
+                // Update button appearance
+                if (isNowActive) {
+                    button.className = 'btn btn-success active';
+                    button.innerHTML = `<i class="fas fa-eye me-1"></i>${lineName}`;
+                } else {
+                    button.className = 'btn btn-outline-secondary';
+                    button.innerHTML = `<i class="fas fa-eye-slash me-1"></i>${lineName}`;
+                }
+                
+                // Update the chart with new toggle states
+                console.log('Updating chart from toggles...');
+                updateChartFromToggles();
+            } else {
+                console.error('Button not found for line:', lineName, 'Button ID:', buttonId);
+            }
+        }
+        
+        function updateChartFromToggles() {
+            console.log('=== UPDATE CHART FROM TOGGLES ===');
+            console.log('Current strike data:', window.currentStrikeData ? 'Available' : 'Not available');
+            console.log('Current strike:', window.currentStrike);
+            console.log('Current date/time data:', window.currentDateTimeData ? 'Available' : 'Not available');
+            console.log('Current date/time sheet:', window.currentDateTimeSheet);
+            
+            // Check if we have current data and update the chart accordingly
+            if (window.currentStrikeData && window.currentStrike) {
+                console.log('Updating strike chart from toggles');
+                createStrikeChart(window.currentStrikeData, window.currentStrike);
+            } else if (window.currentDateTimeData && window.currentDateTimeSheet) {
+                // For date/time view, update the chart directly with stored data
+                console.log('Updating date/time chart from toggles');
+                createDateTimeChart(window.currentDateTimeData, window.currentDateTimeSheet);
+            } else {
+                console.log('No current data available for toggle update');
+            }
+        }
+        
+        function createDateTimeChart(sheetData, sheetName) {
+            try {
+                console.log('=== CREATE DATE/TIME CHART ===');
+                console.log('Creating date/time chart with data:', sheetData);
+                console.log('Sheet name:', sheetName);
+                console.log('Data length:', sheetData ? sheetData.length : 'No data');
+                console.log('Sample data item:', sheetData ? sheetData[0] : 'No data');
+                
+                // Create readable title from sheet name
+                let chartTitle = sheetName;
+                if (sheetName.includes('Hour_') && sheetName.includes('_2025-')) {
+                    try {
+                        const parts = sheetName.split('_');
+                        if (parts.length >= 3) {
+                            const hour = parts[1];
+                            const date = parts[2];
+                            chartTitle = `${date} ${hour}:00 - Strike vs Price`;
+                        }
+                    } catch (e) {
+                        console.warn('Could not parse sheet name for title:', sheetName);
+                    }
+                }
+                
+                // Get toggle states
+                const pxLastVisible = document.getElementById('togglePX_LAST').classList.contains('active');
+                const lastHestonVisible = document.getElementById('toggleLastHeston').classList.contains('active');
+                const hestonPriceVisible = document.getElementById('toggleHeston_Price').classList.contains('active');
+                
+                console.log('Toggle states - PX_LAST:', pxLastVisible, 'Last Heston:', lastHestonVisible, 'Heston_Price:', hestonPriceVisible);
+                
+                // Prepare chart data based on toggle states
+                const datasets = [];
+                
+                if (pxLastVisible) {
+                    datasets.push({
+                        label: 'PX_LAST',
+                        data: sheetData.map(item => item.PX_LAST),
+                        borderColor: 'rgb(75, 192, 192)',
+                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                        tension: 0.1
+                    });
+                }
+                
+                if (lastHestonVisible) {
+                    datasets.push({
+                        label: 'Last heston',
+                        data: sheetData.map(item => item['Last heston']),
+                        borderColor: 'rgb(255, 99, 132)',
+                        backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                        tension: 0.1
+                    });
+                }
+                
+                if (hestonPriceVisible) {
+                    datasets.push({
+                        label: 'Heston_Price',
+                        data: sheetData.map(item => item.Heston_Price),
+                        borderColor: 'rgb(54, 162, 235)',
+                        backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                        tension: 0.1
+                    });
+                }
+                
+                const chartData = {
+                    labels: sheetData.map(item => `$${item.Strike}`),
+                    datasets: datasets
+                };
+                
+                console.log('Chart data created with', datasets.length, 'datasets:', datasets.map(d => d.label));
+                
+                const chartOptions = {
+                    responsive: true,
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: chartTitle
+                        },
+                        legend: {
+                            display: true,
+                            position: 'top'
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: false,
+                            title: {
+                                display: true,
+                                text: 'Price ($)'
+                            }
+                        },
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Strike Price ($)'
+                            }
+                        }
+                    }
+                };
+                
+                // Destroy existing chart if it exists
+                if (window.hourlyChart && typeof window.hourlyChart.destroy === 'function') {
+                    console.log('Destroying existing chart...');
+                    window.hourlyChart.destroy();
+                }
+                
+                // Create new chart
+                console.log('Creating new date/time chart with data:', chartData);
+                console.log('Chart options:', chartOptions);
+                
+                const canvas = document.getElementById('hourlyChart');
+                if (!canvas) {
+                    console.error('Canvas element not found');
+                    showError('Chart canvas not found');
+                    return;
+                }
+                
+                const ctx = canvas.getContext('2d');
+                if (!ctx) {
+                    console.error('Could not get 2D context from canvas');
+                    showError('Could not initialize chart context');
+                    return;
+                }
+                
+                try {
+                    window.hourlyChart = new Chart(ctx, {
+                        type: 'line',
+                        data: chartData,
+                        options: chartOptions
+                    });
+                    console.log('Date/time chart created successfully:', window.hourlyChart);
+                } catch (chartError) {
+                    console.error('Error creating Chart.js chart:', chartError);
+                    showError(`Error creating chart: ${chartError.message}`);
+                }
+                
+            } catch (error) {
+                console.error('Error in createDateTimeChart:', error);
+                showError(`Error creating date/time chart: ${error.message}`);
+            }
+        }
+        
+        function populateDateTimeOptions(hourlyData) {
+            try {
+                console.log('populateDateTimeOptions function called');
+                console.log('Populating date/time options with data:', hourlyData);
+                
+                if (!hourlyData || !Array.isArray(hourlyData)) {
+                    console.error('Invalid hourly data:', hourlyData);
+                    return;
+                }
+                
+                const dateTimeSelect = document.getElementById('dateTimeSelect');
+                if (!dateTimeSelect) {
+                    console.error('DateTime select element not found');
+                    return;
+                }
+                
+                // Get available sheets from the API to populate date/time options
+                fetch('/api/sheets')
+                    .then(response => {
+                        console.log('Sheets response status:', response.status);
+                        if (!response.ok) {
+                            throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        console.log('Sheets API response for date/time options:', data);
+                        if (data.success && data.sheets.length > 0) {
+                            console.log('Available sheets for date/time:', data.sheets);
+                            populateSheetBasedDateTimeOptions(data.sheets);
+                        } else {
+                            console.log('No sheets available for date/time options');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error loading sheets for date/time options:', error);
+                    });
+                
+            } catch (error) {
+                console.error('Error in populateDateTimeOptions function:', error);
+                console.error('Error details:', {
+                    name: error.name,
+                    message: error.message,
+                    stack: error.stack
+                });
+            }
+        }
+        
+        function populateSheetBasedDateTimeOptions(sheets) {
+            const dateTimeSelect = document.getElementById('dateTimeSelect');
+            if (!dateTimeSelect) {
+                console.error('DateTime select element not found');
+                return;
+            }
+            
+            dateTimeSelect.innerHTML = '<option value="">Select Date & Time</option>';
+            
+            sheets.forEach(sheet => {
+                const option = document.createElement('option');
+                option.value = sheet;
+                
+                // Convert sheet name to readable format
+                // e.g., "Hour_12_2025-08-06" -> "2025-08-06 12:00"
+                let displayText = sheet;
+                if (sheet.includes('Hour_') && sheet.includes('_2025-')) {
+                    try {
+                        const parts = sheet.split('_');
+                        if (parts.length >= 3) {
+                            const hour = parts[1];
+                            const date = parts[2];
+                            displayText = `${date} ${hour}:00`;
+                        }
+                    } catch (e) {
+                        console.warn('Could not parse sheet name:', sheet);
+                    }
+                }
+                
+                option.textContent = displayText;
+                dateTimeSelect.appendChild(option);
+                console.log(`Added date/time option: ${sheet} -> ${displayText}`);
+            });
+            
+            console.log('Sheet-based date/time options populated');
+        }
+        
+        function loadSummaryStats() {
+            fetch('/api/summary')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        document.getElementById('totalTrades').textContent = data.summary.total_trades;
+                        document.getElementById('totalPnL').textContent = `$${data.summary.total_pnl}`;
+                        document.getElementById('avgReturn').textContent = `${data.summary.avg_return}%`;
+                        document.getElementById('dataPoints').textContent = data.summary.hourly_data_points;
+                    }
+                })
+                .catch(error => {
+                    console.error('Error loading summary:', error);
+                });
+        }
+        
+        function displayHourlyData(data) {
+            try {
+                console.log('displayHourlyData function called with data:', data);
+                console.log('Data type:', typeof data);
+                console.log('Data length:', data ? data.length : 'No data');
+                
+                if (!data || data.length === 0) {
+                    console.log('No data available, showing error');
+                    showError('No hourly data available for the selected date range');
+                    return;
+                }
+                
+                console.log('Creating chart container...');
+                const chartContainer = document.createElement('div');
+                chartContainer.className = 'chart-container';
+                chartContainer.innerHTML = `
+                    <h4><i class="fas fa-chart-line me-2"></i>Hourly Data Chart</h4>
+                    
+                    <!-- Line Toggle Controls -->
+                    <div id="lineToggles" class="mb-3">
+                        <div class="btn-group" role="group" aria-label="Line Toggles">
+                            <button type="button" class="btn btn-success active" id="togglePX_LAST" onclick="toggleLine('PX_LAST')">
+                                <i class="fas fa-eye me-1"></i>PX_LAST
+                            </button>
+                            <button type="button" class="btn btn-success active" id="toggleLastHeston" onclick="toggleLine('Last heston')">
+                                <i class="fas fa-eye me-1"></i>Last Heston
+                            </button>
+                            <button type="button" class="btn btn-success active" id="toggleHeston_Price" onclick="toggleLine('Heston_Price')">
+                                <i class="fas fa-eye me-1"></i>Heston Price
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div id="chartControls" class="mb-3">
+                        <button class="btn btn-outline-primary me-2" onclick="updateChart()">
+                            <i class="fas fa-sync-alt me-2"></i>Update Chart
+                        </button>
+                    </div>
+                    <canvas id="hourlyChart" width="400" height="200"></canvas>
+                `;
+                
+                console.log('Adding chart container to DOM...');
+                document.getElementById('dataDisplay').innerHTML = '';
+                document.getElementById('dataDisplay').appendChild(chartContainer);
+                
+                // Store hourly data globally for chart updates
+                window.currentHourlyData = data;
+                console.log('Stored hourly data globally:', window.currentHourlyData);
+                
+                // Create initial chart
+                console.log('Calling updateChart...');
+                updateChart();
+                
+            } catch (error) {
+                console.error('Error in displayHourlyData:', error);
+                showError(`Error displaying hourly data: ${error.message}`);
+            }
+        }
+        
+        function debugStrikes() {
+            console.log('=== DEBUG STRIKES ===');
+            console.log('Current hourly data:', window.currentHourlyData);
+            console.log('Strike select element:', document.getElementById('strikeSelect'));
+            console.log('Strike select options:', document.getElementById('strikeSelect').options);
+            console.log('Strike select innerHTML:', document.getElementById('strikeSelect').innerHTML);
+            
+            if (window.currentHourlyData && window.currentHourlyData.length > 0) {
+                const strikes = [...new Set(window.currentHourlyData.map(item => item.Strike))];
+                console.log('Available strikes in data:', strikes);
+                console.log('Sample data items:', window.currentHourlyData.slice(0, 3));
+            }
+        }
+        
+
+        
+        function updateChart() {
+            try {
+                console.log('updateChart function called');
+                
+                const viewType = document.querySelector('input[name="hourlyView"]:checked').value;
+                console.log('Selected view type:', viewType);
+                
+                if (viewType === 'strike') {
+                    // Strike-based view - check if we have strike data loaded
+                    if (window.currentStrikeData && window.currentStrike) {
+                        console.log('Using existing strike data for chart');
+                        createStrikeChart(window.currentStrikeData, window.currentStrike);
+                    } else {
+                        console.log('No strike data available, showing message');
+                        showError('Please select a strike price first to load data across all sheets');
+                        return;
+                    }
+                    
+                } else if (viewType === 'datetime') {
+                    // Date/Time-based view - show data for selected sheet
+                    const selectedSheet = document.getElementById('dateTimeSelect').value;
+                    if (!selectedSheet) {
+                        console.log('No sheet selected, showing message');
+                        showError('Please select a date and time first');
+                        return;
+                    }
+                    
+                    console.log('Creating date/time-based chart for sheet:', selectedSheet);
+                    
+                    // Load data from the selected sheet
+                    loadSheetDataForDateTimeView(selectedSheet);
+                }
+                
+            } catch (error) {
+                console.error('Error in updateChart:', error);
+                showError(`Error updating chart: ${error.message}`);
+            }
+        }
+        
+        function displayTradesData(trades) {
+            console.log('Frontend received trades data:', trades);
+            
+            if (!trades || trades.length === 0) {
+                showError('No trades data available for the selected date range');
+                return;
+            }
+            
+            // Calculate summary metrics for the selected time period
+            const summary = calculateTradesSummary(trades);
+            
+            const tradesContainer = document.createElement('div');
+            tradesContainer.className = 'trades-table';
+            tradesContainer.innerHTML = `
+                <h4><i class="fas fa-list me-2"></i>Trades Log</h4>
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Timestamp</th>
+                                <th>Action</th>
+                                <th>Option ID</th>
+                                <th>Strike</th>
+                                <th>Type</th>
+                                <th>Trade</th>
+                                <th>Price</th>
+                                <th>P&L</th>
+                                <th>Return %</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${trades.map(trade => {
+                                console.log(`Processing trade: ${trade.option_id}, return_pct: ${trade.return_pct}, type: ${typeof trade.return_pct}`);
+                                return `
+                                <tr>
+                                    <td>${formatTimestamp(trade.timestamp)}</td>
+                                    <td><span class="badge badge-${trade.action.toLowerCase()}">${trade.action}</span></td>
+                                    <td>${trade.option_id}</td>
+                                    <td>$${trade.strike}</td>
+                                    <td>${trade.option_type}</td>
+                                    <td><span class="badge badge-${trade.trade_type.toLowerCase()}">${trade.trade_type}</span></td>
+                                    <td>$${trade.price || '-'}</td>
+                                    <td>${trade.pnl ? `$${trade.pnl}` : '-'}</td>
+                                    <td>${trade.return_pct && trade.return_pct !== 0 ? `${trade.return_pct}%` : '-'}</td>
+                                </tr>
+                            `;
+                            }).join('')}
+                        </tbody>
+                    </table>
+                </div>
+                
+                <!-- Summary Section -->
+                <div class="period-summary">
+                    <h5 class="mb-3"><i class="fas fa-chart-pie me-2"></i>Period Summary</h5>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="summary-metric">
+                                <div class="h4 text-primary">${summary.totalTrades}</div>
+                                <div class="text-muted">Total Trades</div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="summary-metric">
+                                <div class="h4 ${summary.totalPnl >= 0 ? 'text-success' : 'text-danger'}">$${summary.totalPnl.toFixed(2)}</div>
+                                <div class="text-muted">Total P&L</div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="summary-metric">
+                                <div class="h4 ${summary.pnlPercentage >= 0 ? 'text-success' : 'text-danger'}">${summary.pnlPercentage.toFixed(2)}%</div>
+                                <div class="text-muted">P&L Percentage</div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="summary-metric">
+                                <div class="h4 ${summary.totalProfit >= 0 ? 'text-success' : 'text-danger'}">$${summary.totalProfit.toFixed(2)}</div>
+                                <div class="text-muted">Total Profit</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            document.getElementById('dataDisplay').innerHTML = '';
+            document.getElementById('dataDisplay').appendChild(tradesContainer);
+        }
+        
+        function calculateTradesSummary(trades) {
+            let totalTrades = trades.length;
+            let totalPnl = 0;
+            let totalProfit = 0;
+            let totalCost = 0;
+            
+            trades.forEach(trade => {
+                if (trade.action === 'ENTER') {
+                    // For ENTER trades, calculate the cost
+                    totalCost += trade.price || 0;
+                } else if (trade.action === 'EXIT' && trade.pnl !== null && trade.pnl !== undefined) {
+                    // For EXIT trades, add P&L and calculate profit
+                    totalPnl += trade.pnl;
+                    if (trade.pnl > 0) {
+                        totalProfit += trade.pnl;
+                    }
+                }
+            });
+            
+            // Calculate P&L percentage based on total cost
+            let pnlPercentage = totalCost > 0 ? (totalPnl / totalCost) * 100 : 0;
+            
+            return {
+                totalTrades: totalTrades,
+                totalPnl: totalPnl,
+                pnlPercentage: pnlPercentage,
+                totalProfit: totalProfit
+            };
+        }
+        
+        function formatTimestamp(timestamp) {
+            const date = new Date(timestamp);
+            return date.toLocaleString();
+        }
+        
+        function showLoading() {
+            document.getElementById('dataDisplay').innerHTML = `
+                <div class="loading">
+                    <i class="fas fa-spinner fa-spin fa-2x mb-3"></i>
+                    <p>Loading data...</p>
+                </div>
+            `;
+        }
+        
+        function showError(message) {
+            document.getElementById('dataDisplay').innerHTML = `
+                <div class="error-message">
+                    <i class="fas fa-exclamation-triangle me-2"></i>
+                    ${message}
+                </div>
+            `;
+        }
+    </script>
+</body>
+</html>
+

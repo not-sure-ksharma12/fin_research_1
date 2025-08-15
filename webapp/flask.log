@@ -1,0 +1,42 @@
+/Users/kalpit/fin_research_1/webapp/app.py:2: DeprecationWarning: 
+Pyarrow will become a required dependency of pandas in the next major release of pandas (pandas 3.0),
+(to allow more performant data types, such as the Arrow string type, and better interoperability with other libraries)
+but was not found to be installed on your system.
+If this would cause problems for you,
+please provide us feedback at https://github.com/pandas-dev/pandas/issues/54466
+        
+  import pandas as pd
+INFO:app:Cache initialized successfully
+INFO:app.data.crcl_loader:Using relative data path: ../scripts/scripts/realtime_output/multi_company_sep19/CRCL_hourly_data.xlsx
+INFO:app.data.crcl_loader:CRCL Data Loader initialized with path: ../scripts/scripts/realtime_output/multi_company_sep19/CRCL_hourly_data.xlsx
+INFO:app.api.crcl:CRCL data loader initialized successfully
+INFO:app:CRCL API blueprint registered successfully at /api/crcl
+INFO:app.data.crcl_loader:Using relative data path: ../scripts/scripts/realtime_output/multi_company_sep19/CRCL_hourly_data.xlsx
+INFO:app.data.crcl_loader:CRCL Data Loader initialized with path: ../scripts/scripts/realtime_output/multi_company_sep19/CRCL_hourly_data.xlsx
+INFO:__main__:CRCL data loader imported successfully
+ * Serving Flask app 'app'
+ * Debug mode: on
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5002
+ * Running on http://10.242.0.31:5002
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+/Users/kalpit/fin_research_1/webapp/app.py:2: DeprecationWarning: 
+Pyarrow will become a required dependency of pandas in the next major release of pandas (pandas 3.0),
+(to allow more performant data types, such as the Arrow string type, and better interoperability with other libraries)
+but was not found to be installed on your system.
+If this would cause problems for you,
+please provide us feedback at https://github.com/pandas-dev/pandas/issues/54466
+        
+  import pandas as pd
+INFO:app:Cache initialized successfully
+INFO:app.data.crcl_loader:Using relative data path: ../scripts/scripts/realtime_output/multi_company_sep19/CRCL_hourly_data.xlsx
+INFO:app.data.crcl_loader:CRCL Data Loader initialized with path: ../scripts/scripts/realtime_output/multi_company_sep19/CRCL_hourly_data.xlsx
+INFO:app.api.crcl:CRCL data loader initialized successfully
+INFO:app:CRCL API blueprint registered successfully at /api/crcl
+INFO:app.data.crcl_loader:Using relative data path: ../scripts/scripts/realtime_output/multi_company_sep19/CRCL_hourly_data.xlsx
+INFO:app.data.crcl_loader:CRCL Data Loader initialized with path: ../scripts/scripts/realtime_output/multi_company_sep19/CRCL_hourly_data.xlsx
+INFO:__main__:CRCL data loader imported successfully
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 475-653-192
