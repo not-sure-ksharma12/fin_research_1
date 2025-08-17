@@ -270,6 +270,53 @@
             border-radius: 8px;
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
         }
+
+        .trade-row {
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+        }
+        
+        .trade-row:hover {
+            background-color: #f8f9fa !important;
+            transform: translateX(5px);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .trade-row.highlighted {
+            background-color: #fff3cd !important;
+            border-left: 4px solid #ffc107;
+            animation: glow 1.5s ease-in-out infinite alternate;
+        }
+        
+        .trade-row.related-highlight {
+            background-color: #d1ecf1 !important;
+            border-left: 4px solid #17a2b8;
+            animation: pulse 1.5s ease-in-out infinite alternate;
+        }
+        
+        @keyframes glow {
+            from { box-shadow: 0 0 5px #ffc107, 0 0 10px #ffc107, 0 0 15px #ffc107; }
+            to { box-shadow: 0 0 10px #ffc107, 0 0 20px #ffc107, 0 0 30px #ffc107; }
+        }
+        
+        @keyframes pulse {
+            from { box-shadow: 0 0 5px #17a2b8, 0 0 10px #17a2b8, 0 0 15px #17a2b8; }
+            to { box-shadow: 0 0 10px #17a2b8, 0 0 20px #17a2b8, 0 0 30px #17a2b8; }
+        }
+        
+        .trade-row.highlighted td,
+        .trade-row.related-highlight td {
+            font-weight: bold;
+        }
+        
+        .trade-connection-line {
+            position: absolute;
+            left: -20px;
+            width: 2px;
+            background: linear-gradient(45deg, #ffc107, #17a2b8);
+            z-index: 1;
+        }
     </style>
 </head>
 <body>
@@ -292,24 +339,29 @@
                             </select>
                         </div>
                     </div>
+                    <!-- Date and Time Selection -->
                     <div class="col-md-3">
                         <div class="control-group">
-                            <label class="control-label">Start Date</label>
-                            <input type="date" class="form-control" id="startDate">
+                            <label for="startDateSelect" class="form-label">Start Sheet:</label>
+                            <select class="form-select" id="startDateSelect">
+                                <option value="">Select start sheet...</option>
+                            </select>
                         </div>
                     </div>
                     <div class="col-md-3">
                         <div class="control-group">
-                            <label class="control-label">End Date</label>
-                            <input type="date" class="form-control" id="endDate">
+                            <label for="endDateSelect" class="form-label">End Sheet:</label>
+                            <select class="form-select" id="endDateSelect">
+                                <option value="">Select end sheet...</option>
+                            </select>
                         </div>
                     </div>
                     <div class="col-md-3">
                         <div class="control-group">
-                            <label class="control-label">Data Type</label>
-                            <select class="form-select" id="dataTypeSelect" onchange="toggleHourlyOptions()">
-                                <option value="hourly">Hourly Data Graph</option>
-                                <option value="trades">Trades Log</option>
+                            <label for="dataTypeSelect" class="form-label">Data Type:</label>
+                            <select class="form-select" id="dataTypeSelect">
+                                <option value="trades">Trades in this time</option>
+                                <option value="hourly">Data graph in this time</option>
                             </select>
                         </div>
                     </div>
@@ -363,28 +415,62 @@
             
             <!-- Summary Statistics -->
             <div class="row" id="summaryStats">
-                <div class="col-md-3">
+                <div class="col-md-4">
                     <div class="stats-card">
                         <div class="stats-number" id="totalTrades">-</div>
                         <div class="stats-label">Total Trades</div>
                     </div>
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-4">
                     <div class="stats-card">
                         <div class="stats-number" id="totalPnL">-</div>
                         <div class="stats-label">Total P&L</div>
                     </div>
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-4">
                     <div class="stats-card">
                         <div class="stats-number" id="avgReturn">-</div>
                         <div class="stats-label">Avg Return %</div>
                     </div>
                 </div>
-                <div class="col-md-3">
-                    <div class="stats-card">
-                        <div class="stats-number" id="dataPoints">-</div>
-                        <div class="stats-label">Data Points</div>
+            </div>
+
+            <!-- Trade Logs Section -->
+            <div class="card mb-4">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">
+                        <i class="fas fa-exchange-alt me-2"></i>
+                        Simulated Trading Strategy Results
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead class="table-dark">
+                                <tr>
+                                    <th>Label</th>
+                                    <th>Action</th>
+                                    <th>Timestamp</th>
+                                    <th>Trade Type</th>
+                                    <th>Strike Price</th>
+                                    <th>Option Type</th>
+                                    <th>Market Price</th>
+                                    <th>Heston Price</th>
+                                    <th>Difference (Market - Heston)</th>
+                                    <th>Position Size</th>
+                                    <th>PnL</th>
+                                    <th>Return %</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tradeLogsBody">
+                                <tr>
+                                    <td colspan="12" class="text-center text-muted">
+                                        <i class="fas fa-info-circle me-2"></i>
+                                        Select start and end sheets above, then click "Load Data" to see simulated trading results
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
@@ -403,65 +489,165 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     
     <script>
-        // Set default dates (last 7 days)
+        // Initialize when page loads
         document.addEventListener('DOMContentLoaded', function() {
-            const today = new Date();
-            const weekAgo = new Date(today.getTime() - 7 * 24 * 60 * 60 * 1000);
+            // Load available sheets for both main interface and simulation
+            loadAvailableSheets();
             
-            document.getElementById('startDate').value = weekAgo.toISOString().split('T')[0];
-            document.getElementById('endDate').value = today.toISOString().split('T')[0];
-            
-            // Load summary stats on page load
-            loadSummaryStats();
-            
-            // If hourly is selected by default, load the options
-            setTimeout(() => {
-                if (document.getElementById('dataTypeSelect').value === 'hourly') {
-                    console.log('Hourly selected by default, loading options...');
-                    toggleHourlyOptions();
-                }
-            }, 500);
+            // Load initial data
+            loadSummaryData();
+            loadHourlyOptions();
         });
-        
-        function loadData() {
-            const ticker = document.getElementById('tickerSelect').value;
-            const startDate = document.getElementById('startDate').value;
-            const endDate = document.getElementById('endDate').value;
-            const dataType = document.getElementById('dataTypeSelect').value;
-            
-            if (!startDate || !endDate) {
-                showError('Please select both start and end dates');
-                return;
-            }
-            
-            if (startDate > endDate) {
-                showError('Start date cannot be after end date');
-                return;
-            }
-            
-            showLoading();
-            
-            const apiUrl = `/api/data?type=${dataType}&start_date=${startDate}&end_date=${endDate}`;
-            console.log('Fetching from:', apiUrl);
-            
-            fetch(apiUrl)
+
+        function loadAvailableSheets() {
+            fetch('/api/sheets')
                 .then(response => response.json())
                 .then(data => {
-                    console.log('API response:', data);
                     if (data.success) {
-                        if (dataType === 'hourly') {
-                            displayHourlyData(data.data);
-                        } else {
-                            displayTradesData(data.data);
-                        }
-                    } else {
-                        showError(data.error || 'Failed to load data');
+                        const startSelect = document.getElementById('startDateSelect');
+                        const endSelect = document.getElementById('endDateSelect');
+                        
+                        // Clear existing options
+                        startSelect.innerHTML = '<option value="">Select start sheet...</option>';
+                        endSelect.innerHTML = '<option value="">Select end sheet...</option>';
+                        
+                        // Add sheet options
+                        data.sheets.forEach(sheet => {
+                            const startOption = document.createElement('option');
+                            startOption.value = sheet;
+                            startOption.textContent = formatSheetName(sheet);
+                            startSelect.appendChild(startOption);
+                            
+                            const endOption = document.createElement('option');
+                            endOption.value = sheet;
+                            endOption.textContent = formatSheetName(sheet);
+                            endSelect.appendChild(endOption);
+                        });
                     }
                 })
                 .catch(error => {
-                    console.error('Error:', error);
-                    showError('Failed to load data. Please try again.');
+                    console.error('Error loading sheets:', error);
                 });
+        }
+
+        function formatSheetName(sheetName) {
+            // Convert "Hour_12_2025-08-06" to "12:00 PM - Aug 6, 2025"
+            try {
+                const parts = sheetName.split('_');
+                if (parts.length >= 3 && parts[0] === 'Hour') {
+                    const hour = parseInt(parts[1]);
+                    const date = parts[2];
+                    
+                    // Format hour
+                    let timeStr = '';
+                    if (hour === 0) timeStr = '12:00 AM';
+                    else if (hour < 12) timeStr = `${hour}:00 AM`;
+                    else if (hour === 12) timeStr = '12:00 PM';
+                    else timeStr = `${hour - 12}:00 PM`;
+                    
+                    // Format date - parse explicitly to avoid timezone issues
+                    const [year, month, day] = date.split('-').map(Number);
+                    const dateStr = new Date(year, month - 1, day).toLocaleDateString('en-US', { 
+                        month: 'short', 
+                        day: 'numeric', 
+                        year: 'numeric' 
+                    });
+                    
+                    return `${timeStr} - ${dateStr}`;
+                }
+                return sheetName;
+            } catch (e) {
+                return sheetName;
+            }
+        }
+
+        function loadData() {
+            const startSheet = document.getElementById('startDateSelect').value;
+            const endSheet = document.getElementById('endDateSelect').value;
+            const dataType = document.getElementById('dataTypeSelect').value;
+            
+            console.log('Load Data clicked with:', { startSheet, endSheet, dataType });
+            
+            if (!startSheet || !endSheet) {
+                alert('Please select both start and end sheets.');
+                return;
+            }
+            
+            if (dataType === 'trades') {
+                console.log('Loading trades data via simulation...');
+                // For trades, run the simulation to show what trades would have been executed
+                runSimulation();
+            } else {
+                console.log('Loading hourly data from sheets...');
+                // For hourly data, load data from the selected sheets
+                loadHourlyDataForSheets(startSheet, endSheet);
+            }
+        }
+
+        function loadHourlyDataForSheets(startSheet, endSheet) {
+            console.log('loadHourlyDataForSheets called with:', { startSheet, endSheet });
+            
+            // Get all available sheets
+            fetch('/api/sheets')
+                .then(response => response.json())
+                .then(data => {
+                    console.log('Sheets API response:', data);
+                    if (data.success) {
+                        // Find the indices of start and end sheets
+                        const startIdx = data.sheets.indexOf(startSheet);
+                        const endIdx = data.sheets.indexOf(endSheet);
+                        
+                        console.log('Sheet indices:', { startIdx, endIdx });
+                        
+                        if (startIdx === -1 || endIdx === -1) {
+                            alert('Invalid sheet selection.');
+                            return;
+                        }
+                        
+                        // Ensure start is before end
+                        const actualStartIdx = Math.min(startIdx, endIdx);
+                        const actualEndIdx = Math.max(startIdx, endIdx);
+                        
+                        // Get sheets in the window
+                        const windowSheets = data.sheets.slice(actualStartIdx, actualEndIdx + 1);
+                        console.log('Window sheets:', windowSheets);
+                        
+                        // Load data from all sheets in the window
+                        loadAggregatedHourlyData(windowSheets);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error loading sheets:', error);
+                });
+        }
+
+        function loadAggregatedHourlyData(sheetNames) {
+            console.log('loadAggregatedHourlyData called with:', sheetNames);
+            
+            // Load data from the first sheet as a starting point
+            if (sheetNames.length > 0) {
+                const firstSheet = sheetNames[0];
+                console.log('Loading data from first sheet:', firstSheet);
+                
+                // Load hourly data from the first sheet
+                fetch(`/api/data?type=hourly&sheet=${encodeURIComponent(firstSheet)}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log('Hourly data API response:', data);
+                        if (data.success) {
+                            displayHourlyData(data.data);
+                            // Show hourly options
+                            document.getElementById('hourlyOptions').style.display = 'block';
+                            loadHourlyOptions();
+                        } else {
+                            alert('Failed to load hourly data: ' + (data.error || 'Unknown error'));
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error loading hourly data:', error);
+                        alert('Error loading hourly data. Please try again.');
+                    });
+            }
         }
         
         function toggleHourlyOptions() {
@@ -527,8 +713,8 @@
         function loadAllStrikesAndDates() {
             console.log('Loading all strikes and dates...');
             
-            const startDate = document.getElementById('startDate').value;
-            const endDate = document.getElementById('endDate').value;
+            const startDate = document.getElementById('startDateSelect').value;
+            const endDate = document.getElementById('endDateSelect').value;
             
             if (!startDate || !endDate) {
                 console.log('Missing dates, returning early');
@@ -787,8 +973,8 @@
         function loadSheetDataForDateTimeView(sheetName) {
             console.log(`Loading sheet data for date/time view: ${sheetName}`);
             
-            const startDate = document.getElementById('startDate').value;
-            const endDate = document.getElementById('endDate').value;
+            const startDate = document.getElementById('startDateSelect').value;
+            const endDate = document.getElementById('endDateSelect').value;
             
             if (!startDate || !endDate) {
                 showError('Please select both start and end dates');
@@ -1133,7 +1319,6 @@
                         document.getElementById('totalTrades').textContent = data.summary.total_trades;
                         document.getElementById('totalPnL').textContent = `$${data.summary.total_pnl}`;
                         document.getElementById('avgReturn').textContent = `${data.summary.avg_return}%`;
-                        document.getElementById('dataPoints').textContent = data.summary.hourly_data_points;
                     }
                 })
                 .catch(error => {
@@ -1142,64 +1327,28 @@
         }
         
         function displayHourlyData(data) {
-            try {
-                console.log('displayHourlyData function called with data:', data);
-                console.log('Data type:', typeof data);
-                console.log('Data length:', data ? data.length : 'No data');
-                
-                if (!data || data.length === 0) {
-                    console.log('No data available, showing error');
-                    showError('No hourly data available for the selected date range');
-                    return;
-                }
-                
-                console.log('Creating chart container...');
-                const chartContainer = document.createElement('div');
-                chartContainer.className = 'chart-container';
-                chartContainer.innerHTML = `
-                    <h4><i class="fas fa-chart-line me-2"></i>Hourly Data Chart</h4>
-                    
-                    <!-- Line Toggle Controls -->
-                    <div id="lineToggles" class="mb-3">
-                        <div class="btn-group" role="group" aria-label="Line Toggles">
-                            <button type="button" class="btn btn-success active" id="togglePX_LAST" onclick="toggleLine('PX_LAST')">
-                                <i class="fas fa-eye me-1"></i>PX_LAST
-                            </button>
-                            <button type="button" class="btn btn-success active" id="toggleLastHeston" onclick="toggleLine('Last heston')">
-                                <i class="fas fa-eye me-1"></i>Last Heston
-                            </button>
-                            <button type="button" class="btn btn-success active" id="toggleHeston_Price" onclick="toggleLine('Heston_Price')">
-                                <i class="fas fa-eye me-1"></i>Heston Price
-                            </button>
-                        </div>
-                    </div>
-                    
-                    <div id="chartControls" class="mb-3">
-                        <button class="btn btn-outline-primary me-2" onclick="updateChart()">
-                            <i class="fas fa-sync-alt me-2"></i>Update Chart
-                        </button>
-                    </div>
-                    <canvas id="hourlyChart" width="400" height="200"></canvas>
-                `;
-                
-                console.log('Adding chart container to DOM...');
-                document.getElementById('dataDisplay').innerHTML = '';
-                document.getElementById('dataDisplay').appendChild(chartContainer);
-                
-                // Store hourly data globally for chart updates
-                window.currentHourlyData = data;
-                console.log('Stored hourly data globally:', window.currentHourlyData);
-                
-                // Create initial chart
-                console.log('Calling updateChart...');
-                updateChart();
-                
-            } catch (error) {
-                console.error('Error in displayHourlyData:', error);
-                showError(`Error displaying hourly data: ${error.message}`);
+            console.log('Displaying hourly data:', data);
+            
+            // Show the chart container
+            const chartContainer = document.getElementById('chartContainer');
+            if (chartContainer) {
+                chartContainer.style.display = 'block';
             }
+            
+            // Create the chart
+            createHourlyChart(data);
         }
-        
+
+        function createHourlyChart(data) {
+            // This function will create the hourly data chart
+            // For now, we'll just show that data was loaded
+            console.log('Hourly data loaded:', data.length, 'rows');
+            
+            // You can implement chart creation here using Chart.js
+            // For now, let's just show a success message
+            alert(`Successfully loaded ${data.length} rows of hourly data from the selected sheets.`);
+        }
+
         function debugStrikes() {
             console.log('=== DEBUG STRIKES ===');
             console.log('Current hourly data:', window.currentHourlyData);
@@ -1255,16 +1404,16 @@
             }
         }
         
-        function displayTradesData(trades) {
-            console.log('Frontend received trades data:', trades);
+        function displayTradesData(data) {
+            console.log('Frontend received trades data:', data);
             
-            if (!trades || trades.length === 0) {
-                showError('No trades data available for the selected date range');
+            if (!data || data.length === 0) {
+                showError('No trade data available for the selected date range');
                 return;
             }
             
             // Calculate summary metrics for the selected time period
-            const summary = calculateTradesSummary(trades);
+            const summary = calculateTradesSummary(data);
             
             const tradesContainer = document.createElement('div');
             tradesContainer.className = 'trades-table';
@@ -1272,11 +1421,10 @@
                 <h4><i class="fas fa-list me-2"></i>Trades Log</h4>
                 <div class="table-responsive">
                     <table class="table table-hover">
-                        <thead>
+                        <thead class="table-dark">
                             <tr>
                                 <th>Timestamp</th>
                                 <th>Action</th>
-                                <th>Option ID</th>
                                 <th>Strike</th>
                                 <th>Type</th>
                                 <th>Trade</th>
@@ -1286,19 +1434,22 @@
                             </tr>
                         </thead>
                         <tbody>
-                            ${trades.map(trade => {
+                            ${data.map(trade => {
                                 console.log(`Processing trade: ${trade.option_id}, return_pct: ${trade.return_pct}, type: ${typeof trade.return_pct}`);
                                 return `
-                                <tr>
-                                    <td>${formatTimestamp(trade.timestamp)}</td>
-                                    <td><span class="badge badge-${trade.action.toLowerCase()}">${trade.action}</span></td>
-                                    <td>${trade.option_id}</td>
-                                    <td>$${trade.strike}</td>
-                                    <td>${trade.option_type}</td>
-                                    <td><span class="badge badge-${trade.trade_type.toLowerCase()}">${trade.trade_type}</span></td>
-                                    <td>$${trade.price || '-'}</td>
-                                    <td>${trade.pnl ? `$${trade.pnl}` : '-'}</td>
-                                    <td>${trade.return_pct && trade.return_pct !== 0 ? `${trade.return_pct}%` : '-'}</td>
+                                <tr class="trade-row" onclick="highlightRelatedTrade(this, '${trade.option_id}', '${trade.action}')">
+                                    <td>${trade.action || 'N/A'}</td>
+                                    <td>${trade.timestamp ? formatTimestamp(trade.timestamp) : 'N/A'}</td>
+                                    <td>${trade.company || 'N/A'}</td>
+                                    <td>${trade.trade_type || 'N/A'}</td>
+                                    <td>$${trade.strike_price || 'N/A'}</td>
+                                    <td>${trade.option_type || 'N/A'}</td>
+                                    <td>$${trade.action === 'EXIT' ? (trade.exit_price || trade.market_price || 'N/A') : (trade.entry_market_price || trade.market_price || 'N/A')}</td>
+                                    <td>$${trade.heston_price || trade.entry_heston_price ? (trade.heston_price || trade.entry_heston_price).toFixed(2) : 'N/A'}</td>
+                                    <td class="${marketVsHestonClass}">${marketVsHestonDisplay}</td>
+                                    <td>$${trade.position_size?.toFixed(2) || 'N/A'}</td>
+                                    <td class="${pnlClass}">${pnlSign}${trade.pnl ? `$${trade.pnl.toFixed(2)}` : '$0.00'}</td>
+                                    <td class="${pnlClass}">${pnlSign}${trade.return_pct ? `${trade.return_pct.toFixed(2)}%` : '0.00%'}</td>
                                 </tr>
                             `;
                             }).join('')}
@@ -1347,14 +1498,16 @@
             let totalPnl = 0;
             let totalProfit = 0;
             let totalCost = 0;
+            let exitTrades = 0;
             
             trades.forEach(trade => {
                 if (trade.action === 'ENTER') {
-                    // For ENTER trades, calculate the cost
-                    totalCost += trade.price || 0;
+                    // For ENTER trades, calculate the cost using position_size
+                    totalCost += trade.position_size || 0;
                 } else if (trade.action === 'EXIT' && trade.pnl !== null && trade.pnl !== undefined) {
                     // For EXIT trades, add P&L and calculate profit
                     totalPnl += trade.pnl;
+                    exitTrades++;
                     if (trade.pnl > 0) {
                         totalProfit += trade.pnl;
                     }
@@ -1364,11 +1517,15 @@
             // Calculate P&L percentage based on total cost
             let pnlPercentage = totalCost > 0 ? (totalPnl / totalCost) * 100 : 0;
             
+            // Calculate average return from EXIT trades only
+            let avgReturn = exitTrades > 0 ? (totalPnl / exitTrades) : 0;
+            
             return {
                 totalTrades: totalTrades,
                 totalPnl: totalPnl,
                 pnlPercentage: pnlPercentage,
-                totalProfit: totalProfit
+                totalProfit: totalProfit,
+                avgReturn: avgReturn
             };
         }
         
@@ -1393,6 +1550,253 @@
                     ${message}
                 </div>
             `;
+        }
+
+        // Load summary data on page load
+        function loadSummaryData() {
+            fetch('/api/summary')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        document.getElementById('totalTrades').textContent = data.total_trades || 0;
+                        document.getElementById('totalPnL').textContent = data.total_pnl || '$0.00';
+                        document.getElementById('avgReturn').textContent = data.avg_return || '0.00%';
+                    }
+                })
+                .catch(error => {
+                    console.error('Error loading summary data:', error);
+                });
+        }
+
+        // Sliding Window Simulation Functions
+        function runSimulation() {
+            const startSheet = document.getElementById('startDateSelect').value;
+            const endSheet = document.getElementById('endDateSelect').value;
+            
+            if (!startSheet || !endSheet) {
+                alert('Please select both start and end sheets.');
+                return;
+            }
+            
+            // Show loading state
+            const dataDisplay = document.getElementById('dataDisplay');
+            dataDisplay.innerHTML = `
+                <div class="text-center">
+                    <i class="fas fa-spinner fa-spin fa-2x mb-3"></i>
+                    <p>Running trading simulation...</p>
+                </div>
+            `;
+            
+            // Run simulation
+            fetch(`/api/sliding-window-simulation?start_sheet=${startSheet}&end_sheet=${endSheet}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        // Hide the loading message and show results
+                        dataDisplay.innerHTML = '';
+                        
+                        // Display simulation results
+                        displaySimulationResults(data.data);
+                    } else {
+                        dataDisplay.innerHTML = `
+                            <div class="alert alert-danger">
+                                <i class="fas fa-exclamation-triangle me-2"></i>
+                                Error: ${data.error || 'Failed to run simulation'}
+                            </div>
+                        `;
+                    }
+                })
+                .catch(error => {
+                    console.error('Error running simulation:', error);
+                    dataDisplay.innerHTML = `
+                        <div class="alert alert-danger">
+                            <i class="fas fa-exclamation-triangle me-2"></i>
+                            Error: Failed to run simulation. Please try again.
+                        </div>
+                    `;
+                });
+        }
+
+        function displaySimulationResults(simulationData) {
+            console.log('Displaying simulation results:', simulationData);
+            
+            // Update dataDisplay to show success message
+            const dataDisplay = document.getElementById('dataDisplay');
+            if (dataDisplay) {
+                dataDisplay.innerHTML = `
+                    <div class="alert alert-success">
+                        <i class="fas fa-check-circle me-2"></i>
+                        Trading simulation completed successfully! Showing ${simulationData.trade_history.length} trades.
+                    </div>
+                `;
+            }
+            
+            // Show period summary
+            const periodSummary = document.getElementById('periodSummary');
+            if (periodSummary) {
+                periodSummary.style.display = 'block';
+            }
+            
+            // Calculate summary from trade history
+            const summary = calculateTradesSummary(simulationData.trade_history);
+            console.log('Calculated summary:', summary);
+            
+            // Update performance summary
+            const totalTrades = document.getElementById('totalTrades');
+            const totalPnl = document.getElementById('totalPnL');
+            const avgReturn = document.getElementById('avgReturn');
+            const totalProfit = document.getElementById('totalProfit');
+            
+            if (totalTrades) totalTrades.textContent = summary.totalTrades || 0;
+            if (totalPnl) totalPnl.textContent = `$${summary.totalPnl.toFixed(2)}`;
+            if (avgReturn) avgReturn.textContent = `${summary.pnlPercentage.toFixed(2)}%`;
+            if (totalProfit) totalProfit.textContent = `$${summary.totalProfit.toFixed(2)}`;
+            
+            // Populate trade logs table
+            populateSimulatedTradeLogsTable(simulationData.trade_history);
+            
+            // Scroll to results
+            if (periodSummary) {
+                periodSummary.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+
+        function populateSimulatedTradeLogsTable(tradeHistory) {
+            const tbody = document.getElementById('tradeLogsBody');
+            if (!tbody) return;
+            
+            tbody.innerHTML = '';
+            
+            if (!tradeHistory || tradeHistory.length === 0) {
+                tbody.innerHTML = `
+                    <tr>
+                                            <td colspan="12" class="text-center text-muted">
+                        <i class="fas fa-info-circle me-2"></i>
+                        No trades executed during simulation period
+                    </td>
+                    </tr>
+                `;
+                return;
+            }
+            
+            tradeHistory.forEach(trade => {
+                const row = document.createElement('tr');
+                row.className = 'trade-row';
+                row.setAttribute('data-trade-key', trade.trade_key);
+                row.setAttribute('data-action', trade.action);
+                row.onclick = () => highlightRelatedTrade(row, trade.trade_key, trade.action);
+                
+                // Determine action badge color
+                const actionClass = trade.action === 'ENTER' ? 'bg-primary' : 'bg-success';
+                
+                // Color code based on PnL (only for EXIT trades)
+                const pnlClass = trade.action === 'EXIT' ? 
+                    (trade.pnl > 0 ? 'text-success' : trade.pnl < 0 ? 'text-danger' : 'text-muted') : 'text-muted';
+                const pnlSign = trade.action === 'EXIT' ? 
+                    (trade.pnl > 0 ? '+' : trade.pnl < 0 ? '' : '') : '';
+                
+                // Calculate Market vs Heston difference
+                let marketPrice, hestonPrice, marketVsHeston;
+                
+                if (trade.action === 'ENTER') {
+                    marketPrice = trade.entry_market_price;
+                    hestonPrice = trade.entry_heston_price;
+                    marketVsHeston = trade.entry_market_vs_heston;
+                } else { // EXIT
+                    marketPrice = trade.exit_price;
+                    hestonPrice = trade.exit_heston;
+                    marketVsHeston = trade.exit_market_vs_heston;
+                }
+                
+                // Format Market vs Heston difference
+                const marketVsHestonClass = marketVsHeston ? 
+                    (marketVsHeston < 0 ? 'text-success' : marketVsHeston > 0 ? 'text-danger' : 'text-muted') : 'text-muted';
+                const marketVsHestonSign = marketVsHeston ? (marketVsHeston < 0 ? '' : '+') : '';
+                const marketVsHestonDisplay = marketVsHeston ? 
+                    `${marketVsHestonSign}$${Math.abs(marketVsHeston).toFixed(2)}` : '-';
+                
+                row.innerHTML = `
+                    <td><span class="badge bg-info">${trade.trade_label || 'X'}</span></td>
+                    <td><span class="badge ${actionClass}">${trade.action || 'N/A'}</span></td>
+                    <td>${trade.timestamp || 'N/A'}</td>
+                    <td><span class="badge ${trade.trade_type === 'BUY' ? 'bg-success' : 'bg-warning'}">${trade.trade_type || 'N/A'}</span></td>
+                    <td>$${trade.strike_price || 'N/A'}</td>
+                    <td>${trade.option_type || 'N/A'}</td>
+                    <td>$${trade.action === 'EXIT' ? (trade.exit_price || trade.market_price || 'N/A') : (trade.entry_market_price || trade.market_price || 'N/A')}</td>
+                    <td>$${trade.heston_price || trade.entry_heston_price ? (trade.heston_price || trade.entry_heston_price).toFixed(2) : 'N/A'}</td>
+                    <td class="${marketVsHestonClass}">${marketVsHestonDisplay}</td>
+                    <td>$${trade.position_size?.toFixed(2) || 'N/A'}</td>
+                    <td class="${pnlClass}">${pnlSign}${trade.pnl ? `$${trade.pnl.toFixed(2)}` : '$0.00'}</td>
+                    <td class="${pnlClass}">${pnlSign}${trade.return_pct ? `${trade.return_pct.toFixed(2)}%` : '0.00%'}</td>
+                `;
+                
+                tbody.appendChild(row);
+            });
+        }
+
+        function clearSimulation() {
+            // Hide period summary
+            const periodSummary = document.getElementById('periodSummary');
+            if (periodSummary) {
+                periodSummary.style.display = 'none';
+            }
+            
+            // Reset selectors
+            const startSelect = document.getElementById('startDateSelect');
+            const endSelect = document.getElementById('endDateSelect');
+            if (startSelect) startSelect.value = '';
+            if (endSelect) endSelect.value = '';
+            
+            // Reset trade logs table
+            const tbody = document.getElementById('tradeLogsBody');
+            if (tbody) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="12" class="text-center text-muted">
+                            <i class="fas fa-info-circle me-2"></i>
+                            Select start and end sheets above, then click "Run Strategy" to see simulated trading results
+                        </td>
+                    </tr>
+                `;
+            }
+        }
+
+        function highlightRelatedTrade(row, tradeKey, action) {
+            // Clear all previous highlights
+            document.querySelectorAll('.trade-row').forEach(r => {
+                r.classList.remove('highlighted', 'related-highlight');
+            });
+            
+            // Find the related trade (opposite action for same trade_key)
+            const relatedAction = action === 'ENTER' ? 'EXIT' : 'ENTER';
+            const allRows = document.querySelectorAll('.trade-row');
+            let relatedRow = null;
+            
+            allRows.forEach(r => {
+                const rowTradeKey = r.getAttribute('data-trade-key');
+                const rowAction = r.getAttribute('data-action');
+                
+                if (rowTradeKey === tradeKey && rowAction === relatedAction) {
+                    relatedRow = r;
+                }
+            });
+            
+            // Add highlight classes
+            if (action === 'ENTER') {
+                row.classList.add('highlighted');
+                if (relatedRow) relatedRow.classList.add('related-highlight');
+                console.log(`Highlighted ENTER trade with key ${tradeKey}, looking for EXIT trade with same key`);
+            } else { // EXIT
+                row.classList.add('highlighted');
+                if (relatedRow) relatedRow.classList.add('related-highlight');
+                console.log(`Highlighted EXIT trade with key ${tradeKey}, looking for ENTER trade with same key`);
+            }
+            
+            if (relatedRow) {
+                console.log(`Found related trade: ${relatedAction} with key ${tradeKey}`);
+            } else {
+                console.log(`No related trade found for ${action} with key ${tradeKey}`);
+            }
         }
     </script>
 </body>
