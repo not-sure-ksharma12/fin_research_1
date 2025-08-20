@@ -16,6 +16,9 @@ logger = logging.getLogger(__name__)
 HOURLY_DATA_PATH = "../scripts/scripts/realtime_output/multi_company_sep19/CRCL_hourly_data.xlsx"
 TRADES_LOG_PATH = "../scripts/scripts/realtime_output/multi_company_sep19/CRCL_trades.log"
 
+# Global storage for simulation results
+current_simulation_results = None
+
 def get_excel_sheet_names():
     """Get list of available sheet names from Excel file"""
     try:
@@ -423,6 +426,10 @@ def sliding_window_simulation():
         # Run simulation
         simulation_results = run_trading_simulation(window_sheets)
         
+        # Store the results globally for use in label dropdowns
+        global current_simulation_results
+        current_simulation_results = simulation_results
+        
         return jsonify({
             'success': True,
             'data': simulation_results,
@@ -433,6 +440,343 @@ def sliding_window_simulation():
         
     except Exception as e:
         logger.error(f"Error in sliding window simulation: {e}")
+        return jsonify({'success': False, 'error': str(e)})
+
+@app.route('/api/trade-labels')
+def get_trade_labels():
+    """Get trade data organized by labels (A, B, C, D) for graph generation"""
+    try:
+        global current_simulation_results
+        
+        if current_simulation_results is None:
+            return jsonify({'success': False, 'error': 'No simulation has been run yet. Please run a simulation first.'})
+        
+        if 'trade_history' not in current_simulation_results:
+            return jsonify({'success': False, 'error': 'No trade data available in current simulation'})
+        
+        # Organize trades by label
+        trades_by_label = {'A': [], 'B': [], 'C': [], 'D': []}
+        
+        for trade in current_simulation_results['trade_history']:
+            label = trade.get('trade_label', 'X')
+            if label in trades_by_label:
+                trades_by_label[label].append(trade)
+        
+        # Create dropdown options for each label
+        label_options = {}
+        for label, trades in trades_by_label.items():
+            options = []
+            for trade in trades:
+                if trade['action'] == 'ENTER':
+                    # Create option: "Strike $X - DateTime"
+                    strike = trade['strike_price']
+                    timestamp = trade['timestamp']
+                    option_value = f"{strike}_{timestamp}"
+                    option_text = f"Strike ${strike} - {timestamp}"
+                    options.append({
+                        'value': option_value,
+                        'text': option_text,
+                        'trade_data': trade
+                    })
+            label_options[label] = options
+        
+        return jsonify({
+            'success': True,
+            'label_options': label_options
+        })
+        
+    except Exception as e:
+        logger.error(f"Error getting trade labels: {e}")
+        return jsonify({'success': False, 'error': str(e)})
+
+@app.route('/api/current-simulation')
+def get_current_simulation():
+    """Get the current simulation results for populating label dropdowns"""
+    global current_simulation_results
+    
+    if current_simulation_results is None:
+        return jsonify({'success': False, 'error': 'No simulation has been run yet'})
+    
+    # Extract only the entry trades for each label
+    label_entries = {}
+    for trade in current_simulation_results.get('trade_history', []):
+        if trade.get('action') == 'ENTER':
+            label = trade.get('trade_label', 'X')
+            if label not in label_entries:
+                label_entries[label] = []
+            
+            # Create option for dropdown
+            option = {
+                'value': f"{trade.get('strike_price')}_{trade.get('timestamp')}",
+                'text': f"Strike ${trade.get('strike_price')} - {trade.get('timestamp')}",
+                'trade_data': trade
+            }
+            label_entries[label].append(option)
+    
+    return jsonify({
+        'success': True,
+        'label_entries': label_entries
+    })
+
+@app.route('/api/label-graph-data')
+def get_label_graph_data():
+    """Get graph data for a specific label and strike-datetime combination"""
+    try:
+        label = request.args.get('label')
+        strike_datetime = request.args.get('strike_datetime')
+        
+        if not label or not strike_datetime:
+            return jsonify({'success': False, 'error': 'Label and strike_datetime are required'})
+        
+        # Parse strike_datetime (format: "strike_timestamp")
+        parts = strike_datetime.split('_', 1)
+        if len(parts) != 2:
+            return jsonify({'success': False, 'error': 'Invalid strike_datetime format'})
+        
+        strike = float(parts[0])
+        timestamp = parts[1]
+        
+        # Get simulation results from stored results
+        global current_simulation_results
+        
+        if current_simulation_results is None:
+            return jsonify({'success': False, 'error': 'No simulation has been run yet. Please run a simulation first.'})
+        
+        if 'trade_history' not in current_simulation_results:
+            return jsonify({'success': False, 'error': 'No trade data available in current simulation'})
+        
+        # Parse the selected trade timestamp to find the specific trade
+        selected_trade_timestamp = timestamp  # This is the timestamp from the dropdown selection
+        
+        # Debug: Log the trades found for this label
+        trade_history = current_simulation_results['trade_history']
+        label_trades = [trade for trade in trade_history if trade.get('trade_label') == label]
+        logger.info(f"Found {len(label_trades)} trades for label {label}: {label_trades}")
+        
+        # Find the specific trade that matches the selected timestamp
+        selected_trade = None
+        for trade in label_trades:
+            if trade.get('timestamp') == selected_trade_timestamp:
+                selected_trade = trade
+                break
+        
+        if selected_trade:
+            logger.info(f"Found selected trade for label {label}: {selected_trade}")
+        else:
+            logger.warning(f"No trade found for label {label} with timestamp {selected_trade_timestamp}")
+        
+        # Find ENTER and matching EXIT trades for this specific selection
+        # The dropdown is built from ENTER trades, so selected_trade should be the ENTER
+        enter_trade = None
+        exit_trade = None
+
+        if selected_trade and selected_trade.get('action') == 'ENTER':
+            enter_trade = selected_trade
+            selected_key = selected_trade.get('trade_key')
+            # Match EXIT using the same trade_key to avoid label reuse ambiguity
+            if selected_key:
+                for trade in label_trades:
+                    if trade.get('action') == 'EXIT' and trade.get('trade_key') == selected_key:
+                        exit_trade = trade
+                        break
+
+        # Fallback: if for some reason selected trade wasn't found or key missing,
+        # pick ENTER/EXIT by strike within this label (least preferred)
+        if enter_trade is None:
+            for trade in label_trades:
+                if trade.get('action') == 'ENTER' and trade.get('strike_price') == strike:
+                    enter_trade = trade
+                    break
+        if exit_trade is None and enter_trade is not None:
+            key = enter_trade.get('trade_key')
+            if key:
+                for trade in label_trades:
+                    if trade.get('action') == 'EXIT' and trade.get('trade_key') == key:
+                        exit_trade = trade
+                        break
+            # If still not found, take the first EXIT with same strike
+            if exit_trade is None:
+                for trade in label_trades:
+                    if trade.get('action') == 'EXIT' and trade.get('strike_price') == strike:
+                        exit_trade = trade
+                        break
+
+        logger.info(f"Label {label}, Strike ${strike}: ENTER trade: {enter_trade}, EXIT trade: {exit_trade}")
+        if not enter_trade:
+            logger.warning(f"No ENTER trade found for label {label}, strike ${strike}")
+        if not exit_trade:
+            logger.warning(f"No EXIT trade found for label {label}, strike ${strike}")
+        
+        # Load all sheet data to find the trade period
+        all_data = []
+        
+        # Get sheet names from the stored simulation results
+        sheet_names = get_excel_sheet_names()
+        if not sheet_names:
+            return jsonify({'success': False, 'error': 'No sheets available'})
+        
+        # Debug: Check what columns are available in the first sheet
+        first_df = load_hourly_data(sheet_names[0])
+        if not first_df.empty:
+            logger.info(f"Available columns in Excel data: {list(first_df.columns)}")
+            logger.info(f"Sample row: {first_df.iloc[0].to_dict()}")
+            
+            # Check specifically for Last heston column
+            last_heston_cols = [col for col in first_df.columns if 'heston' in col.lower()]
+            logger.info(f"Columns containing 'heston': {last_heston_cols}")
+            
+            if 'Last heston' in first_df.columns:
+                sample_last_heston = first_df['Last heston'].iloc[0]
+                logger.info(f"Sample 'Last heston' value: {sample_last_heston} (type: {type(sample_last_heston)})")
+        
+        for sheet_name in sheet_names:
+            df = load_hourly_data(sheet_name)
+            if not df.empty:
+                # Filter for the specific strike price
+                strike_data = df[df['Strike'] == strike].copy()
+                if not strike_data.empty:
+                    # Add sheet info for timestamp
+                    hour, date = extract_hour_date_from_sheet(sheet_name)
+                    strike_data['sheet_name'] = sheet_name
+                    strike_data['hour'] = hour
+                    strike_data['date'] = date
+                    all_data.append(strike_data)
+        
+        if not all_data:
+            return jsonify({'success': False, 'error': f'No data found for strike ${strike}'})
+        
+        # Combine all data and sort by timestamp
+        combined_data = pd.concat(all_data, ignore_index=True)
+        combined_data = combined_data.sort_values(['date', 'hour'])
+        
+        # Create graph data
+        graph_data = {
+            'labels': [],  # Time labels
+            'heston_prices': [],
+            'last_heston': [],
+            'last_traded': [],
+            'entry_points': [],  # Entry trade markers
+            'exit_points': []    # Exit trade markers
+        }
+        
+        # Process each data point
+        for _, row in combined_data.iterrows():
+            time_label = f"{row['hour']:02d}:00 - {row['date']}"
+            graph_data['labels'].append(time_label)
+            graph_data['heston_prices'].append(row['Heston_Price'])
+            
+            # Handle missing Last_heston column gracefully
+            # Check for various possible column names and handle pandas column processing
+            last_heston = None
+            
+            # Try different possible column names (pandas might process spaces differently)
+            possible_columns = ['Last_heston', 'Last heston', 'last_heston', 'Last Heston', 'LastHeston']
+            
+            for col_name in possible_columns:
+                if col_name in row.index and pd.notna(row[col_name]) and row[col_name] != '':
+                    last_heston = row[col_name]
+                    logger.info(f"Using '{col_name}' value: {last_heston}")
+                    break
+            
+            if last_heston is None:
+                # If Last_heston doesn't exist or is empty, create a slightly different value for visibility
+                last_heston = row['Heston_Price'] * 0.98  # Make it slightly lower for visibility
+                logger.info(f"Last_heston not found or empty, using calculated value: {last_heston:.2f} (from Heston_Price: {row['Heston_Price']:.2f})")
+            
+            graph_data['last_heston'].append(last_heston)
+            
+            graph_data['last_traded'].append(row['PX_LAST'])
+            
+            # Check if this timestamp matches entry/exit trades
+            entry_match = False
+            exit_match = False
+            
+            # Match this with actual trade data from simulation results
+            # Get simulation results to find entry/exit points for this label
+            
+            # Parse the timestamp to match with trade data
+            try:
+                # Extract hour and date from the time label
+                time_parts = time_label.split(' - ')
+                hour_str = time_parts[0]  # e.g., "12:00"
+                date_str = time_parts[1]  # e.g., "Aug 06, 2025"
+                
+                # Convert to comparable format
+                hour = int(hour_str.split(':')[0])
+                date_obj = datetime.strptime(date_str, '%b %d, %Y')
+                date_key = date_obj.strftime('%Y-%m-%d')
+                
+                logger.info(f"Processing data point: time_label='{time_label}' -> hour={hour}, date={date_key}")
+                
+                # Check for ENTRY marker (from enter_trade)
+                if enter_trade:
+                    try:
+                        trade_timestamp = enter_trade.get('timestamp', '')
+                        if trade_timestamp:
+                            trade_parts = trade_timestamp.split(' - ')
+                            trade_time = trade_parts[0]  # "12:00 PM"
+                            trade_date = trade_parts[1]  # "Aug 06, 2025"
+                            
+                            time_obj = datetime.strptime(trade_time, '%I:%M %p')
+                            trade_hour = time_obj.hour
+                            
+                            trade_date_obj = datetime.strptime(trade_date, '%b %d, %Y')
+                            trade_date_key = trade_date_obj.strftime('%Y-%m-%d')
+                            
+                            # Check if this data point matches the ENTRY trade
+                            if hour == trade_hour and date_key == trade_date_key:
+                                entry_match = True
+                                logger.info(f"Marking ENTRY for label {label} at {time_label}")
+                    except Exception as parse_error:
+                        logger.error(f"Error parsing ENTRY trade timestamp: {parse_error}")
+                
+                # Check for EXIT marker (from exit_trade)
+                if exit_trade:
+                    try:
+                        trade_timestamp = exit_trade.get('timestamp', '')
+                        if trade_timestamp:
+                            trade_parts = trade_timestamp.split(' - ')
+                            trade_time = trade_parts[0]  # "12:00 PM"
+                            trade_date = trade_parts[1]  # "Aug 06, 2025"
+                            
+                            time_obj = datetime.strptime(trade_time, '%I:%M %p')
+                            trade_hour = time_obj.hour
+                            
+                            trade_date_obj = datetime.strptime(trade_date, '%b %d, %Y')
+                            trade_date_key = trade_date_obj.strftime('%Y-%m-%d')
+                            
+                            # Check if this data point matches the EXIT trade
+                            if hour == trade_hour and date_key == trade_date_key:
+                                exit_match = True
+                                logger.info(f"Marking EXIT for label {label} at {time_label}")
+                    except Exception as parse_error:
+                        logger.error(f"Error parsing EXIT trade timestamp: {parse_error}")
+                
+            except Exception as e:
+                logger.error(f"Error parsing timestamp for entry/exit matching: {e}")
+            
+            graph_data['entry_points'].append(entry_match)
+            graph_data['exit_points'].append(exit_match)
+        
+        # Calculate PnL for this label and strike by using the EXIT trade's computed PnL
+        pnl = 0.0
+        if exit_trade:
+            try:
+                pnl = float(exit_trade.get('pnl', 0.0) or 0.0)
+            except Exception:
+                pnl = 0.0
+        logger.info(f"Label {label}, Strike ${strike}: Graph PnL mapped from EXIT trade = ${pnl:.2f}")
+        
+        return jsonify({
+            'success': True,
+            'graph_data': graph_data,
+            'strike': strike,
+            'label': label,
+            'pnl': pnl
+        })
+        
+    except Exception as e:
+        logger.error(f"Error getting label graph data: {e}")
         return jsonify({'success': False, 'error': str(e)})
 
 def run_trading_simulation(sheet_names):

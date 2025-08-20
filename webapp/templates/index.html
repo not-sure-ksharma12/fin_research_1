@@ -317,6 +317,29 @@
             background: linear-gradient(45deg, #ffc107, #17a2b8);
             z-index: 1;
         }
+        
+        .graph-container {
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            padding: 10px;
+            background: white;
+            height: 280px;
+            margin-bottom: 15px;
+        }
+        
+        .graph-container canvas {
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            max-width: 100%;
+            height: auto !important;
+        }
+        
+        .graph-container h6 {
+            margin-bottom: 10px;
+            font-size: 14px;
+            font-weight: 600;
+            color: #495057;
+        }
     </style>
 </head>
 <body>
@@ -383,6 +406,12 @@
                                         Date/Time-based View
                                     </label>
                                 </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="hourlyView" id="labelView" value="label" onchange="toggleHourlyView()">
+                                    <label class="form-check-label" for="labelView">
+                                        Label-based View (A, B, C, D)
+                                    </label>
+                                </div>
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -400,6 +429,58 @@
                                 <select class="form-select" id="dateTimeSelect">
                                     <option value="">Loading dates...</option>
                                 </select>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Label-based View Options -->
+                    <div id="labelOptions" class="row mb-3" style="display: none;">
+                        <div class="col-12">
+                            <h6 class="mb-3">Select Trade Labels for 2x2 Graph Grid</h6>
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="control-group">
+                                        <label class="control-label">Label A</label>
+                                        <select class="form-select" id="labelASelect">
+                                            <option value="">Select strike-datetime...</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="control-group">
+                                        <label class="control-label">Label B</label>
+                                        <select class="form-select" id="labelBSelect">
+                                            <option value="">Select strike-datetime...</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="control-group">
+                                        <label class="control-label">Label C</label>
+                                        <select class="form-select" id="labelCSelect">
+                                            <option value="">Select strike-datetime...</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="control-group">
+                                        <label class="control-label">Label D</label>
+                                        <select class="form-select" id="labelDSelect">
+                                            <option value="">Select strike-datetime...</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="row mt-3">
+                                <div class="col-12 text-center">
+                                    <button class="btn btn-success" onclick="generateLabelGraphs()">
+                                        <i class="fas fa-chart-area me-2"></i>Generate 2x2 Graphs
+                                    </button>
+                                    <button class="btn btn-secondary ms-2" onclick="testLabelAPI()">
+                                        <i class="fas fa-vial me-2"></i>Test API
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -448,6 +529,7 @@
                         <table class="table table-hover">
                             <thead class="table-dark">
                                 <tr>
+                                    <th>Graph</th>
                                     <th>Label</th>
                                     <th>Action</th>
                                     <th>Timestamp</th>
@@ -464,13 +546,115 @@
                             </thead>
                             <tbody id="tradeLogsBody">
                                 <tr>
-                                    <td colspan="12" class="text-center text-muted">
+                                    <td colspan="13" class="text-center text-muted">
                                         <i class="fas fa-info-circle me-2"></i>
                                         Select start and end sheets above, then click "Load Data" to see simulated trading results
                                     </td>
                                 </tr>
                             </tbody>
                         </table>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 2x2 Label Graph Grid -->
+            <div id="labelGraphGrid" class="card mb-4" style="display: none;">
+                <div class="card-header bg-success text-white">
+                    <h5 class="mb-0">
+                        <i class="fas fa-chart-area me-2"></i>
+                        Label-based Trading Analysis (2x2 Grid)
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <!-- Line Toggle Controls -->
+                    <div class="row mb-3">
+                        <div class="col-12 text-center">
+                            <div class="btn-group" role="group" aria-label="Line Toggles">
+                                <button type="button" class="btn btn-outline-primary active" id="toggleHestonPrice" onclick="toggleLabelLine('hestonPrice')">
+                                    <i class="fas fa-eye me-1"></i>Heston Price
+                                </button>
+                                <button type="button" class="btn btn-outline-primary active" id="toggleLastHeston" onclick="toggleLabelLine('lastHeston')">
+                                    <i class="fas fa-eye me-1"></i>Last Heston
+                                </button>
+                                <button type="button" class="btn btn-outline-primary active" id="toggleLastTraded" onclick="toggleLabelLine('lastTraded')">
+                                    <i class="fas fa-eye me-1"></i>Last Traded
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="row mb-3">
+                        <div class="col-12">
+                            <div class="alert alert-info">
+                                <i class="fas fa-info-circle me-2"></i>
+                                <strong>Selected Trades:</strong> 
+                                <span id="selectedTradesSummary">None selected</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <div class="graph-container">
+                                <h6 class="text-center">Label A</h6>
+                                <canvas id="labelAChart" width="300" height="200"></canvas>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="graph-container">
+                                <h6 class="text-center">Label B</h6>
+                                <canvas id="labelBChart" width="300" height="200"></canvas>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="graph-container">
+                                <h6 class="text-center">Label C</h6>
+                                <canvas id="labelCChart" width="300" height="200"></canvas>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="graph-container">
+                                <h6 class="text-center">Label D</h6>
+                                <canvas id="labelDChart" width="300" height="200"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Single Trade Graph -->
+            <div id="singleTradeGraphCard" class="card mb-4" style="display: none;">
+                <div class="card-header bg-secondary text-white">
+                    <h5 class="mb-0">
+                        <i class="fas fa-chart-line me-2"></i>
+                        Single Trade Graph
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="row mb-2">
+                        <div class="col-12"><span id="singleTradeTitle" class="fw-semibold"></span></div>
+                    </div>
+                    <!-- Single graph line toggles -->
+                    <div class="row mb-3">
+                        <div class="col-12 text-center">
+                            <div class="btn-group" role="group" aria-label="Single Trade Line Toggles">
+                                <button type="button" class="btn btn-outline-primary active" id="stToggleHeston" onclick="toggleSingleTradeLine('hestonPrice')">
+                                    <i class="fas fa-eye me-1"></i>Heston Price
+                                </button>
+                                <button type="button" class="btn btn-outline-primary active" id="stToggleLastHeston" onclick="toggleSingleTradeLine('lastHeston')">
+                                    <i class="fas fa-eye me-1"></i>Last Heston
+                                </button>
+                                <button type="button" class="btn btn-outline-primary active" id="stToggleLastTraded" onclick="toggleSingleTradeLine('lastTraded')">
+                                    <i class="fas fa-eye me-1"></i>Last Traded
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="graph-container">
+                                <canvas id="singleTradeChart" width="600" height="300"></canvas>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -491,12 +675,30 @@
     <script>
         // Initialize when page loads
         document.addEventListener('DOMContentLoaded', function() {
+            console.log('Dashboard initialized');
+            
             // Load available sheets for both main interface and simulation
             loadAvailableSheets();
             
             // Load initial data
             loadSummaryData();
             loadHourlyOptions();
+            
+            // Set default view and add debugging
+            console.log('Setting default view...');
+            const strikeView = document.getElementById('strikeView');
+            if (strikeView) {
+                strikeView.checked = true;
+                console.log('Strike view set as default');
+            } else {
+                console.error('Strike view radio button not found');
+            }
+            
+            // Debug: Check if label view elements exist
+            console.log('Label view elements check:');
+            console.log('labelView radio:', document.getElementById('labelView'));
+            console.log('labelOptions div:', document.getElementById('labelOptions'));
+            console.log('labelGraphGrid div:', document.getElementById('labelGraphGrid'));
         });
 
         function loadAvailableSheets() {
@@ -678,23 +880,48 @@
         
         function toggleHourlyView() {
             const strikeView = document.getElementById('strikeView');
+            const dateTimeView = document.getElementById('dateTimeView');
+            const labelView = document.getElementById('labelView');
             const strikeSelection = document.getElementById('strikeSelection');
             const dateTimeSelection = document.getElementById('dateTimeSelection');
+            const labelOptions = document.getElementById('labelOptions');
+            
+            // Hide all selections first
+            strikeSelection.style.display = 'none';
+            dateTimeSelection.style.display = 'none';
+            labelOptions.style.display = 'none';
             
             if (strikeView.checked) {
                 strikeSelection.style.display = 'block';
-                dateTimeSelection.style.display = 'none';
                 // Clear date/time data when switching to strike view
                 window.currentDateTimeData = null;
                 window.currentDateTimeSheet = null;
                 console.log('Switched to strike view, cleared date/time data');
-            } else {
-                strikeSelection.style.display = 'none';
+            } else if (dateTimeView.checked) {
                 dateTimeSelection.style.display = 'block';
                 // Clear strike data when switching to date/time view
                 window.currentStrikeData = null;
                 window.currentStrike = null;
                 console.log('Switched to date/time view, cleared strike data');
+            } else if (labelView.checked) {
+                labelOptions.style.display = 'block';
+                // Check if simulation has been run
+                if (document.getElementById('dataDisplay').innerHTML.includes('Trading simulation completed')) {
+                    // Load label options when switching to label view
+                    loadLabelOptions();
+                    console.log('Switched to label view, loading label options');
+                } else {
+                    // Show message to run simulation first
+                    document.getElementById('labelOptions').innerHTML = `
+                        <div class="col-12">
+                            <div class="alert alert-info">
+                                <i class="fas fa-info-circle me-2"></i>
+                                Please run a simulation first by selecting start/end sheets and clicking "Load Data" to populate the label options.
+                            </div>
+                        </div>
+                    `;
+                    console.log('Switched to label view, but no simulation results available');
+                }
             }
         }
         
@@ -1597,6 +1824,9 @@
                         
                         // Display simulation results
                         displaySimulationResults(data.data);
+                        
+                        // After simulation completes, populate label dropdowns
+                        loadLabelOptions();
                     } else {
                         dataDisplay.innerHTML = `
                             <div class="alert alert-danger">
@@ -1715,7 +1945,13 @@
                 const marketVsHestonDisplay = marketVsHeston ? 
                     `${marketVsHestonSign}$${Math.abs(marketVsHeston).toFixed(2)}` : '-';
                 
+                // Graph button only for ENTER trades
+                const graphBtnHtml = trade.action === 'ENTER' ? 
+                    `<button class="btn btn-sm btn-outline-primary" title="Graph this trade" onclick="event.stopPropagation(); graphSingleTrade('${trade.trade_label}','${trade.strike_price}_${trade.timestamp.replace(/'/g, "\'")}')"><i class="fas fa-chart-line"></i></button>`
+                    : '';
+
                 row.innerHTML = `
+                    <td>${graphBtnHtml}</td>
                     <td><span class="badge bg-info">${trade.trade_label || 'X'}</span></td>
                     <td><span class="badge ${actionClass}">${trade.action || 'N/A'}</span></td>
                     <td>${trade.timestamp || 'N/A'}</td>
@@ -1797,6 +2033,568 @@
             } else {
                 console.log(`No related trade found for ${action} with key ${tradeKey}`);
             }
+        }
+
+        function loadLabelOptions() {
+            // Load trade options for each label (A, B, C, D)
+            console.log('Loading label options...');
+            
+            // Show loading state
+            const labels = ['A', 'B', 'C', 'D'];
+            labels.forEach(label => {
+                const select = document.getElementById(`label${label}Select`);
+                if (select) {
+                    select.innerHTML = '<option value="">Loading...</option>';
+                }
+            });
+            
+            fetch('/api/trade-labels')
+                .then(response => response.json())
+                .then(data => {
+                    console.log('API Response:', data);
+                    if (data.success) {
+                        console.log('Label options loaded:', data.label_options);
+                        populateLabelDropdowns(data.label_options);
+                        
+                        // Show success message
+                        const labelOptions = document.getElementById('labelOptions');
+                        if (labelOptions) {
+                            const successMsg = document.createElement('div');
+                            successMsg.className = 'col-12 mb-3';
+                            successMsg.innerHTML = `
+                                <div class="alert alert-success">
+                                    <i class="fas fa-check-circle me-2"></i>
+                                    Label options loaded successfully! Select trades from the dropdowns above to generate graphs.
+                                </div>
+                            `;
+                            labelOptions.insertBefore(successMsg, labelOptions.firstChild);
+                        }
+                    } else {
+                        console.error('Failed to load label options:', data.error);
+                        // Show error in dropdowns
+                        labels.forEach(label => {
+                            const select = document.getElementById(`label${label}Select`);
+                            if (select) {
+                                select.innerHTML = '<option value="">No simulation data</option>';
+                            }
+                        });
+                        
+                        // Show message to run simulation first
+                        const labelOptions = document.getElementById('labelOptions');
+                        if (labelOptions) {
+                            labelOptions.innerHTML = `
+                                <div class="col-12">
+                                    <div class="alert alert-warning">
+                                        <i class="fas fa-exclamation-triangle me-2"></i>
+                                        ${data.error}. Please run a simulation first by selecting start/end sheets and clicking "Load Data".
+                                    </div>
+                                </div>
+                            `;
+                        }
+                    }
+                })
+                .catch(error => {
+                    console.error('Error loading label options:', error);
+                    // Show error in dropdowns
+                    labels.forEach(label => {
+                        const select = document.getElementById(`label${label}Select`);
+                        if (select) {
+                            select.innerHTML = '<option value="">Network error</option>';
+                        }
+                    });
+                });
+        }
+
+        function populateLabelDropdowns(labelOptions) {
+            // Populate the 4 label dropdowns with available trade options
+            const labels = ['A', 'B', 'C', 'D'];
+            
+            labels.forEach(label => {
+                const select = document.getElementById(`label${label}Select`);
+                if (select) {
+                    if (labelOptions[label] && labelOptions[label].length > 0) {
+                        select.innerHTML = '<option value="">Select strike-datetime...</option>';
+                        labelOptions[label].forEach(option => {
+                            const optionElement = document.createElement('option');
+                            optionElement.value = option.value;
+                            optionElement.textContent = option.text;
+                            select.appendChild(optionElement);
+                        });
+                    } else {
+                        select.innerHTML = '<option value="">No trades available</option>';
+                        select.disabled = true;
+                    }
+                }
+            });
+        }
+
+        function generateLabelGraphs() {
+            // Generate 2x2 grid of graphs for selected label trades
+            console.log('Generating label graphs...');
+            
+            const labels = ['A', 'B', 'C', 'D'];
+            const selectedTrades = {};
+            
+            // Get selected trades for each label
+            labels.forEach(label => {
+                const select = document.getElementById(`label${label}Select`);
+                if (select && select.value) {
+                    selectedTrades[label] = select.value;
+                }
+            });
+            
+            if (Object.keys(selectedTrades).length === 0) {
+                alert('Please select at least one trade label to generate graphs.');
+                return;
+            }
+            
+            // Show the graph grid
+            document.getElementById('labelGraphGrid').style.display = 'block';
+            
+            // Update summary
+            updateSelectedTradesSummary(selectedTrades);
+            
+            // Generate individual graphs for each selected label
+            Object.entries(selectedTrades).forEach(([label, strikeDatetime]) => {
+                generateLabelGraph(label, strikeDatetime);
+            });
+        }
+
+        function generateLabelGraph(label, strikeDatetime) {
+            // Generate a single graph for a specific label
+            console.log(`Generating graph for label ${label} with strike-datetime: ${strikeDatetime}`);
+            
+            const encodedStrikeDatetime = encodeURIComponent(strikeDatetime);
+            console.log(`Encoded strike_datetime: ${encodedStrikeDatetime}`);
+            fetch(`/api/label-graph-data?label=${label}&strike_datetime=${encodedStrikeDatetime}`)
+                .then(response => {
+                    console.log(`Response status for label ${label}:`, response.status);
+                    return response.json();
+                })
+                .then(data => {
+                    console.log(`API Response for label ${label}:`, data);
+                    if (data.success) {
+                        console.log(`Graph data for label ${label}:`, data.graph_data);
+                        createLabelChart(label, data.graph_data, data.strike, data.pnl);
+                    } else {
+                        console.error(`Failed to get graph data for label ${label}:`, data.error);
+                        // Show error on the chart canvas
+                        const canvas = document.getElementById(`label${label}Chart`);
+                        if (canvas) {
+                            const ctx = canvas.getContext('2d');
+                            ctx.clearRect(0, 0, canvas.width, canvas.height);
+                            ctx.font = '16px Arial';
+                            ctx.fillStyle = 'red';
+                            ctx.textAlign = 'center';
+                            ctx.fillText(`Error: ${data.error}`, canvas.width/2, canvas.height/2);
+                        }
+                    }
+                })
+                .catch(error => {
+                    console.error(`Error getting graph data for label ${label}:`, error);
+                    console.error(`Error details:`, {
+                        name: error.name,
+                        message: error.message,
+                        stack: error.stack
+                    });
+                    // Show error on the chart canvas
+                    const canvas = document.getElementById(`label${label}Chart`);
+                    if (canvas) {
+                        const ctx = canvas.getContext('2d');
+                        ctx.clearRect(0, 0, canvas.width, canvas.height);
+                        ctx.font = '16px Arial';
+                        ctx.fillStyle = 'red';
+                        ctx.textAlign = 'center';
+                        ctx.fillText(`Network Error: ${error.message}`, canvas.width/2, canvas.height/2);
+                    }
+                });
+        }
+
+        function testLabelAPI() {
+            console.log('Testing Label API...');
+            
+            // Test the trade-labels endpoint
+            fetch('/api/trade-labels')
+                .then(response => {
+                    console.log('Trade labels response status:', response.status);
+                    return response.json();
+                })
+                .then(data => {
+                    console.log('Trade labels API response:', data);
+                    if (data.success) {
+                        console.log('Trade labels loaded successfully');
+                        // Test the first available trade
+                        const firstTrade = data.label_options.A?.[0];
+                        if (firstTrade) {
+                            console.log('Testing with first trade:', firstTrade);
+                            testLabelGraphAPI(firstTrade.value);
+                        }
+                    }
+                })
+                .catch(error => {
+                    console.error('Error testing trade labels API:', error);
+                });
+        }
+        
+        function updateSelectedTradesSummary(selectedTrades) {
+            const summaryElement = document.getElementById('selectedTradesSummary');
+            if (!summaryElement) return;
+            
+            if (Object.keys(selectedTrades).length === 0) {
+                summaryElement.textContent = 'None selected';
+                return;
+            }
+            
+            const summaryText = Object.entries(selectedTrades)
+                .map(([label, strikeDatetime]) => {
+                    const [strike, datetime] = strikeDatetime.split('_', 2);
+                    return `${label}: Strike $${strike} at ${datetime}`;
+                })
+                .join(' | ');
+            
+            summaryElement.textContent = summaryText;
+        }
+        
+        function testLabelGraphAPI(strikeDatetime) {
+            console.log('Testing label graph API with:', strikeDatetime);
+            
+            fetch(`/api/label-graph-data?label=A&strike_datetime=${encodeURIComponent(strikeDatetime)}`)
+                .then(response => {
+                    console.log('Label graph response status:', response.status);
+                    return response.json();
+                })
+                .then(data => {
+                    console.log('Label graph API response:', data);
+                    if (data.success) {
+                        console.log('Label graph data loaded successfully');
+                        // Try to create a chart
+                        createLabelChart('A', data.graph_data, data.strike, data.pnl);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error testing label graph API:', error);
+                });
+        }
+        
+        // Render a single graph for a specific trade (label + strike_datetime)
+        function graphSingleTrade(label, strikeDatetime) {
+            try {
+                const card = document.getElementById('singleTradeGraphCard');
+                const title = document.getElementById('singleTradeTitle');
+                const canvas = document.getElementById('singleTradeChart');
+                if (!card || !title || !canvas) return;
+
+                title.textContent = `Label ${label} - ${strikeDatetime.replace('_', ' | ')}`;
+                card.style.display = 'block';
+
+                fetch(`/api/label-graph-data?label=${encodeURIComponent(label)}&strike_datetime=${encodeURIComponent(strikeDatetime)}`)
+                    .then(r => r.json())
+                    .then(data => {
+                        if (!data.success) throw new Error(data.error || 'API failed');
+
+                        const ctx = canvas.getContext('2d');
+                        // Destroy previous if exists
+                        if (window.singleTradeChart && typeof window.singleTradeChart.destroy === 'function') {
+                            window.singleTradeChart.destroy();
+                        }
+
+                        window.singleTradeChart = new Chart(ctx, {
+                            type: 'line',
+                            data: {
+                                labels: data.graph_data.labels,
+                                datasets: [
+                                    {
+                                        label: 'Heston Price',
+                                        data: data.graph_data.heston_prices,
+                                        borderColor: 'rgb(75, 192, 192)',
+                                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                                        tension: 0.1,
+                                        hidden: false
+                                    },
+                                    {
+                                        label: 'Last Heston',
+                                        data: data.graph_data.last_heston,
+                                        borderColor: 'rgb(255, 99, 132)',
+                                        backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                                        tension: 0.1,
+                                        hidden: false
+                                    },
+                                    {
+                                        label: 'Last Traded',
+                                        data: data.graph_data.last_traded,
+                                        borderColor: 'rgb(54, 162, 235)',
+                                        backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                                        tension: 0.1,
+                                        hidden: false
+                                    },
+                                    {
+                                        label: 'Entry Points',
+                                        data: data.graph_data.entry_points.map((p, i) => p ? data.graph_data.last_traded[i] : null),
+                                        pointBackgroundColor: 'rgba(255, 215, 0, 1)',
+                                        pointBorderColor: 'rgba(255, 215, 0, 1)',
+                                        pointRadius: 8,
+                                        pointHoverRadius: 10,
+                                        showLine: false,
+                                        pointStyle: 'star'
+                                    },
+                                    {
+                                        label: 'Exit Points',
+                                        data: data.graph_data.exit_points.map((p, i) => p ? data.graph_data.last_traded[i] : null),
+                                        pointBackgroundColor: 'rgba(255, 0, 0, 1)',
+                                        pointBorderColor: 'rgba(255, 0, 0, 1)',
+                                        pointRadius: 8,
+                                        pointHoverRadius: 10,
+                                        showLine: false,
+                                        pointStyle: 'triangle'
+                                    }
+                                ]
+                            },
+                            options: {
+                                responsive: true,
+                                maintainAspectRatio: false,
+                                plugins: {
+                                    title: {
+                                        display: true,
+                                        text: `Single Trade - Label ${label} - Strike $${data.strike}`,
+                                        font: { size: 12, weight: 'bold' }
+                                    },
+                                    subtitle: {
+                                        display: true,
+                                        text: `PnL: $${(data.pnl ?? 0).toFixed(2)}`,
+                                        color: (data.pnl ?? 0) >= 0 ? 'green' : 'red',
+                                        font: { size: 10 }
+                                    }
+                                },
+                                elements: { point: { radius: 3 }, line: { borderWidth: 2 } }
+                            }
+                        });
+                    })
+                    .catch(err => {
+                        console.error('Error rendering single trade graph:', err);
+                    });
+            } catch (e) { console.error(e); }
+        }
+
+        function toggleSingleTradeLine(lineType) {
+            const button = event.target.closest('button');
+            const isActive = button.classList.contains('active');
+
+            // Toggle button style
+            if (isActive) {
+                button.classList.remove('active', 'btn-outline-primary');
+                button.classList.add('btn-outline-secondary');
+                button.querySelector('i').className = 'fas fa-eye-slash me-1';
+            } else {
+                button.classList.add('active', 'btn-outline-primary');
+                button.classList.remove('btn-outline-secondary');
+                button.querySelector('i').className = 'fas fa-eye me-1';
+            }
+
+            if (!window.singleTradeChart) return;
+
+            // Dataset indexes must match creation order: 0=Heston, 1=Last Heston, 2=Last Traded
+            let idx = -1;
+            if (lineType === 'hestonPrice') idx = 0;
+            else if (lineType === 'lastHeston') idx = 1;
+            else if (lineType === 'lastTraded') idx = 2;
+
+            if (idx >= 0) {
+                const visible = !isActive;
+                window.singleTradeChart.setDatasetVisibility(idx, visible);
+                window.singleTradeChart.update();
+            }
+        }
+        function createLabelChart(label, graphData, strike, pnl = null) {
+            // Create a Chart.js chart for a specific label
+            console.log(`Creating chart for label ${label} with data:`, graphData);
+            
+            const canvasId = `label${label}Chart`;
+            const canvas = document.getElementById(canvasId);
+            
+            if (!canvas) {
+                console.error(`Canvas not found for label ${label}`);
+                return;
+            }
+            
+            console.log(`Canvas found for label ${label}:`, canvas);
+            console.log(`Canvas dimensions: ${canvas.width} x ${canvas.height}`);
+            
+            // Destroy existing chart if it exists
+            const chartKey = `label${label}Chart`;
+            if (window[chartKey] && typeof window[chartKey].destroy === 'function') {
+                console.log(`Destroying existing chart for label ${label}`);
+                window[chartKey].destroy();
+            }
+            
+            // Create new chart
+            const ctx = canvas.getContext('2d');
+            console.log(`Canvas context created for label ${label}:`, ctx);
+            
+            try {
+                const chartKey = `label${label}Chart`;
+                window[chartKey] = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: graphData.labels,
+                        datasets: [
+                            {
+                                label: 'Heston Price',
+                                data: graphData.heston_prices,
+                                borderColor: 'rgb(75, 192, 192)',
+                                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                                tension: 0.1
+                            },
+                            {
+                                label: 'Last Heston',
+                                data: graphData.last_heston,
+                                borderColor: 'rgb(255, 99, 132)',
+                                backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                                tension: 0.1
+                            },
+                            {
+                                label: 'Last Traded',
+                                data: graphData.last_traded,
+                                borderColor: 'rgb(54, 162, 235)',
+                                backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                                tension: 0.1
+                            },
+                            {
+                                label: 'Entry Points',
+                                data: graphData.entry_points.map((point, index) => point ? graphData.last_traded[index] : null),
+                                pointBackgroundColor: 'rgba(255, 215, 0, 1)',
+                                pointBorderColor: 'rgba(255, 215, 0, 1)',
+                                pointRadius: 8,
+                                pointHoverRadius: 10,
+                                showLine: false,
+                                pointStyle: 'star'
+                            },
+                            {
+                                label: 'Exit Points',
+                                data: graphData.exit_points.map((point, index) => point ? graphData.last_traded[index] : null),
+                                pointBackgroundColor: 'rgba(255, 0, 0, 1)',
+                                pointBorderColor: 'rgba(255, 0, 0, 1)',
+                                pointRadius: 8,
+                                pointHoverRadius: 10,
+                                showLine: false,
+                                pointStyle: 'triangle'
+                            }
+                        ]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            title: {
+                                display: true,
+                                text: `Label ${label} - Strike $${strike}`,
+                                font: {
+                                    size: 12,
+                                    weight: 'bold'
+                                }
+                            },
+                            subtitle: {
+                                display: pnl !== null,
+                                text: pnl !== null ? `PnL: $${pnl.toFixed(2)}` : '',
+                                font: {
+                                    size: 10,
+                                    weight: 'normal'
+                                },
+                                color: pnl !== null ? (pnl >= 0 ? 'green' : 'red') : 'black'
+                            },
+                            legend: {
+                                display: true,
+                                position: 'top',
+                                labels: {
+                                    boxWidth: 12,
+                                    padding: 8,
+                                    font: {
+                                        size: 10
+                                    }
+                                }
+                            }
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: false,
+                                title: {
+                                    display: false
+                                },
+                                ticks: {
+                                    font: {
+                                        size: 10
+                                    }
+                                }
+                            },
+                            x: {
+                                title: {
+                                    display: false
+                                },
+                                ticks: {
+                                    font: {
+                                        size: 9
+                                    },
+                                    maxRotation: 45
+                                }
+                            }
+                        },
+                        elements: {
+                            point: {
+                                radius: 2
+                            },
+                            line: {
+                                borderWidth: 2
+                            }
+                        }
+                    }
+                });
+                console.log(`Chart created successfully for label ${label}`);
+            } catch (error) {
+                console.error(`Error creating chart for label ${label}:`, error);
+                // Show error on canvas
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                ctx.font = '16px Arial';
+                ctx.fillStyle = 'red';
+                ctx.textAlign = 'center';
+                ctx.fillText(`Chart Error: ${error.message}`, canvas.width/2, canvas.height/2);
+            }
+        }
+        
+        function toggleLabelLine(lineType) {
+            const button = event.target.closest('button');
+            const isActive = button.classList.contains('active');
+            
+            // Toggle button state
+            if (isActive) {
+                button.classList.remove('active', 'btn-outline-primary');
+                button.classList.add('btn-outline-secondary');
+                button.querySelector('i').className = 'fas fa-eye-slash me-1';
+            } else {
+                button.classList.add('active', 'btn-outline-primary');
+                button.classList.remove('btn-outline-secondary');
+                button.querySelector('i').className = 'fas fa-eye me-1';
+            }
+            
+            // Update all label charts
+            const labels = ['A', 'B', 'C', 'D'];
+            labels.forEach(label => {
+                const chartKey = `label${label}Chart`;
+                if (window[chartKey] && typeof window[chartKey].setDatasetVisibility === 'function') {
+                    const chart = window[chartKey];
+                    
+                    // Find the dataset index based on line type
+                    let datasetIndex = -1;
+                    if (lineType === 'hestonPrice') datasetIndex = 0;
+                    else if (lineType === 'lastHeston') datasetIndex = 1;
+                    else if (lineType === 'lastTraded') datasetIndex = 2;
+                    
+                    if (datasetIndex >= 0) {
+                        // Toggle visibility
+                        const isVisible = !isActive;
+                        chart.setDatasetVisibility(datasetIndex, isVisible);
+                        chart.update();
+                    }
+                }
+            });
         }
     </script>
 </body>

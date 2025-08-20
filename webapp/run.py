@@ -62,14 +62,14 @@ def main():
     
     print()
     print("🌐 Starting Flask application...")
-    print("   Dashboard will be available at: http://localhost:5000")
+    print("   Dashboard will be available at: http://localhost:5001")
     print("   Press Ctrl+C to stop the server")
     print("=" * 50)
     
     try:
         # Import and run the Flask app
         from app import app
-        app.run(debug=True, host='0.0.0.0', port=5000)
+        app.run(debug=True, host='0.0.0.0', port=5001)
     except KeyboardInterrupt:
         print("\n\n🛑 Server stopped by user")
     except Exception as e:
