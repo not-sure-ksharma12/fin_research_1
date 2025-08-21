@@ -382,7 +382,7 @@
                     <div class="col-md-3">
                         <div class="control-group">
                             <label for="dataTypeSelect" class="form-label">Data Type:</label>
-                            <select class="form-select" id="dataTypeSelect">
+                            <select class="form-select" id="dataTypeSelect" onchange="toggleDataType()">
                                 <option value="trades">Trades in this time</option>
                                 <option value="hourly">Data graph in this time</option>
                             </select>
@@ -391,44 +391,15 @@
                     
                     <!-- Hourly Graph Options -->
                     <div id="hourlyOptions" class="row mb-3" style="display: none;">
-                        <div class="col-md-6">
+                        <div class="col-12">
                             <div class="control-group">
                                 <label class="control-label">View Type</label>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="hourlyView" id="strikeView" value="strike" checked onchange="toggleHourlyView()">
-                                    <label class="form-check-label" for="strikeView">
-                                        Strike-based View
-                                    </label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="hourlyView" id="dateTimeView" value="datetime" onchange="toggleHourlyView()">
-                                    <label class="form-check-label" for="dateTimeView">
-                                        Date/Time-based View
-                                    </label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="hourlyView" id="labelView" value="label" onchange="toggleHourlyView()">
+                                    <input class="form-check-input" type="radio" name="hourlyView" id="labelView" value="label" checked onchange="toggleHourlyView()">
                                     <label class="form-check-label" for="labelView">
                                         Label-based View (A, B, C, D)
                                     </label>
                                 </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <!-- Strike Selection (for Strike-based View) -->
-                            <div id="strikeSelection" class="control-group">
-                                <label class="control-label">Select Strike Price</label>
-                                <select class="form-select" id="strikeSelect">
-                                    <option value="">Loading strikes...</option>
-                                </select>
-                            </div>
-                            
-                            <!-- Date/Time Selection (for Date/Time-based View) -->
-                            <div id="dateTimeSelection" class="control-group" style="display: none;">
-                                <label class="control-label">Select Date & Time</label>
-                                <select class="form-select" id="dateTimeSelect">
-                                    <option value="">Loading dates...</option>
-                                </select>
                             </div>
                         </div>
                     </div>
@@ -878,50 +849,45 @@
             }
         }
         
-        function toggleHourlyView() {
-            const strikeView = document.getElementById('strikeView');
-            const dateTimeView = document.getElementById('dateTimeView');
-            const labelView = document.getElementById('labelView');
-            const strikeSelection = document.getElementById('strikeSelection');
-            const dateTimeSelection = document.getElementById('dateTimeSelection');
+        function toggleDataType() {
+            const dataType = document.getElementById('dataTypeSelect').value;
+            const hourlyOptions = document.getElementById('hourlyOptions');
             const labelOptions = document.getElementById('labelOptions');
             
-            // Hide all selections first
-            strikeSelection.style.display = 'none';
-            dateTimeSelection.style.display = 'none';
-            labelOptions.style.display = 'none';
-            
-            if (strikeView.checked) {
-                strikeSelection.style.display = 'block';
-                // Clear date/time data when switching to strike view
-                window.currentDateTimeData = null;
-                window.currentDateTimeSheet = null;
-                console.log('Switched to strike view, cleared date/time data');
-            } else if (dateTimeView.checked) {
-                dateTimeSelection.style.display = 'block';
-                // Clear strike data when switching to date/time view
-                window.currentStrikeData = null;
-                window.currentStrike = null;
-                console.log('Switched to date/time view, cleared strike data');
-            } else if (labelView.checked) {
+            if (dataType === 'hourly') {
+                hourlyOptions.style.display = 'block';
                 labelOptions.style.display = 'block';
-                // Check if simulation has been run
-                if (document.getElementById('dataDisplay').innerHTML.includes('Trading simulation completed')) {
-                    // Load label options when switching to label view
-                    loadLabelOptions();
-                    console.log('Switched to label view, loading label options');
-                } else {
-                    // Show message to run simulation first
-                    document.getElementById('labelOptions').innerHTML = `
-                        <div class="col-12">
-                            <div class="alert alert-info">
-                                <i class="fas fa-info-circle me-2"></i>
-                                Please run a simulation first by selecting start/end sheets and clicking "Load Data" to populate the label options.
-                            </div>
+                // Trigger the hourly view toggle to show label options
+                toggleHourlyView();
+            } else {
+                hourlyOptions.style.display = 'none';
+                labelOptions.style.display = 'none';
+            }
+        }
+        
+        function toggleHourlyView() {
+            const labelView = document.getElementById('labelView');
+            const labelOptions = document.getElementById('labelOptions');
+            
+            // Since we only have label view now, always show label options
+            labelOptions.style.display = 'block';
+            
+            // Check if simulation has been run
+            if (document.getElementById('dataDisplay').innerHTML.includes('Trading simulation completed')) {
+                // Load label options when switching to label view
+                loadLabelOptions();
+                console.log('Switched to label view, loading label options');
+            } else {
+                // Show message to run simulation first
+                document.getElementById('labelOptions').innerHTML = `
+                    <div class="col-12">
+                        <div class="alert alert-info">
+                            <i class="fas fa-info-circle me-2"></i>
+                            Please run a simulation first by selecting start/end sheets and clicking "Load Data" to populate the label options.
                         </div>
-                    `;
-                    console.log('Switched to label view, but no simulation results available');
-                }
+                    </div>
+                `;
+                console.log('Switched to label view, but no simulation results available');
             }
         }
         
@@ -2330,12 +2296,12 @@
                                     {
                                         label: 'Entry Points',
                                         data: data.graph_data.entry_points.map((p, i) => p ? data.graph_data.last_traded[i] : null),
-                                        pointBackgroundColor: 'rgba(255, 215, 0, 1)',
-                                        pointBorderColor: 'rgba(255, 215, 0, 1)',
+                                        pointBackgroundColor: 'rgba(0, 128, 0, 1)',
+                                        pointBorderColor: 'rgba(0, 128, 0, 1)',
                                         pointRadius: 8,
                                         pointHoverRadius: 10,
                                         showLine: false,
-                                        pointStyle: 'star'
+                                        pointStyle: 'triangle'
                                     },
                                     {
                                         label: 'Exit Points',
@@ -2458,16 +2424,16 @@
                                 backgroundColor: 'rgba(54, 162, 235, 0.2)',
                                 tension: 0.1
                             },
-                            {
-                                label: 'Entry Points',
-                                data: graphData.entry_points.map((point, index) => point ? graphData.last_traded[index] : null),
-                                pointBackgroundColor: 'rgba(255, 215, 0, 1)',
-                                pointBorderColor: 'rgba(255, 215, 0, 1)',
-                                pointRadius: 8,
-                                pointHoverRadius: 10,
-                                showLine: false,
-                                pointStyle: 'star'
-                            },
+                                                            {
+                                    label: 'Entry Points',
+                                    data: graphData.entry_points.map((point, index) => point ? graphData.last_traded[index] : null),
+                                    pointBackgroundColor: 'rgba(0, 128, 0, 1)',
+                                    pointBorderColor: 'rgba(0, 128, 0, 1)',
+                                    pointRadius: 8,
+                                    pointHoverRadius: 10,
+                                    showLine: false,
+                                    pointStyle: 'triangle'
+                                },
                             {
                                 label: 'Exit Points',
                                 data: graphData.exit_points.map((point, index) => point ? graphData.last_traded[index] : null),
