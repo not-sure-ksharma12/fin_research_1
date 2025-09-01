@@ -12,46 +12,91 @@ app = Flask(__name__)
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-# Data file paths
-HOURLY_DATA_PATH = "../scripts/scripts/realtime_output/multi_company_sep19/CRCL_hourly_data.xlsx"
-TRADES_LOG_PATH = "../scripts/scripts/realtime_output/multi_company_sep19/CRCL_trades.log"
+# Data file mappings per ticker
+DATA_BASE_DIR = "/Users/kalpit/fin_research_1/scripts/scripts/realtime_output/multi_company_sep19"
+TICKER_TO_JSON = {
+    "CRCL": f"{DATA_BASE_DIR}/CRCL_hourly_data.json",
+    "AMD": f"{DATA_BASE_DIR}/AMD_hourly_data.json",
+    "AVGO": f"{DATA_BASE_DIR}/AVGO_hourly_data.json",
+    "BBAI": f"{DATA_BASE_DIR}/BBAI_hourly_data.json",
+    "NVDA": f"{DATA_BASE_DIR}/NVDA_hourly_data.json",
+    "SLDB": f"{DATA_BASE_DIR}/SLDB_hourly_data.json",
+    "SOFI": f"{DATA_BASE_DIR}/SOFI_hourly_data.json",
+    "SOUN": f"{DATA_BASE_DIR}/SOUN_hourly_data.json",
+    "TSLA": f"{DATA_BASE_DIR}/TSLA_hourly_data.json",
+}
+TICKER_TO_LOG = {
+    "CRCL": f"{DATA_BASE_DIR}/CRCL_trades.log",
+    # Other tickers can be added here if/when trade logs are available
+}
 
-# Global storage for simulation results
-current_simulation_results = None
+# Global storage for data per ticker
+json_cache = {}
+current_simulation_results_by_ticker = {}
 
-def get_excel_sheet_names():
-    """Get list of available sheet names from Excel file"""
+def get_selected_ticker() -> str:
+    ticker = (request.args.get('ticker') or 'CRCL').upper()
+    if ticker not in TICKER_TO_JSON:
+        logger.warning(f"Unknown ticker '{ticker}', defaulting to CRCL")
+        ticker = 'CRCL'
+    return ticker
+
+def load_json_data(ticker: str):
+    """Load JSON data for a given ticker (cached)."""
+    global json_cache
+    if ticker in json_cache:
+        return json_cache[ticker]
+    json_file_path = TICKER_TO_JSON.get(ticker)
+    if not json_file_path:
+        logger.error(f"No JSON mapping defined for ticker {ticker}")
+        return None
     try:
-        if os.path.exists(HOURLY_DATA_PATH):
-            xl_file = pd.ExcelFile(HOURLY_DATA_PATH)
-            sheet_names = xl_file.sheet_names
-            logger.info(f"Available sheets: {sheet_names}")
-            return sheet_names
-        else:
-            logger.warning(f"Excel file not found: {HOURLY_DATA_PATH}")
-            return []
+        with open(json_file_path, 'r', encoding='utf-8') as f:
+            json_cache[ticker] = json.load(f)
+        logger.info(f"Loaded JSON for {ticker} with {len(json_cache[ticker].get('sheets', {}))} sheets")
+        return json_cache[ticker]
     except Exception as e:
-        logger.error(f"Error getting sheet names: {e}")
-        return []
+        logger.error(f"Error loading JSON data for {ticker}: {e}")
+        return None
 
-def load_hourly_data(sheet_name=None):
-    """Load CRCL hourly data from Excel file"""
-    try:
-        if os.path.exists(HOURLY_DATA_PATH):
-            if sheet_name:
-                df = pd.read_excel(HOURLY_DATA_PATH, sheet_name=sheet_name)
-                logger.info(f"Loaded hourly data from sheet '{sheet_name}': {len(df)} rows")
-            else:
-                # Load first sheet if no specific sheet specified
-                df = pd.read_excel(HOURLY_DATA_PATH)
-                logger.info(f"Loaded hourly data from first sheet: {len(df)} rows")
-            return df
-        else:
-            logger.warning(f"Hourly data file not found: {HOURLY_DATA_PATH}")
-            return pd.DataFrame()
-    except Exception as e:
-        logger.error(f"Error loading hourly data: {e}")
+def get_excel_sheet_names(ticker: str):
+    """Get sheet names from JSON data for ticker"""
+    data = load_json_data(ticker)
+    if data and 'sheets' in data:
+        return list(data['sheets'].keys())
+    return []
+
+def load_hourly_data(sheet_name=None, ticker: str = 'CRCL'):
+    """Load hourly data from JSON for a specific sheet and ticker"""
+    data = load_json_data(ticker)
+    if not data or 'sheets' not in data:
         return pd.DataFrame()
+    
+    if sheet_name is None:
+        # Return first sheet if none specified
+        sheet_name = list(data['sheets'].keys())[0] if data['sheets'] else None
+    
+    if sheet_name not in data['sheets']:
+        logger.warning(f"Sheet '{sheet_name}' not found in JSON data")
+        return pd.DataFrame()
+    
+    sheet_data = data['sheets'][sheet_name]
+    
+    # Convert JSON data back to DataFrame
+    df = pd.DataFrame(sheet_data['data'])
+    
+    # Convert data types back to appropriate types
+    for col, dtype_str in sheet_data['data_types'].items():
+        if col in df.columns:
+            if 'int' in dtype_str:
+                df[col] = pd.to_numeric(df[col], errors='coerce').astype('Int64')
+            elif 'float' in dtype_str:
+                df[col] = pd.to_numeric(df[col], errors='coerce')
+            elif 'datetime' in dtype_str:
+                df[col] = pd.to_datetime(df[col], errors='coerce')
+    
+    logger.info(f"Loaded {len(df)} rows from sheet '{sheet_name}' for {ticker}")
+    return df
 
 def clean_data_for_json(data):
     """Clean data to make it JSON-serializable by replacing NaN values"""
@@ -66,119 +111,47 @@ def clean_data_for_json(data):
     else:
         return data
 
-def load_trades_log():
-    """Load CRCL trades from log file"""
+def load_trades_log(ticker: str = 'CRCL'):
+    """Load trades log for ticker from the log file"""
+    log_file_path = TICKER_TO_LOG.get(ticker)
+    
+    if not log_file_path or not os.path.exists(log_file_path):
+        logger.warning(f"Trades log file not found: {log_file_path}")
+        return []
+    
+    trades = []
     try:
-        if os.path.exists(TRADES_LOG_PATH):
-            trades = []
-            with open(TRADES_LOG_PATH, 'r') as f:
-                for line_num, line in enumerate(f, 1):
-                    line = line.strip()
-                    if line:
-                        # Parse log line: [2025-08-06 12:56:47] ENTER - CRCL - CRCL_95.0_Call - BUY - $25.00
-                        try:
-                            # Extract timestamp
-                            timestamp_str = line[1:20]  # [2025-08-06 12:56:47]
-                            timestamp = datetime.strptime(timestamp_str, "%Y-%m-%d %H:%M:%S")
-                            
-                            # Parse action and details
-                            parts = line.split(" - ")
-                            logger.info(f"Line {line_num}: Parsing '{line}' -> {len(parts)} parts: {parts}")
-                            
-                            if len(parts) >= 5:
-                                # The first part contains timestamp and action, need to split it
-                                first_part = parts[0]  # [2025-08-06 12:56:47] ENTER
-                                action = first_part.split("] ")[1]  # Extract ENTER/EXIT
-                                company = parts[1]  # CRCL
-                                option_id = parts[2]  # CRCL_95.0_Call
-                                trade_type = parts[3]  # BUY or SELL
-                                
-                                # Extract strike and option type from option_id
-                                option_parts = option_id.split("_")
-                                strike = None
-                                option_type = None
-                                
-                                if len(option_parts) >= 3:
-                                    try:
-                                        strike = float(option_parts[1])
-                                        option_type = option_parts[2]
-                                    except (ValueError, IndexError):
-                                        strike = 0.0
-                                        option_type = "Unknown"
-                                else:
-                                    strike = 0.0
-                                    option_type = "Unknown"
-                                
-                                # Extract price and PnL if available
-                                price = None
-                                pnl = None
-                                return_pct = None
-                                
-                                if action == "ENTER":
-                                    if len(parts) > 4:
-                                        try:
-                                            price_str = parts[4]
-                                            price = float(price_str.replace("$", ""))
-                                        except (ValueError, AttributeError):
-                                            price = 0.0
-                                    else:
-                                        price = 0.0
-                                elif action == "EXIT":
-                                    if len(parts) > 4:
-                                        try:
-                                            price_str = parts[4]
-                                            price = float(price_str.replace("$", ""))
-                                        except (ValueError, AttributeError):
-                                            price = 0.0
-                                    else:
-                                        price = 0.0
-                                        
-                                    if len(parts) > 5:
-                                        try:
-                                            pnl_str = parts[5]  # PnL: $13.79
-                                            pnl = float(pnl_str.split("$")[1])
-                                        except (ValueError, IndexError):
-                                            pnl = 0.0
-                                    if len(parts) > 6:
-                                        try:
-                                            return_str = parts[6]  # Return: 55.16%
-                                            logger.info(f"Processing return string: '{return_str}'")
-                                            # Extract just the number part after "Return: " and before "%"
-                                            return_pct = float(return_str.replace("Return: ", "").replace("%", ""))
-                                            logger.info(f"Extracted return percentage: {return_pct}")
-                                        except (ValueError, IndexError) as e:
-                                            logger.warning(f"Failed to parse return percentage from '{return_str}': {e}")
-                                            return_pct = 0.0
-                                
-                                trade_obj = {
-                                    'timestamp': timestamp.isoformat(),
-                                    'action': action,
-                                    'company': company,
-                                    'option_id': option_id,
-                                    'strike': strike,
-                                    'option_type': option_type,
-                                    'trade_type': trade_type,
-                                    'price': price,
-                                    'pnl': pnl,
-                                    'return_pct': return_pct
-                                }
-                                
-                                # Debug logging for EXIT trades
-                                if action == "EXIT":
-                                    logger.info(f"EXIT trade created: {trade_obj}")
-                                
-                                trades.append(trade_obj)
-                        except Exception as e:
-                            logger.warning(f"Could not parse line: {line}, error: {e}")
-                            continue
-            
-            logger.info(f"Loaded trades log: {len(trades)} trades")
-            return trades
-        else:
-            logger.warning(f"Trades log file not found: {TRADES_LOG_PATH}")
-            return []
+        with open(log_file_path, 'r', encoding='utf-8') as f:
+            for line_num, line in enumerate(f, 1):
+                line = line.strip()
+                if not line or line.startswith('#'):
+                    continue
+                
+                try:
+                    # Parse the log line format
+                    parts = line.split(' | ')
+                    if len(parts) >= 8:
+                        trade = {
+                            'timestamp': parts[0].strip(),
+                            'action': parts[1].strip(),
+                            'strike_price': float(parts[2].strip()),
+                            'option_type': parts[3].strip(),
+                            'market_price': float(parts[4].strip()),
+                            'heston_price': float(parts[5].strip()),
+                            'pnl': float(parts[6].strip()) if parts[6].strip() != 'N/A' else 0.0,
+                            'return_pct': float(parts[7].strip().rstrip('%')) if parts[7].strip() != 'N/A' else 0.0
+                        }
+                        trades.append(trade)
+                    else:
+                        logger.warning(f"Line {line_num}: Insufficient parts in log line: {line}")
+                except Exception as e:
+                    logger.warning(f"Line {line_num}: Error parsing log line '{line}': {e}")
+                    continue
+        
+        logger.info(f"Successfully loaded {len(trades)} trades from log file")
+        return trades
     except Exception as e:
-        logger.error(f"Error loading trades log: {e}")
+        logger.error(f"Error reading trades log file: {e}")
         return []
 
 @app.route('/')
@@ -195,6 +168,7 @@ def get_data():
         start_date = request.args.get('start_date')
         end_date = request.args.get('end_date')
         
+        ticker = get_selected_ticker()
         if data_type == 'hourly':
             # Get sheet name from query parameters if provided
             sheet_name = request.args.get('sheet')
@@ -202,11 +176,11 @@ def get_data():
             if sheet_name:
                 # Load data from specific sheet for date/time view
                 logger.info(f"Loading hourly data from specific sheet: {sheet_name}")
-                df = load_hourly_data(sheet_name)
+                df = load_hourly_data(sheet_name, ticker)
             else:
                 # Load data from the first available sheet to get strikes and dates for dropdowns
                 logger.info("Loading hourly data from first sheet for dropdowns")
-                df = load_hourly_data()
+                df = load_hourly_data(ticker=ticker)
             
             if not df.empty:
                 # Filter by date if provided
@@ -232,7 +206,7 @@ def get_data():
                     return jsonify({'success': False, 'error': 'No hourly data available'})
         
         elif data_type == 'trades':
-            trades = load_trades_log()
+            trades = load_trades_log(ticker)
             if trades:
                 # Filter by date if provided
                 if start_date and end_date:
@@ -261,7 +235,8 @@ def get_data():
 def get_sheets():
     """API endpoint to get available Excel sheet names"""
     try:
-        sheet_names = get_excel_sheet_names()
+        ticker = get_selected_ticker()
+        sheet_names = get_excel_sheet_names(ticker)
         return jsonify({'success': True, 'sheets': sheet_names})
     except Exception as e:
         logger.error(f"Error in get_sheets: {e}")
@@ -280,16 +255,17 @@ def get_strike_data():
         except ValueError:
             return jsonify({'success': False, 'error': 'Invalid strike price'})
         
-        logger.info(f"Loading data for strike {strike_float} across all sheets")
+        ticker = get_selected_ticker()
+        logger.info(f"Loading data for strike {strike_float} across all sheets for {ticker}")
         
         # Get all available sheets
-        sheet_names = get_excel_sheet_names()
+        sheet_names = get_excel_sheet_names(ticker)
         all_strike_data = []
         
         for sheet_name in sheet_names:
             try:
                 # Load data from each sheet
-                df = load_hourly_data(sheet_name)
+                df = load_hourly_data(sheet_name, ticker)
                 if not df.empty:
                     # Filter data for the specific strike
                     strike_data = df[df['Strike'] == strike_float]
@@ -360,8 +336,9 @@ def get_strike_data():
 def get_summary():
     """API endpoint to get summary statistics"""
     try:
-        trades = load_trades_log()
-        hourly_data = load_hourly_data()
+        ticker = get_selected_ticker()
+        trades = load_trades_log(ticker)
+        hourly_data = load_hourly_data(ticker=ticker)
         
         # Calculate summary statistics
         total_trades = len(trades)
@@ -397,6 +374,7 @@ def get_summary():
 def sliding_window_simulation():
     """API endpoint for sliding window trading simulation"""
     try:
+        ticker = get_selected_ticker()
         start_sheet = request.args.get('start_sheet')
         end_sheet = request.args.get('end_sheet')
         
@@ -406,7 +384,7 @@ def sliding_window_simulation():
         logger.info(f"Running sliding window simulation from {start_sheet} to {end_sheet}")
         
         # Get all available sheets
-        sheet_names = get_excel_sheet_names()
+        sheet_names = get_excel_sheet_names(ticker)
         
         # Find the indices of start and end sheets
         try:
@@ -424,15 +402,18 @@ def sliding_window_simulation():
         logger.info(f"Simulation window: {len(window_sheets)} sheets from {start_sheet} to {end_sheet}")
         
         # Run simulation
-        simulation_results = run_trading_simulation(window_sheets)
+        simulation_results = run_trading_simulation(window_sheets, ticker)
+        
+        # Clean the simulation results to ensure JSON serialization
+        cleaned_simulation_results = clean_data_for_json(simulation_results)
         
         # Store the results globally for use in label dropdowns
-        global current_simulation_results
-        current_simulation_results = simulation_results
+        global current_simulation_results_by_ticker
+        current_simulation_results_by_ticker[ticker] = cleaned_simulation_results
         
         return jsonify({
             'success': True,
-            'data': simulation_results,
+            'data': cleaned_simulation_results,
             'window_sheets': window_sheets,
             'start_sheet': start_sheet,
             'end_sheet': end_sheet
@@ -446,18 +427,19 @@ def sliding_window_simulation():
 def get_trade_labels():
     """Get trade data organized by labels (A, B, C, D) for graph generation"""
     try:
-        global current_simulation_results
-        
-        if current_simulation_results is None:
+        ticker = get_selected_ticker()
+        global current_simulation_results_by_ticker
+        current_simulation = current_simulation_results_by_ticker.get(ticker)
+        if current_simulation is None:
             return jsonify({'success': False, 'error': 'No simulation has been run yet. Please run a simulation first.'})
         
-        if 'trade_history' not in current_simulation_results:
+        if 'trade_history' not in current_simulation:
             return jsonify({'success': False, 'error': 'No trade data available in current simulation'})
         
         # Organize trades by label
         trades_by_label = {'A': [], 'B': [], 'C': [], 'D': []}
         
-        for trade in current_simulation_results['trade_history']:
+        for trade in current_simulation['trade_history']:
             label = trade.get('trade_label', 'X')
             if label in trades_by_label:
                 trades_by_label[label].append(trade)
@@ -492,8 +474,9 @@ def get_trade_labels():
 @app.route('/api/current-simulation')
 def get_current_simulation():
     """Get the current simulation results for populating label dropdowns"""
-    global current_simulation_results
-    
+    ticker = get_selected_ticker()
+    global current_simulation_results_by_ticker
+    current_simulation_results = current_simulation_results_by_ticker.get(ticker)
     if current_simulation_results is None:
         return jsonify({'success': False, 'error': 'No simulation has been run yet'})
     
@@ -522,11 +505,14 @@ def get_current_simulation():
 def get_label_graph_data():
     """Get graph data for a specific label and strike-datetime combination"""
     try:
+        ticker = get_selected_ticker()
         label = request.args.get('label')
         strike_datetime = request.args.get('strike_datetime')
         
         if not label or not strike_datetime:
             return jsonify({'success': False, 'error': 'Label and strike_datetime are required'})
+        
+        logger.info(f"Requested label: {label}, strike_datetime: {strike_datetime}")
         
         # Parse strike_datetime (format: "strike_timestamp")
         parts = strike_datetime.split('_', 1)
@@ -535,10 +521,11 @@ def get_label_graph_data():
         
         strike = float(parts[0])
         timestamp = parts[1]
+        logger.info(f"Parsed strike: {strike}, timestamp: {timestamp}")
         
         # Get simulation results from stored results
-        global current_simulation_results
-        
+        global current_simulation_results_by_ticker
+        current_simulation_results = current_simulation_results_by_ticker.get(ticker)
         if current_simulation_results is None:
             return jsonify({'success': False, 'error': 'No simulation has been run yet. Please run a simulation first.'})
         
@@ -550,6 +537,7 @@ def get_label_graph_data():
         
         # Debug: Log the trades found for this label
         trade_history = current_simulation_results['trade_history']
+        logger.info(f"All trades in simulation: {[(t.get('trade_label'), t.get('action'), t.get('strike_price')) for t in trade_history]}")
         label_trades = [trade for trade in trade_history if trade.get('trade_label') == label]
         logger.info(f"Found {len(label_trades)} trades for label {label}: {label_trades}")
         
@@ -611,12 +599,12 @@ def get_label_graph_data():
         all_data = []
         
         # Get sheet names from the stored simulation results
-        sheet_names = get_excel_sheet_names()
+        sheet_names = get_excel_sheet_names(ticker)
         if not sheet_names:
             return jsonify({'success': False, 'error': 'No sheets available'})
         
         # Debug: Check what columns are available in the first sheet
-        first_df = load_hourly_data(sheet_names[0])
+        first_df = load_hourly_data(sheet_names[0], ticker)
         if not first_df.empty:
             logger.info(f"Available columns in Excel data: {list(first_df.columns)}")
             logger.info(f"Sample row: {first_df.iloc[0].to_dict()}")
@@ -630,7 +618,7 @@ def get_label_graph_data():
                 logger.info(f"Sample 'Last heston' value: {sample_last_heston} (type: {type(sample_last_heston)})")
         
         for sheet_name in sheet_names:
-            df = load_hourly_data(sheet_name)
+            df = load_hourly_data(sheet_name, ticker)
             if not df.empty:
                 # Filter for the specific strike price
                 strike_data = df[df['Strike'] == strike].copy()
@@ -767,9 +755,12 @@ def get_label_graph_data():
                 pnl = 0.0
         logger.info(f"Label {label}, Strike ${strike}: Graph PnL mapped from EXIT trade = ${pnl:.2f}")
         
+        # Clean the graph data to ensure JSON serialization
+        cleaned_graph_data = clean_data_for_json(graph_data)
+        
         return jsonify({
             'success': True,
-            'graph_data': graph_data,
+            'graph_data': cleaned_graph_data,
             'strike': strike,
             'label': label,
             'pnl': pnl
@@ -779,7 +770,7 @@ def get_label_graph_data():
         logger.error(f"Error getting label graph data: {e}")
         return jsonify({'success': False, 'error': str(e)})
 
-def run_trading_simulation(sheet_names):
+def run_trading_simulation(sheet_names, ticker: str = 'CRCL'):
     """Run trading simulation across multiple sheets"""
     try:
         # Initialize simulation state
@@ -803,7 +794,7 @@ def run_trading_simulation(sheet_names):
             logger.info(f"Processing sheet {i+1}/{len(sheet_names)}: {sheet_name}")
             
             # Load data for this sheet
-            df = load_hourly_data(sheet_name)
+            df = load_hourly_data(sheet_name, ticker)
             if df.empty:
                 logger.warning(f"No data in sheet {sheet_name}, skipping")
                 continue
@@ -908,7 +899,7 @@ def run_trading_simulation(sheet_names):
             
             # Use the last sheet's data for final exit prices
             last_sheet = sheet_names[-1]
-            last_df = load_hourly_data(last_sheet)
+            last_df = load_hourly_data(last_sheet, ticker)
             
             for option_id, trade in list(active_trades.items()):
                 if not last_df.empty:
@@ -945,10 +936,21 @@ def run_trading_simulation(sheet_names):
                     trade_history.append(forced_exit_trade)
                     del active_trades[option_id]
         
-        # Calculate final statistics
-        total_return = ((current_capital - initial_capital) / initial_capital) * 100
+        # Calculate final statistics with NaN handling
+        if pd.isna(current_capital) or pd.isna(initial_capital):
+            total_return = 0.0
+        else:
+            total_return = ((current_capital - initial_capital) / initial_capital) * 100
+        
         profitable_trades = sum(1 for trade in trade_history if trade.get('pnl', 0) > 0 and trade.get('action') == 'EXIT')
-        win_rate = (profitable_trades / (len([t for t in trade_history if t.get('action') == 'EXIT']) or 1)) * 100
+        exit_trades_count = len([t for t in trade_history if t.get('action') == 'EXIT'])
+        win_rate = (profitable_trades / exit_trades_count * 100) if exit_trades_count > 0 else 0.0
+        
+        # Ensure no NaN values in final statistics
+        if pd.isna(total_return):
+            total_return = 0.0
+        if pd.isna(win_rate):
+            win_rate = 0.0
         
         simulation_summary = {
             'initial_capital': initial_capital,
@@ -997,7 +999,7 @@ def should_exit_trade(trade, current_data):
         # Find matching option in current data
         option_mask = (
             (current_data['Strike'] == trade['strike_price']) & 
-            (current_data['Option Type'] == trade['option_type'])
+            (current_data['Option_Type'] == trade['option_type'])
         )
         
         if not option_mask.any():
@@ -1026,7 +1028,7 @@ def exit_simulated_trade(option_id, current_data, active_trades, trade_history, 
     # Find matching option in current data
     option_mask = (
         (current_data['Strike'] == trade['strike_price']) & 
-        (current_data['Option Type'] == trade['option_type'])
+        (current_data['Option_Type'] == trade['option_type'])
     )
     
     if not option_mask.any():
@@ -1038,13 +1040,22 @@ def exit_simulated_trade(option_id, current_data, active_trades, trade_history, 
         exit_price = option_data['PX_LAST']
         exit_heston = option_data['Heston_Price']
     
-    # Calculate PnL
-    if trade['trade_type'] == 'BUY':
-        # Long position: profit = (exit_price - entry_price) * contracts
-        pnl = (exit_price - trade['entry_market_price']) * trade['contracts']
-    else:  # SELL
-        # Short position: profit = (entry_price - exit_price) * contracts
-        pnl = (trade['entry_market_price'] - exit_price) * trade['contracts']
+    # Calculate PnL with NaN handling
+    if pd.isna(exit_price) or pd.isna(trade['entry_market_price']):
+        # If we can't get valid prices, set PnL to 0
+        pnl = 0.0
+        exit_price = trade['entry_market_price']  # Use entry price as fallback
+    else:
+        if trade['trade_type'] == 'BUY':
+            # Long position: profit = (exit_price - entry_price) * contracts
+            pnl = (exit_price - trade['entry_market_price']) * trade['contracts']
+        else:  # SELL
+            # Short position: profit = (entry_price - exit_price) * contracts
+            pnl = (trade['entry_market_price'] - exit_price) * trade['contracts']
+    
+    # Ensure PnL is not NaN
+    if pd.isna(pnl):
+        pnl = 0.0
     
     # Get current sheet name for proper timestamp
     if sheet_name:
@@ -1062,8 +1073,11 @@ def exit_simulated_trade(option_id, current_data, active_trades, trade_history, 
     else:
         time_str = f"{hour - 12}:00 PM"
     
-    # Calculate return percentage
-    return_pct = (pnl / trade['position_size']) * 100 if trade['position_size'] > 0 else 0
+    # Calculate return percentage with NaN handling
+    if trade['position_size'] > 0 and not pd.isna(pnl):
+        return_pct = (pnl / trade['position_size']) * 100
+    else:
+        return_pct = 0.0
     
     # Create EXIT trade entry matching user's log format
     exit_trade = {
@@ -1110,7 +1124,7 @@ def select_simulated_trading_opportunities(data, active_trades, current_capital)
         
         # Filter for valid Call options with non-null prices
         valid_data = data[
-            (data['Option Type'] == 'Call') & 
+            (data['Option_Type'] == 'Call') & 
             data['PX_LAST'].notna() & 
             data['Heston_Price'].notna()
         ].copy()
@@ -1169,7 +1183,7 @@ def select_simulated_trading_opportunities(data, active_trades, current_capital)
                 'option_id': row['Option_ID'],
                 'trade_type': 'BUY',
                 'strike_price': row['Strike'],
-                'option_type': row['Option Type'],
+                'option_type': row['Option_Type'],
                 'entry_market_price': row['PX_LAST'],
                 'entry_heston_price': row['Heston_Price'],
                 'position_size': min(25.0, current_capital),  # Dynamic position sizing
@@ -1190,7 +1204,7 @@ def select_simulated_trading_opportunities(data, active_trades, current_capital)
                 'option_id': row['Option_ID'],
                 'trade_type': 'SELL',
                 'strike_price': row['Strike'],
-                'option_type': row['Option Type'],
+                'option_type': row['Option_Type'],
                 'entry_market_price': row['PX_LAST'],
                 'entry_heston_price': row['Heston_Price'],
                 'position_size': min(25.0, current_capital),  # Dynamic position sizing

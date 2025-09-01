@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CRCL Trading Dashboard</title>
+    <title id="pageTitle">CRCL Trading Dashboard</title>
     
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -347,7 +347,7 @@
         <div class="dashboard-container">
             <!-- Header Section -->
             <div class="header-section">
-                <h1><i class="fas fa-chart-line me-3"></i>Trading Dashboard</h1>
+                <h1><i class="fas fa-chart-line me-3"></i><span id="mainDashboardTitle">Trading Dashboard</span></h1>
                 <p class="mb-0">Real-time trading data visualization and analysis</p>
             </div>
             
@@ -357,8 +357,16 @@
                     <div class="col-md-3">
                         <div class="control-group">
                             <label class="control-label">Company Ticker</label>
-                            <select class="form-select" id="tickerSelect">
+                            <select class="form-select" id="tickerSelect" onchange="onTickerChange()">
                                 <option value="CRCL" selected>CRCL</option>
+                                <option value="AMD">AMD</option>
+                                <option value="AVGO">AVGO</option>
+                                <option value="BBAI">BBAI</option>
+                                <option value="NVDA">NVDA</option>
+                                <option value="SLDB">SLDB</option>
+                                <option value="SOFI">SOFI</option>
+                                <option value="SOUN">SOUN</option>
+                                <option value="TSLA">TSLA</option>
                             </select>
                         </div>
                     </div>
@@ -492,7 +500,7 @@
                 <div class="card-header bg-primary text-white">
                     <h5 class="mb-0">
                         <i class="fas fa-exchange-alt me-2"></i>
-                        Simulated Trading Strategy Results
+                        <span id="tradeBoardHeading">Simulated Trading Strategy Results</span>
                     </h5>
                 </div>
                 <div class="card-body">
@@ -533,7 +541,7 @@
                 <div class="card-header bg-success text-white">
                     <h5 class="mb-0">
                         <i class="fas fa-chart-area me-2"></i>
-                        Label-based Trading Analysis (2x2 Grid)
+                        <span id="gridGraphHeading">Label-based Trading Analysis (2x2 Grid)</span>
                     </h5>
                 </div>
                 <div class="card-body">
@@ -597,7 +605,7 @@
                 <div class="card-header bg-secondary text-white">
                     <h5 class="mb-0">
                         <i class="fas fa-chart-line me-2"></i>
-                        Single Trade Graph
+                        <span id="singleGraphHeading">Single Trade Graph</span>
                     </h5>
                 </div>
                 <div class="card-body">
@@ -648,6 +656,10 @@
         document.addEventListener('DOMContentLoaded', function() {
             console.log('Dashboard initialized');
             
+            // Initialize ticker headings with default ticker
+            const defaultTicker = document.getElementById('tickerSelect').value;
+            updateTickerHeadings(defaultTicker);
+            
             // Load available sheets for both main interface and simulation
             loadAvailableSheets();
             
@@ -673,7 +685,7 @@
         });
 
         function loadAvailableSheets() {
-            fetch('/api/sheets')
+            fetch(`/api/sheets?ticker=${encodeURIComponent(document.getElementById('tickerSelect').value)}`)
                 .then(response => response.json())
                 .then(data => {
                     if (data.success) {
@@ -711,16 +723,17 @@
                     const hour = parseInt(parts[1]);
                     const date = parts[2];
                     
-                    // Format hour
+                    // Format hour with better readability
                     let timeStr = '';
-                    if (hour === 0) timeStr = '12:00 AM';
+                    if (hour === 0) timeStr = '12:00 AM (Midnight)';
                     else if (hour < 12) timeStr = `${hour}:00 AM`;
-                    else if (hour === 12) timeStr = '12:00 PM';
+                    else if (hour === 12) timeStr = '12:00 PM (Noon)';
                     else timeStr = `${hour - 12}:00 PM`;
                     
                     // Format date - parse explicitly to avoid timezone issues
                     const [year, month, day] = date.split('-').map(Number);
                     const dateStr = new Date(year, month - 1, day).toLocaleDateString('en-US', { 
+                        weekday: 'short',
                         month: 'short', 
                         day: 'numeric', 
                         year: 'numeric' 
@@ -761,7 +774,7 @@
             console.log('loadHourlyDataForSheets called with:', { startSheet, endSheet });
             
             // Get all available sheets
-            fetch('/api/sheets')
+            fetch(`/api/sheets?ticker=${encodeURIComponent(document.getElementById('tickerSelect').value)}`)
                 .then(response => response.json())
                 .then(data => {
                     console.log('Sheets API response:', data);
@@ -853,43 +866,116 @@
             const dataType = document.getElementById('dataTypeSelect').value;
             const hourlyOptions = document.getElementById('hourlyOptions');
             const labelOptions = document.getElementById('labelOptions');
+            const ticker = document.getElementById('tickerSelect').value;
+            
+            console.log('toggleDataType called with:', dataType);
             
             if (dataType === 'hourly') {
                 hourlyOptions.style.display = 'block';
                 labelOptions.style.display = 'block';
-                // Trigger the hourly view toggle to show label options
-                toggleHourlyView();
+                console.log('Showing hourly and label options');
+                
+                // Check if we already have label options loaded
+                const labelA = document.getElementById('labelASelect');
+                if (labelA && labelA.options.length > 1) {
+                    console.log('Label options already loaded, showing them');
+                } else {
+                    console.log('Label options not loaded, calling loadLabelOptions');
+                    // If no simulation has been run, show message
+                    if (!document.getElementById('dataDisplay').innerHTML.includes('Trading simulation completed')) {
+                        labelOptions.innerHTML = `
+                            <div class="col-12">
+                                <div class="alert alert-info">
+                                    <i class="fas fa-info-circle me-2"></i>
+                                    Please run a simulation first by selecting start/end sheets and clicking "Load Data" to populate the label options.
+                                </div>
+                            </div>
+                        `;
+                    } else {
+                        // Load label options if simulation was completed
+                        loadLabelOptions();
+                    }
+                }
             } else {
                 hourlyOptions.style.display = 'none';
                 labelOptions.style.display = 'none';
+                console.log('Hiding hourly and label options');
+            }
+        }
+
+        function onTickerChange() {
+            const ticker = document.getElementById('tickerSelect').value;
+            console.log('Ticker changed to', ticker);
+            
+            // Update all headings with the new ticker name
+            updateTickerHeadings(ticker);
+            
+            // Reload sheets for the selected ticker
+            fetch(`/api/sheets?ticker=${encodeURIComponent(ticker)}`)
+                .then(r => r.json())
+                .then(data => {
+                    if (data.success) {
+                        const startSel = document.getElementById('startDateSelect');
+                        const endSel = document.getElementById('endDateSelect');
+                        if (startSel && endSel) {
+                            startSel.innerHTML = '<option value="">Select start sheet...</option>';
+                            endSel.innerHTML = '<option value="">Select end sheet...</option>';
+                            data.sheets.forEach(s => {
+                                const o1 = document.createElement('option');
+                                o1.value = s; o1.textContent = formatSheetName(s);
+                                startSel.appendChild(o1);
+                                const o2 = document.createElement('option');
+                                o2.value = s; o2.textContent = formatSheetName(s);
+                                endSel.appendChild(o2);
+                            });
+                        }
+                    }
+                });
+            // Clear label dropdowns
+            ['A','B','C','D'].forEach(l => {
+                const sel = document.getElementById(`label${l}Select`);
+                if (sel) { sel.innerHTML = '<option value="">Select strike-datetime...</option>'; sel.disabled = false; }
+            });
+            // Clear charts
+            ['A','B','C','D'].forEach(l => {
+                const key = `label${l}Chart`;
+                if (window[key] && typeof window[key].destroy === 'function') window[key].destroy();
+            });
+        }
+        
+        function updateTickerHeadings(ticker) {
+            // Update page title
+            const pageTitle = document.getElementById('pageTitle');
+            if (pageTitle) {
+                pageTitle.textContent = `${ticker} Trading Dashboard`;
+            }
+            
+            // Update main dashboard title
+            const mainDashboardTitle = document.getElementById('mainDashboardTitle');
+            if (mainDashboardTitle) {
+                mainDashboardTitle.textContent = `${ticker} Trading Dashboard`;
+            }
+            
+            // Update trade board heading
+            const tradeBoardHeading = document.getElementById('tradeBoardHeading');
+            if (tradeBoardHeading) {
+                tradeBoardHeading.textContent = `${ticker} - Simulated Trading Strategy Results`;
+            }
+            
+            // Update grid graph heading
+            const gridGraphHeading = document.getElementById('gridGraphHeading');
+            if (gridGraphHeading) {
+                gridGraphHeading.textContent = `${ticker} - Label-based Trading Analysis (2x2 Grid)`;
+            }
+            
+            // Update single graph heading
+            const singleGraphHeading = document.getElementById('singleGraphHeading');
+            if (singleGraphHeading) {
+                singleGraphHeading.textContent = `${ticker} - Single Trade Graph`;
             }
         }
         
-        function toggleHourlyView() {
-            const labelView = document.getElementById('labelView');
-            const labelOptions = document.getElementById('labelOptions');
-            
-            // Since we only have label view now, always show label options
-            labelOptions.style.display = 'block';
-            
-            // Check if simulation has been run
-            if (document.getElementById('dataDisplay').innerHTML.includes('Trading simulation completed')) {
-                // Load label options when switching to label view
-                loadLabelOptions();
-                console.log('Switched to label view, loading label options');
-            } else {
-                // Show message to run simulation first
-                document.getElementById('labelOptions').innerHTML = `
-                    <div class="col-12">
-                        <div class="alert alert-info">
-                            <i class="fas fa-info-circle me-2"></i>
-                            Please run a simulation first by selecting start/end sheets and clicking "Load Data" to populate the label options.
-                        </div>
-                    </div>
-                `;
-                console.log('Switched to label view, but no simulation results available');
-            }
-        }
+        // toggleHourlyView function removed - no longer needed
         
         function loadHourlyOptions() {
             try {
@@ -1436,7 +1522,7 @@
                 }
                 
                 // Get available sheets from the API to populate date/time options
-                fetch('/api/sheets')
+                fetch(`/api/sheets?ticker=${encodeURIComponent(document.getElementById('tickerSelect').value)}`)
                     .then(response => {
                         console.log('Sheets response status:', response.status);
                         if (!response.ok) {
@@ -1763,6 +1849,7 @@
 
         // Sliding Window Simulation Functions
         function runSimulation() {
+            const ticker = document.getElementById('tickerSelect').value;
             const startSheet = document.getElementById('startDateSelect').value;
             const endSheet = document.getElementById('endDateSelect').value;
             
@@ -1781,7 +1868,7 @@
             `;
             
             // Run simulation
-            fetch(`/api/sliding-window-simulation?start_sheet=${startSheet}&end_sheet=${endSheet}`)
+            fetch(`/api/sliding-window-simulation?start_sheet=${startSheet}&end_sheet=${endSheet}&ticker=${encodeURIComponent(ticker)}`)
                 .then(response => response.json())
                 .then(data => {
                     if (data.success) {
@@ -2014,7 +2101,7 @@
                 }
             });
             
-            fetch('/api/trade-labels')
+            fetch(`/api/trade-labels?ticker=${encodeURIComponent(document.getElementById('tickerSelect').value)}`)
                 .then(response => response.json())
                 .then(data => {
                     console.log('API Response:', data);
@@ -2132,7 +2219,7 @@
             
             const encodedStrikeDatetime = encodeURIComponent(strikeDatetime);
             console.log(`Encoded strike_datetime: ${encodedStrikeDatetime}`);
-            fetch(`/api/label-graph-data?label=${label}&strike_datetime=${encodedStrikeDatetime}`)
+            fetch(`/api/label-graph-data?label=${label}&strike_datetime=${encodedStrikeDatetime}&ticker=${encodeURIComponent(document.getElementById('tickerSelect').value)}`)
                 .then(response => {
                     console.log(`Response status for label ${label}:`, response.status);
                     return response.json();
@@ -2180,7 +2267,7 @@
             console.log('Testing Label API...');
             
             // Test the trade-labels endpoint
-            fetch('/api/trade-labels')
+            fetch(`/api/trade-labels?ticker=${encodeURIComponent(document.getElementById('tickerSelect').value)}`)
                 .then(response => {
                     console.log('Trade labels response status:', response.status);
                     return response.json();
@@ -2224,7 +2311,7 @@
         function testLabelGraphAPI(strikeDatetime) {
             console.log('Testing label graph API with:', strikeDatetime);
             
-            fetch(`/api/label-graph-data?label=A&strike_datetime=${encodeURIComponent(strikeDatetime)}`)
+            fetch(`/api/label-graph-data?label=A&strike_datetime=${encodeURIComponent(strikeDatetime)}&ticker=${encodeURIComponent(document.getElementById('tickerSelect').value)}`)
                 .then(response => {
                     console.log('Label graph response status:', response.status);
                     return response.json();
@@ -2253,7 +2340,7 @@
                 title.textContent = `Label ${label} - ${strikeDatetime.replace('_', ' | ')}`;
                 card.style.display = 'block';
 
-                fetch(`/api/label-graph-data?label=${encodeURIComponent(label)}&strike_datetime=${encodeURIComponent(strikeDatetime)}`)
+                fetch(`/api/label-graph-data?label=${encodeURIComponent(label)}&strike_datetime=${encodeURIComponent(strikeDatetime)}&ticker=${encodeURIComponent(document.getElementById('tickerSelect').value)}`)
                     .then(r => r.json())
                     .then(data => {
                         if (!data.success) throw new Error(data.error || 'API failed');
